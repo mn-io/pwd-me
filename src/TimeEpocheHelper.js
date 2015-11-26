@@ -6,7 +6,6 @@ export default class TimeEpocheHelper extends React.Component {
 
   constructor(props) {
     super(props)
-    this.props = props
 
     this.oneMinuteInMilliseconds = 60 * 1000
 
