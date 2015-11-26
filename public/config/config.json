@@ -1,9 +1,9 @@
 {
   "globalSalt": "asdcasdhckdscluh",
-  "fieldCount": 3,
+  "outputRows": 3,
   "profiles": {
     "skype": {
       "specialChars": ["#", "$"]
     }
-  } 
+  }
 }
