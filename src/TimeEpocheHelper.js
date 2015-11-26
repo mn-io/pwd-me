@@ -8,7 +8,6 @@ export default class TimeEpocheHelper extends React.Component {
     super(props)
 
     this.oneMinuteInMilliseconds = 60 * 1000
-
     this.state = {
       intervalInMs: props.intervalInMin * this.oneMinuteInMilliseconds,
       visible: false
