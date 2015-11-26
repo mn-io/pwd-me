@@ -1,0 +1,32 @@
+{
+  "name": "pwd-me",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "build": "./node_modules/.bin/browserify ./src/app.js -t babelify --outfile ./public/bundle.js",
+    "watch": "./node_modules/.bin/watchify ./src/app.js -d -v -t babelify --outfile ./public/bundle.js",
+    "prestart": "npm install",
+    "start": "npm run build & npm run watch",
+    "test": "mocha --compilers js:babel/register src/**/*.spec.js",
+    "testwatch": "mocha --compilers js:babel/register --watch src/**/*.spec.js"
+  },
+  "repository": "git@github.com:mn-io/pwd-me.git",
+  "author": "Mario Neises",
+  "license": "ISC",
+  "devDependencies": {
+    "babelify": "^7.2.0",
+    "browserify": "^12.0.1",
+    "mocha": "^2.3.4",
+    "watchify": "^3.6.1"
+  },
+  "dependencies": {
+    "babel": "^6.1.18",
+    "bootstrap": "^3.3.6",
+    "lodash": "^3.10.1",
+    "react": "^0.14.3",
+    "react-bootstrap": "^0.28.1",
+    "react-dom": "^0.14.3"
+  }
+}

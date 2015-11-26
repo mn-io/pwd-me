@@ -1,0 +1,6 @@
+{
+  "es5" : true,
+  "esnext": true,
+  "asi" : true,
+  "lastsemic": true
+}
