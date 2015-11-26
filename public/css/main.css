@@ -1,1 +1,7 @@
- .hidden { display:none; }
+.pointer {
+  cursor: pointer;
+}
+
+.hidden {
+  display:none;
+}
