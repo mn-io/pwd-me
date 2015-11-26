@@ -6,5 +6,5 @@ import TimeEpocheHelper from './TimeEpocheHelper'
 
 window.onload = function() {
   ReactDOM.render(<UserInput />, document.getElementById('userInput'))
-  ReactDOM.render(<TimeEpocheHelper intervalInMin={1}/>, document.getElementById('helperField'))
+  ReactDOM.render(<TimeEpocheHelper intervalInMin={3} />, document.getElementById('helperField'))
 }

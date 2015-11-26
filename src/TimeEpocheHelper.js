@@ -8,13 +8,14 @@ export default class TimeEpocheHelper extends React.Component {
     super(props)
     this.props = props
 
-    this.intervalInMs= props.intervalInMin * 60 * 1000
+    this.oneMinuteInMilliseconds = 60 * 1000
 
     this.state = {
-      epoches: 0,
+      intervalInMs: props.intervalInMin * this.oneMinuteInMilliseconds,
+      visible: false
     }
 
-    _.bindAll(this, 'componentDidMount', 'componentWillUnmount', 'tick')
+    _.bindAll(this, 'componentDidMount', 'componentWillUnmount', 'tick', 'toggleVisibility')
   }
 
   componentDidMount() {
@@ -25,33 +26,51 @@ export default class TimeEpocheHelper extends React.Component {
     clearTimeout(this.timeout);
   }
 
-  tick() {
-    let count = Math.floor(Date.now() / this.intervalInMs)
+  tick(event) {
+    clearTimeout(this.timeout);
 
-    let beginInMs = count * this.intervalInMs
-    let endInMs = beginInMs + this.intervalInMs
+    let now = Date.now()
+    let count = Math.floor(now / this.state.intervalInMs)
 
-    let timeoutForUpdate = endInMs - beginInMs
+    let beginInMs = count * this.state.intervalInMs
+    let endInMs = beginInMs + this.state.intervalInMs
+
+    let timeoutForUpdate = endInMs - now
+
+    let intervalInMs = this.state.intervalInMs
+    if(event && event.target.value > 0) {
+      intervalInMs = event.target.value * this.oneMinuteInMilliseconds
+    }
 
     this.setState({
       epocheCount: count,
       epocheBeginInMs: beginInMs,
-      epocheEndInMs: endInMs
+      epocheEndInMs: endInMs,
+      intervalInMs: intervalInMs
     })
 
     this.timeout = setTimeout(this.tick, timeoutForUpdate)
-    console.log("timeout: " + timeoutForUpdate)
-    //TODO: check whether tick is called in correct moment
+  }
+
+  toggleVisibility() {
+    this.setState({
+      visible: !this.state.visible
+    })
   }
 
   render() {
     let beginCurrentEpoche = moment(this.state.epocheBeginInMs).format('LTS')
     let beginNextEpoche = moment(this.state.epocheEndInMs).format('LTS')
 
+    let intervalInMin = this.state.intervalInMs /  this.oneMinuteInMilliseconds
+
     return (<div>
-        Count of {this.props.intervalInMinutes} minute epoches in UNIX timestamp: {this.state.epocheCount},
-        start was: {beginCurrentEpoche},
-        end will be: {beginNextEpoche}
+        <input type="checkbox" checked={this.state.visible} onChange={this.toggleVisibility} />
+        <div className={this.state.visible ? '' : 'hidden'}>
+          Count of <input type="number" value={intervalInMin} onChange={this.tick} min="1" /> minute epoches in UNIX timestamp: {this.state.epocheCount},
+          start was: {beginCurrentEpoche},
+          end will be: {beginNextEpoche}
+        </div>
       </div>)
   }
 }

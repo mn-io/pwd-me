@@ -1,5 +1,5 @@
 {
-  "es5" : true,
+  "es6" : true,
   "esnext": true,
   "asi" : true,
   "lastsemic": true
