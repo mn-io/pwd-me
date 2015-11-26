@@ -22,6 +22,7 @@
     "watchify": "^3.6.1"
   },
   "dependencies": {
+    "airwaves": "^0.3.0",
     "babel": "^5.8.3",
     "bootstrap": "^3.3.6",
     "lodash": "^3.10.1",

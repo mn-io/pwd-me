@@ -26,7 +26,7 @@ export default class UserInput extends React.Component {
       return
     }
 
-    console.log("yea")
+    this.props.radio.broadcast('fieldChanged')
   }
 
   render() {

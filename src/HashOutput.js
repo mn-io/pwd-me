@@ -15,6 +15,14 @@ export default class HashOutput extends React.Component {
     // _.bindAll(this, 'showPassword')
   }
 
+  componentDidMount() {
+    this.props.radio.subscribe('fieldChanged', () => console.log("yeha"))
+  }
+
+  componentWillUnmount() {
+    this.props.radio.unubscribe('fieldChanged')
+  }
+
   render() {
     let fields = [];
     for (let i = 0; i < this.props.rows; i++) {
