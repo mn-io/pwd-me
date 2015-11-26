@@ -26,7 +26,7 @@ export default class UserInput extends React.Component {
       return
     }
 
-    this.props.radio.broadcast('fieldChanged')
+    this.props.radio.broadcast('fieldChanged', this.inputs[this.identifierFieldName], this.inputs[this.tokenFieldName])
   }
 
   render() {
