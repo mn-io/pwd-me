@@ -16,13 +16,13 @@
   "author": "Mario Neises",
   "license": "ISC",
   "devDependencies": {
-    "babelify": "^7.2.0",
+    "babelify": "^6.1.3",
     "browserify": "^12.0.1",
     "mocha": "^2.3.4",
     "watchify": "^3.6.1"
   },
   "dependencies": {
-    "babel": "^6.1.18",
+    "babel": "^5.8.3",
     "bootstrap": "^3.3.6",
     "lodash": "^3.10.1",
     "react": "^0.14.3",
