@@ -1,8 +1,6 @@
 import React from 'react'
 import _ from 'lodash'
 
-import Colors from '../public/config/colors.json'
-
 class HashRow extends React.Component {
 
   handleFocus(event) {
@@ -14,7 +12,8 @@ class HashRow extends React.Component {
 
   render() {
     let index = this.props.index
-    let currentColor = Colors[index % Colors.length]
+    let colors = this.props.config.colors
+    let currentColor = colors[index % colors.length]
     let colorStyle = {
       background: currentColor
     }
@@ -62,7 +61,7 @@ export default class HashOutput extends React.Component {
 
     let fields = [];
     for (let i = 0; i < hashs.length; i++) {
-      fields.push(<HashRow key={i} index={i+1} value={hashs[i]}/>);
+      fields.push(<HashRow key={i} index={i+1} value={hashs[i]} config={this.props.config} />);
     }
 
     return (<div>{fields}</div>)

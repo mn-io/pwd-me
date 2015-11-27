@@ -18,5 +18,5 @@ let box = new HashBox(radio, config)
 window.onload = () => {
   ReactDOM.render(<UserInput radio={radio} />, document.getElementById('userInput'))
   ReactDOM.render(<TimeEpocheHelper intervalInMin={3} radio={radio} />, document.getElementById('helperField'))
-  ReactDOM.render(<HashOutput rows={config.outputRows} radio={radio} />, document.getElementById('hashOutput'))
+  ReactDOM.render(<HashOutput config={config} radio={radio} />, document.getElementById('hashOutput'))
 }
