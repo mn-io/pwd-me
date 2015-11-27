@@ -40,7 +40,7 @@ export default class HashBox {
     let hashs = []
     for (let i = 0; i < this.config.rows; i++) {
       let currentHash = Sha1(key + i)
-      hashs.push(currentHash)
+      hashs.push([currentHash, currentHash])
     }
 
     this.radio.broadcast('hashsCalculated', hashs)

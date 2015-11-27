@@ -13,14 +13,21 @@ class HashRow extends React.Component {
   render() {
     let index = this.props.index
     let colors = this.props.config.colors
+    let hashs = this.props.hashs
+
     let currentColor = colors[index % colors.length]
     let colorStyle = {
       background: currentColor
     }
 
+    let fields = []
+    for (let i = 0; i < hashs.length; i++) {
+      fields.push(<input key={i} type="text" value={hashs[i]} readOnly={true} onFocus={this.handleFocus} />);
+    }
+
     return (<div>{index}
         <div className="rounded" style={colorStyle}></div>
-        <input type="text" value={this.props.value} readOnly={true} onFocus={this.handleFocus} />
+        {fields}
       </div>)
   }
 }
@@ -59,11 +66,11 @@ export default class HashOutput extends React.Component {
       return (<div></div>)
     }
 
-    let fields = [];
+    let rows = [];
     for (let i = 0; i < hashs.length; i++) {
-      fields.push(<HashRow key={i} index={i+1} value={hashs[i]} config={this.props.config} />);
+      rows.push(<HashRow key={i} index={i+1} hashs={hashs[i]} config={this.props.config} />);
     }
 
-    return (<div>{fields}</div>)
+    return (<div>{rows}</div>)
   }
 }
