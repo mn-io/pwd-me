@@ -11,16 +11,31 @@ export default class HashBox {
       salt: config.globalSalt
     }
 
-    this.epocheCount = 0
+    this.state = {
+      epocheCount: 0,
+      identifier: "",
+      token: ""
+    }
 
-    _.bindAll(this, 'inputChanged', 'timeEpocheChanged')
+    _.bindAll(this, 'inputChanged', 'timeEpocheChanged', 'createHashs')
 
     radio.subscribe('inputChanged', this.inputChanged)
     radio.subscribe('timeEpocheChanged', this.timeEpocheChanged)
   }
 
   inputChanged(identifier, token) {
-    let key = identifier +  token + this.epocheCount
+    this.state.identifier = identifier
+    this.state.token = token
+    this.createHashs()
+  }
+
+  timeEpocheChanged(epocheCount) {
+    this.state.epocheCount = epocheCount
+    this.createHashs()
+  }
+
+  createHashs() {
+    let key = this.config.globalSalt + this.state.identifier +  this.state.token + this.state.epocheCount
 
     let hashs = []
     for (let i = 0; i < this.config.rows; i++) {
@@ -28,9 +43,5 @@ export default class HashBox {
     }
 
     this.radio.broadcast('hashsCalculated', hashs)
-  }
-
-  timeEpocheChanged(epocheCount) {
-    this.epocheCount = epocheCount
   }
 }

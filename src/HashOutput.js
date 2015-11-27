@@ -26,9 +26,13 @@ export default class HashOutput extends React.Component {
   }
 
   fillFields(hashs) {
-    this.setState({
-      hashs: hashs
-    })
+    let setStateAsync = () => {
+      this.setState({
+        hashs: hashs
+      })
+    }
+
+    setTimeout(setStateAsync, 500) //TODO: extract constant
   }
 
   render() {
