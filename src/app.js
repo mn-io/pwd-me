@@ -13,7 +13,7 @@ import config from '../public/config/config.json'
 
 let radio = new Airwaves.Channel
 
-let box = new HashBox(radio)
+let box = new HashBox(radio, config)
 
 window.onload = () => {
   ReactDOM.render(<UserInput radio={radio} />, document.getElementById('userInput'))
