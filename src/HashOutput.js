@@ -16,7 +16,6 @@ export default class HashOutput extends React.Component {
       id: "",
       token: ""
     }
-    // _.bindAll(this, 'showPassword')
   }
 
   componentDidMount() {

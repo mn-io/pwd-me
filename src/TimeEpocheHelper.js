@@ -13,6 +13,8 @@ export default class TimeEpocheHelper extends React.Component {
       visible: false
     }
 
+    this.props.radio.broadcast('timeEpocheChanged', 0)
+    
     _.bindAll(this, 'componentDidMount', 'componentWillUnmount', 'tick', 'toggleVisibility')
   }
 
@@ -51,9 +53,14 @@ export default class TimeEpocheHelper extends React.Component {
   }
 
   toggleVisibility() {
+    let newVisisbility = !this.state.visible
     this.setState({
-      visible: !this.state.visible
+      visible: newVisisbility
     })
+
+    if(!newVisisbility) {
+      this.props.radio.broadcast('timeEpocheChanged', 0)
+    }
   }
 
   render() {
@@ -61,6 +68,10 @@ export default class TimeEpocheHelper extends React.Component {
     let beginNextEpoche = moment(this.state.epocheEndInMs).format('LTS')
 
     let intervalInMin = this.state.intervalInMs /  this.oneMinuteInMilliseconds
+
+    if(this.state.visible) {
+      this.props.radio.broadcast('timeEpocheChanged', this.state.epocheCount)
+    }
 
     return (<div>
         <input type="checkbox" checked={this.state.visible} onChange={this.toggleVisibility} />

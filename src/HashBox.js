@@ -6,5 +6,7 @@ export default class HashBox {
 
         radio.broadcast('hashsCalculated', identifier+identifier, token+token)
       })
+
+      radio.subscribe('timeEpocheChanged', (arg1) => console.log(arg1))
   }
 }
