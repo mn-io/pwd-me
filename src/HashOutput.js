@@ -20,11 +20,11 @@ export default class HashOutput extends React.Component {
   }
 
   componentDidMount() {
-    this.props.radio.subscribe('fieldChanged', (id, token) => this.fillFields(id, token))
+    this.props.radio.subscribe('hashsCalculated', (id, token) => this.fillFields(id, token))
   }
 
   componentWillUnmount() {
-    this.props.radio.unubscribe('fieldChanged')
+    this.props.radio.unubscribe('hashsCalculated')
   }
 
   fillFields(id, token) {

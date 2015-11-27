@@ -1,10 +1,10 @@
 export default class HashBox {
   constructor(radio) {
 
-      radio.intercept('fieldChanged', (broadcast, identifier, token) => {
+      radio.subscribe('inputChanged', (identifier, token) => {
         console.log("intercept: " + identifier + " - " + token)
-        
-        broadcast(identifier+identifier, token+token)
+
+        radio.broadcast('hashsCalculated', identifier+identifier, token+token)
       })
   }
 }

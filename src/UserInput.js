@@ -19,14 +19,11 @@ export default class UserInput extends React.Component {
   }
 
   updateHashs(event) {
-    // console.log(event.target)
-
     this.inputs[event.target.id] = event.target.value
-    if(!this.inputs[this.identifierFieldName] || !this.inputs[this.tokenFieldName]) {
-      return
-    }
-
-    this.props.radio.broadcast('fieldChanged', this.inputs[this.identifierFieldName], this.inputs[this.tokenFieldName])
+    
+    this.props.radio.broadcast('inputChanged',
+      this.inputs[this.identifierFieldName],
+      this.inputs[this.tokenFieldName])
   }
 
   render() {
