@@ -1,5 +1,6 @@
 import React from 'react'
 import _ from 'lodash'
+import Entities from 'html-entities'
 
 export default class UserInput extends React.Component {
 
@@ -13,11 +14,19 @@ export default class UserInput extends React.Component {
     this.inputs[this.identifierFieldName] = ""
     this.inputs[this.tokenFieldName] = ""
 
+    this.escapeHelper = new Entities.AllHtmlEntities()
+
     _.bindAll(this, 'showPassword', 'updateHashs')
   }
 
-  showPassword() {
+  showPassword(event) {
+    let target = event.target;
+    let token = this.inputs[this.tokenFieldName]
+    target.innerHTML= this.escapeHelper.encode(token)
 
+    setTimeout(() => {
+      target.innerHTML = ""
+    }, 1000) //TODO: extract constant, fade out animation
   }
 
   updateHashs(event) {
