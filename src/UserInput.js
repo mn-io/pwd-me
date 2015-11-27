@@ -10,6 +10,8 @@ export default class UserInput extends React.Component {
     this.tokenFieldName = "tokenField"
 
     this.inputs = {}
+    this.inputs[this.identifierFieldName] = ""
+    this.inputs[this.tokenFieldName] = ""
 
     _.bindAll(this, 'showPassword', 'updateHashs')
   }
@@ -20,10 +22,12 @@ export default class UserInput extends React.Component {
 
   updateHashs(event) {
     this.inputs[event.target.id] = event.target.value
-    
-    this.props.radio.broadcast('inputChanged',
-      this.inputs[this.identifierFieldName],
-      this.inputs[this.tokenFieldName])
+
+    this.props.radio.broadcast(
+        'inputChanged',
+        this.inputs[this.identifierFieldName],
+        this.inputs[this.tokenFieldName]
+      )
   }
 
   render() {

@@ -13,8 +13,7 @@ export default class HashOutput extends React.Component {
     super(props)
 
     this.state = {
-      id: "",
-      token: ""
+      hashs : []
     }
   }
 

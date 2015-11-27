@@ -1,5 +1,6 @@
 
 import _ from 'lodash'
+import Sha1 from 'sha1'
 
 export default class HashBox {
   constructor(radio, config) {
@@ -19,12 +20,11 @@ export default class HashBox {
   }
 
   inputChanged(identifier, token) {
-    //radio.broadcast('hashsCalculated', identifier+identifier, token+token)
-    console.log(identifier + "-" + token)
+    let key = identifier +  token + this.epocheCount
 
     let hashs = []
     for (let i = 0; i < this.config.rows; i++) {
-      hashs.push(i)
+      hashs.push(Sha1(key + i))
     }
 
     this.radio.broadcast('hashsCalculated', hashs)
