@@ -2,8 +2,18 @@ import React from 'react'
 import _ from 'lodash'
 
 class HashRow extends React.Component {
+
+  handleFocus(event) {
+    let target = event.target;
+    setTimeout(() => {
+      target.select();
+    }, 0);
+  }
+
   render() {
-    return (<div>{this.props.index}<input type="text" value={this.props.value} readOnly={true} /></div>)
+    return (<div>{this.props.index}
+        <input type="text" value={this.props.value} readOnly={true} onFocus={this.handleFocus} />
+      </div>)
   }
 }
 
@@ -32,7 +42,7 @@ export default class HashOutput extends React.Component {
       })
     }
 
-    setTimeout(setStateAsync, 500) //TODO: extract constant
+    setTimeout(setStateAsync, 100) //TODO: extract constant
   }
 
   render() {
@@ -46,8 +56,6 @@ export default class HashOutput extends React.Component {
       fields.push(<HashRow key={i} index={i+1} value={hashs[i]}/>);
     }
 
-    return (<div>
-      {fields}
-    </div>)
+    return (<div>{fields}</div>)
   }
 }
