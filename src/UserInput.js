@@ -3,7 +3,6 @@ import _ from 'lodash'
 import Entities from 'html-entities'
 
 export default class UserInput extends React.Component {
-
   constructor(props) {
     super(props)
 

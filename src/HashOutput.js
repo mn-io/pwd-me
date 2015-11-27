@@ -2,7 +2,6 @@ import React from 'react'
 import _ from 'lodash'
 
 class HashRow extends React.Component {
-
   handleFocus(event) {
     let target = event.target;
     setTimeout(() => {
@@ -33,7 +32,6 @@ class HashRow extends React.Component {
 }
 
 export default class HashOutput extends React.Component {
-
   constructor(props) {
     super(props)
 
