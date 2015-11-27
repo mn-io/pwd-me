@@ -1,6 +1,8 @@
 import React from 'react'
 import _ from 'lodash'
 
+import Colors from '../public/config/colors.json'
+
 class HashRow extends React.Component {
 
   handleFocus(event) {
@@ -11,7 +13,14 @@ class HashRow extends React.Component {
   }
 
   render() {
-    return (<div>{this.props.index}
+    let index = this.props.index
+    let currentColor = Colors[index % Colors.length]
+    let colorStyle = {
+      background: currentColor
+    }
+
+    return (<div>{index}
+        <div className="rounded" style={colorStyle}></div>
         <input type="text" value={this.props.value} readOnly={true} onFocus={this.handleFocus} />
       </div>)
   }

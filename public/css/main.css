@@ -5,3 +5,12 @@
 .hidden {
   display:none;
 }
+
+.rounded {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+
+  border-radius: 25px;
+  border: 1px solid black;
+}
