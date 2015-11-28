@@ -29,7 +29,7 @@ export default class UserInput extends React.Component {
     this.token = event.target.value
     this.timer = setTimeout(() => {
       this.props.radio.broadcast('tokenChanged', this.token)
-    }, 500) //TODO: extract constant
+    }, 400) //TODO: extract constant
   }
 
   setIdentifier(event) {

@@ -1,5 +1,6 @@
 
 import _ from 'lodash'
+import pbkdf2 from 'pbkdf2-sha256'
 import Sha1 from 'sha1'
 
 export default class HashBox {
@@ -8,13 +9,13 @@ export default class HashBox {
 
     this.config = {
       rows: config.outputRows,
-      salt: config.globalSalt
+      salt: config.salt
     }
 
     this.state = {
       epocheCount: 0,
       identifier: "",
-      token: ""
+      tokenHash: ""
     }
 
     _.bindAll(this, 'identifierChanged', 'tokenChanged', 'timeEpocheChanged', 'createHashs')
@@ -30,7 +31,9 @@ export default class HashBox {
   }
 
   tokenChanged(token) {
-    this.state.token = token
+    let hash = pbkdf2(token, this.config.salt , this.config.pbkdf2Iterations , 64) //TOOD: extract config
+    // console.log(hash.toString('hex'))
+    this.state.tokenHash = hash
     this.createHashs()
   }
 
@@ -40,7 +43,7 @@ export default class HashBox {
   }
 
   createHashs() {
-    let key = this.config.globalSalt + this.state.identifier +  this.state.token + this.state.epocheCount
+    let key = this.state.identifier +  this.state.tokenHash + this.state.epocheCount
 
     let hashs = []
     for (let i = 0; i < this.config.rows; i++) {
