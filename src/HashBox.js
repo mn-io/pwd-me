@@ -28,7 +28,7 @@ export default class HashBox {
   identifierChanged(identifier) {
     if("" == identifier) {
       this.state.identifier = null
-      //TODO: clear hashs
+      this.radio.broadcast('clearHashs')
       return
     }
 
@@ -39,7 +39,7 @@ export default class HashBox {
   tokenChanged(token) {
     if("" == token) {
       this.state.token = null
-      //TODO: clear hashs
+      this.radio.broadcast('clearHashs')
       return
     }
 
