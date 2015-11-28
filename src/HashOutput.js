@@ -55,7 +55,7 @@ export default class HashOutput extends React.Component {
       })
     }
 
-    setTimeout(setStateAsync, 100) //TODO: extract constant
+    setTimeout(setStateAsync, 20) //TODO: extract constant
   }
 
   render() {

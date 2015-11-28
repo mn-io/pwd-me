@@ -17,14 +17,19 @@ export default class HashBox {
       token: ""
     }
 
-    _.bindAll(this, 'inputChanged', 'timeEpocheChanged', 'createHashs')
+    _.bindAll(this, 'identifierChanged', 'tokenChanged', 'timeEpocheChanged', 'createHashs')
 
-    radio.subscribe('inputChanged', this.inputChanged)
+    radio.subscribe('identifierChanged', this.identifierChanged)
+    radio.subscribe('tokenChanged', this.tokenChanged)
     radio.subscribe('timeEpocheChanged', this.timeEpocheChanged)
   }
 
-  inputChanged(identifier, token) {
+  identifierChanged(identifier) {
     this.state.identifier = identifier
+    this.createHashs()
+  }
+
+  tokenChanged(token) {
     this.state.token = token
     this.createHashs()
   }

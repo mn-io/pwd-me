@@ -6,42 +6,35 @@ export default class UserInput extends React.Component {
   constructor(props) {
     super(props)
 
-    this.identifierFieldName = "identifierField"
-    this.tokenFieldName = "tokenField"
-
-    this.inputs = {}
-    this.inputs[this.identifierFieldName] = ""
-    this.inputs[this.tokenFieldName] = ""
-
+    this.token = ""
     this.escapeHelper = new Entities.AllHtmlEntities()
 
-    _.bindAll(this, 'showPassword', 'updateHashs')
+    _.bindAll(this, 'showPassword', 'setToken', 'setIdentifier')
   }
 
   showPassword(event) {
     let target = event.target;
-    let token = this.inputs[this.tokenFieldName]
-    target.innerHTML= this.escapeHelper.encode(token)
+    target.innerHTML= this.escapeHelper.encode(this.token)
 
     setTimeout(() => {
       target.innerHTML = ""
     }, 1000) //TODO: extract constant, fade out animation
   }
 
-  updateHashs(event) {
-    this.inputs[event.target.id] = event.target.value
+  setToken(event) {
+    this.token = event.target.value
+    this.props.radio.broadcast('tokenChanged', this.token)
+  }
 
-    this.props.radio.broadcast(
-        'inputChanged',
-        this.inputs[this.identifierFieldName],
-        this.inputs[this.tokenFieldName]
-      )
+  setIdentifier(event) {
+    let id = event.target.value
+    this.props.radio.broadcast('identifierChanged', id)
   }
 
   render() {
     return (<div>
-      Identifier: <input type="text" onKeyUp={this.updateHashs} id={this.identifierFieldName} />
-      Token: <input type="password" onKeyUp={this.updateHashs} id={this.tokenFieldName} />
+      Token: <input type="password" onKeyUp={this.setToken} />
+      Identifier: <input type="text" onKeyUp={this.setIdentifier} />
       <span className="glyphicon glyphicon-eye-open pointer" aria-hidden="true" onClick={this.showPassword}></span>
       <span></span>
     </div>)
