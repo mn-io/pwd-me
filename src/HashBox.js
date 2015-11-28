@@ -8,6 +8,7 @@ export default class HashBox {
 
     this.config = {
       rows: config.outputRows,
+      columns: config.outputColumns,
       tokenSalt: config.tokenSalt,
       keySalt: config.keySalt,
       iterations: config.pbkdf2Iterations,
@@ -18,7 +19,7 @@ export default class HashBox {
       epocheCount: 0
     }
 
-    _.bindAll(this, 'identifierChanged', 'tokenChanged', 'timeEpocheChanged', 'createHashs', 'translateHash')
+    _.bindAll(this, 'identifierChanged', 'tokenChanged', 'timeEpocheChanged', 'createHashs', 'translateHash', 'createColumns')
 
     radio.subscribe('identifierChanged', this.identifierChanged)
     radio.subscribe('tokenChanged', this.tokenChanged)
@@ -43,7 +44,7 @@ export default class HashBox {
       return
     }
 
-    let hash = pbkdf2(token, this.config.tokenSalt , this.config.iterations , 64) //TOOD: extract config
+    let hash = pbkdf2(token, this.config.tokenSalt , this.config.iterations , 64)
     // console.log(hash.toString('hex'))
     this.state.tokenHash = hash
     this.createHashs()
@@ -63,9 +64,10 @@ export default class HashBox {
 
     let hashs = []
     for (let i = 0; i < this.config.rows; i++) {
-      let currentHash = pbkdf2(key, i + this.config.keySalt, 1, 64) //TOOD: extract config
+      let currentHash = pbkdf2(key, i + this.config.keySalt, 1, 64)
       let readablePwd = this.translateHash(currentHash)
-      hashs.push([currentHash, readablePwd])
+      let pwds = this.createColumns(readablePwd)
+      hashs.push(pwds)
     }
 
     this.radio.broadcast('hashsCalculated', hashs)
@@ -81,5 +83,20 @@ export default class HashBox {
     }
 
     return result.join("")
+  }
+
+  createColumns(pwd) {
+    let columns = []
+
+    for (let i = 0; i < this.config.columns.length; i++) {
+      let end = this.config.columns[i]
+      let value = pwd
+      if(end > 0) {
+        value = pwd.substring(0, end)
+      }
+      columns.push(value)
+    }
+
+    return columns
   }
 }
