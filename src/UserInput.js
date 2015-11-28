@@ -22,8 +22,14 @@ export default class UserInput extends React.Component {
   }
 
   setToken(event) {
+    if(this.timer) {
+      clearTimeout(this.timer)
+    }
+
     this.token = event.target.value
-    this.props.radio.broadcast('tokenChanged', this.token)
+    this.timer = setTimeout(() => {
+      this.props.radio.broadcast('tokenChanged', this.token)
+    }, 500) //TODO: extract constant
   }
 
   setIdentifier(event) {
@@ -33,9 +39,9 @@ export default class UserInput extends React.Component {
 
   render() {
     return (<div>
-      Token: <input type="password" onKeyUp={this.setToken} />
+      Token (slow): <input type="password" onKeyUp={this.setToken} />
+      <span className="glyphicon glyphicon-eye-open pointer" aria-hidden="true" onClick={this.showPassword}></span><br />
       Identifier: <input type="text" onKeyUp={this.setIdentifier} />
-      <span className="glyphicon glyphicon-eye-open pointer" aria-hidden="true" onClick={this.showPassword}></span>
       <span></span>
     </div>)
   }
