@@ -31,7 +31,6 @@
     "pbkdf2-sha256": "^1.1.1",
     "react": "^0.14.3",
     "react-bootstrap": "^0.28.1",
-    "react-dom": "^0.14.3",
-    "sha1": "^1.1.1"
+    "react-dom": "^0.14.3"
   }
 }

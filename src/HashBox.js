@@ -1,7 +1,6 @@
 
 import _ from 'lodash'
 import pbkdf2 from 'pbkdf2-sha256'
-import Sha1 from 'sha1'
 
 export default class HashBox {
   constructor(radio, config) {
@@ -9,7 +8,8 @@ export default class HashBox {
 
     this.config = {
       rows: config.outputRows,
-      salt: config.salt
+      salt: config.salt,
+      iterations: config.pbkdf2Iterations
     }
 
     this.state = {
@@ -31,7 +31,7 @@ export default class HashBox {
   }
 
   tokenChanged(token) {
-    let hash = pbkdf2(token, this.config.salt , this.config.pbkdf2Iterations , 64) //TOOD: extract config
+    let hash = pbkdf2(token, this.config.salt , this.config.iterations , 64) //TOOD: extract config
     // console.log(hash.toString('hex'))
     this.state.tokenHash = hash
     this.createHashs()
@@ -47,7 +47,8 @@ export default class HashBox {
 
     let hashs = []
     for (let i = 0; i < this.config.rows; i++) {
-      let currentHash = Sha1(key + i)
+      let currentHash = pbkdf2(key, i + "sall2", 1, 64) //TOOD: extract config
+      //TODO: continue here with translation table
       hashs.push([currentHash, currentHash])
     }
 
