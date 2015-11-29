@@ -33,6 +33,10 @@ export default class HashBox {
       return
     }
 
+    if(this.state.identifier == identifier) {
+      return
+    }
+
     this.state.identifier = identifier
     this.createHashs()
   }
@@ -44,9 +48,14 @@ export default class HashBox {
       return
     }
 
+    if(this.state.token == token) {
+      return
+    }
+
     let hash = pbkdf2(token, this.config.tokenSalt , this.config.iterations , 64)
     // console.log(hash.toString('hex'))
     this.state.tokenHash = hash
+    this.state.token = token
     this.createHashs()
   }
 
