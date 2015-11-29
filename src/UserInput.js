@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from 'react-bootstrap/lib/Button'
 import _ from 'lodash'
 import Entities from 'html-entities'
 
@@ -7,9 +8,15 @@ export default class UserInput extends React.Component {
     super(props)
 
     this.token = ""
+    this.identifier = ""
+
+    this.state = {
+      isInstantGeneration: false
+    }
+
     this.escapeHelper = new Entities.AllHtmlEntities()
 
-    _.bindAll(this, 'showPassword', 'setToken', 'setIdentifier')
+    _.bindAll(this, 'showPassword', 'setToken', 'setIdentifier', 'toggleInstantGeneration', 'sendDataOnClick')
   }
 
   showPassword(event) {
@@ -27,14 +34,43 @@ export default class UserInput extends React.Component {
     }
 
     this.token = event.target.value
+
+    if(!this.state.isInstantGeneration) {
+      return
+    }
+
     this.timer = setTimeout(() => {
       this.props.radio.broadcast('tokenChanged', this.token)
     }, 400) //TODO: extract constant
   }
 
   setIdentifier(event) {
-    let id = event.target.value
-    this.props.radio.broadcast('identifierChanged', id)
+    this.identifier = event.target.value
+
+    if(!this.state.isInstantGeneration) {
+      return
+    }
+
+    this.props.radio.broadcast('identifierChanged', this.identifier)
+  }
+
+  toggleInstantGeneration() {
+    let isEnabled = !this.state.isInstantGeneration
+    this.setState({
+      isInstantGeneration: isEnabled
+    })
+
+    if(isEnabled) {
+      this.sendDataOnClick()
+    }
+  }
+
+  sendDataOnClick() {
+    if(this.state.isInstantGeneration) {
+      return
+    }
+    this.props.radio.broadcast('identifierChanged', this.identifier)
+    this.props.radio.broadcast('tokenChanged', this.token)
   }
 
   render() {
@@ -42,7 +78,8 @@ export default class UserInput extends React.Component {
       Token (slow): <input type="password" onKeyUp={this.setToken} />
       <span className="glyphicon glyphicon-eye-open pointer" aria-hidden="true" onClick={this.showPassword}></span><br />
       Identifier: <input type="text" onKeyUp={this.setIdentifier} />
-      <span></span>
+      <input type="checkbox" checked={this.state.isInstantGeneration} onChange={this.toggleInstantGeneration} />instant
+      <Button onClick={this.sendDataOnClick}>Generate</Button>
     </div>)
   }
 }
