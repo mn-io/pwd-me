@@ -77,9 +77,9 @@ export default class HashBox {
     let result = []
     let position = 0
 
-    for (let i = 0; i < hash.length; i=i+1) {
+    for (let i = 0; i < hash.length-1; i=i+2) {
       position = position + hash[i]
-      let validPosition = position % this.config.chars.length
+      let validPosition = (position + hash[i+1]) % this.config.chars.length
       result.push(this.config.chars[validPosition])
     }
 
