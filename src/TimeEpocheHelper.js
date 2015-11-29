@@ -73,7 +73,7 @@ export default class TimeEpocheHelper extends React.Component {
     }
 
     return (<div>
-        <input type="checkbox" checked={this.state.visible} onChange={this.toggleVisibility} />
+        <label><input type="checkbox" checked={this.state.visible} onChange={this.toggleVisibility} className="checkbox" />Time Epoche Helper</label>
         <div className={this.state.visible ? '' : 'hidden'}>
           Count of <input type="number" value={intervalInMin} onChange={this.tick} min="1" /> minute epoches in UNIX timestamp: {this.state.epocheCount},
           start was: {beginCurrentEpoche},

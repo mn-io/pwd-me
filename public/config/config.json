@@ -1,7 +1,7 @@
 {
   "tokenSalt": "fdF6e%! #wMe",
   "keySalt": "f134§",
-  "outputRows": 3,
+  "outputRows": 17,
   "outputColumns": [6, 12, -1],
   "pbkdf2Iterations": 6400,
   "validCharacters": "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 !$%&(){}[]-_.:,;#+*@",

@@ -81,7 +81,7 @@ export default class UserInput extends React.Component {
       Token (slow): <input type="password" onKeyUp={this.setToken} />
       <span className="glyphicon glyphicon-eye-open pointer" aria-hidden="true" onClick={this.showPassword}></span><br />
       Identifier: <input type="text" onKeyUp={this.setIdentifier} />
-      <input type="checkbox" checked={this.state.isInstantGeneration} onChange={this.toggleInstantGeneration} />instant
+      <label><input type="checkbox" className="checkbox" checked={this.state.isInstantGeneration} onChange={this.toggleInstantGeneration} />instant</label>
       <Button onClick={this.sendDataOnClick}>Generate</Button>
     </div>)
   }
