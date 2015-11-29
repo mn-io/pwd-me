@@ -69,7 +69,7 @@ export default class HashBox {
       return
     }
 
-    let key = this.state.identifier +  this.state.tokenHash + this.state.epocheCount
+    let key = "id=" + this.state.identifier + "&token=" + this.state.tokenHash + "&epoche=" + this.state.epocheCount
 
     let hashs = []
     for (let i = 0; i < this.config.rows; i++) {
