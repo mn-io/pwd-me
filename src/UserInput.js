@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from 'react-bootstrap/lib/Button'
+import MobileDetect from 'mobile-detect'
 import _ from 'lodash'
 import Entities from 'html-entities'
 
@@ -10,8 +11,10 @@ export default class UserInput extends React.Component {
     this.token = ""
     this.identifier = ""
 
+    let isMobile = !!(new MobileDetect(navigator.userAgent).mobile())
+
     this.state = {
-      isInstantGeneration: false
+      isInstantGeneration: !isMobile
     }
 
     this.escapeHelper = new Entities.AllHtmlEntities()
