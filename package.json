@@ -5,28 +5,20 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "build": "./node_modules/.bin/browserify ./src/app.js -t babelify --outfile ./public/bundle.js",
-    "watch": "./node_modules/.bin/watchify ./src/app.js -d -v -t babelify --outfile ./public/bundle.js",
-    "compress": "uglifyjs --compress -- ./public/bundle.js > ./public/bundle.min.js",
-    "prestart": "npm install",
-    "start": "npm run build & npm run watch",
+    "build": "browserify ./src/app.js -t babelify | uglifyjs -c > ./public/bundle.js",
+    "build-debug": "browserify ./src/app.js -d -v -t babelify > ./public/bundle.js",
+    "watch": "watchify ./src/app.js -d -v -t babelify -o ./public/bundle.js",
+
     "test": "mocha --compilers js:babel/register src/**/*.spec.js",
     "testwatch": "mocha --compilers js:babel/register --watch src/**/*.spec.js"
   },
   "repository": "git@github.com:mn-io/pwd-me.git",
   "author": "Mario Neises",
   "license": "ISC",
-  "devDependencies": {
-    "babelify": "^6.1.3",
-    "browserify": "^12.0.1",
-    "mocha": "^2.3.4",
-    "uglify-js": "^2.6.1",
-    "watchify": "^3.6.1"
-  },
   "dependencies": {
     "airwaves": "^0.3.0",
-    "babel": "^5.8.3",
-    "bootstrap": "^3.3.6",
+    "babel-core": "~6.1.4",
+    "babel-polyfill": "~6.1.4",
     "html-entities": "^1.2.0",
     "lodash": "^3.10.1",
     "mobile-detect": "^1.3.0",
@@ -35,5 +27,15 @@
     "react": "^0.14.3",
     "react-bootstrap": "^0.28.1",
     "react-dom": "^0.14.3"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.1.4",
+    "babel-preset-react": "^6.1.18",
+    "babelify": "^7.2.0",
+    "bootstrap": "^3.3.6",
+    "browserify": "^12.0.1",
+    "mocha": "^2.3.4",
+    "uglifyjs": "^2.4.10",
+    "watchify": "^3.6.1"
   }
 }
