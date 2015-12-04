@@ -1,5 +1,4 @@
 import React from 'react'
-import Button from 'react-bootstrap/lib/Button'
 import MobileDetect from 'mobile-detect'
 import _ from 'lodash'
 import Entities from 'html-entities'
@@ -82,7 +81,7 @@ export default class UserInput extends React.Component {
       <span className="glyphicon glyphicon-eye-open pointer" aria-hidden="true" onClick={this.showPassword}></span><br />
       Identifier: <input type="text" onKeyUp={this.setIdentifier} />
       <label><input type="checkbox" className="checkbox" checked={this.state.isInstantGeneration} onChange={this.toggleInstantGeneration} />instant</label>
-      <Button onClick={this.sendDataOnClick}>Generate</Button>
+      <button type="button" className="btn btn-link" onClick={this.sendDataOnClick}>Generate</button>
     </div>)
   }
 }
