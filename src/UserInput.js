@@ -3,6 +3,8 @@ import MobileDetect from 'mobile-detect'
 import _ from 'lodash'
 import Entities from 'html-entities'
 
+import TimeEpocheHelper from './TimeEpocheHelper'
+
 export default class UserInput extends React.Component {
   constructor(props) {
     super(props)
@@ -13,7 +15,8 @@ export default class UserInput extends React.Component {
     let isMobile = !!(new MobileDetect(navigator.userAgent).mobile())
 
     this.state = {
-      isInstantGeneration: !isMobile
+      isInstantGeneration: !isMobile,
+      tokenFieldType: 'password'
     }
 
     this.escapeHelper = new Entities.AllHtmlEntities()
@@ -22,12 +25,15 @@ export default class UserInput extends React.Component {
   }
 
   showPassword(event) {
-    let target = event.target;
-    target.innerHTML= this.escapeHelper.encode(this.token)
+    this.setState({
+      tokenFieldType: 'text'
+    })
 
     setTimeout(() => {
-      target.innerHTML = ""
-    }, 1000) //TODO: extract constant, fade out animation
+      this.setState({
+        tokenFieldType: 'password'
+      })
+    }, 1000) //TODO: extract constant
   }
 
   setToken(event) {
@@ -76,12 +82,42 @@ export default class UserInput extends React.Component {
   }
 
   render() {
-    return (<div>
-      Token (slow): <input type="password" onKeyUp={this.setToken} />
-      <span className="glyphicon glyphicon-eye-open pointer" aria-hidden="true" onClick={this.showPassword}></span><br />
-      Identifier: <input type="text" onKeyUp={this.setIdentifier} />
-      <label><input type="checkbox" className="checkbox" checked={this.state.isInstantGeneration} onChange={this.toggleInstantGeneration} />instant</label>
-      <button type="button" className="btn btn-link" onClick={this.sendDataOnClick}>Generate</button>
-    </div>)
+    return (
+      <div className="col-sm-12">
+        <form className="form-horizontal">
+          <div className="col-sm-12">
+            <div className="form-group">
+              <div className="input-group">
+                <input type={this.state.tokenFieldType} className="form-control" aria-label="Token (slow calculation)" onKeyUp={this.setToken} />
+                <div className="input-group-btn">
+                  <button type="button" className="btn btn-default" aria-label="Hint" onClick={this.showPassword}>
+                    <span className="glyphicon glyphicon-eye-open"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-sm-12">
+            <div className="form-group">
+              <input type="text" className="form-control" placeholder="Identifier" onKeyUp={this.setIdentifier} />
+            </div>
+          </div>
+
+          <div className="col-sm-12">
+            <div className="checkbox">
+              <label>
+                <input type="checkbox" checked={this.state.isInstantGeneration} onChange={this.toggleInstantGeneration} />Instant
+              </label>
+            </div>
+          </div>
+
+          <div className="col-sm-12">
+            <TimeEpocheHelper intervalInMin={3} radio={this.props.radio} />
+          </div>
+          <div className="row">
+            <button type="button" className="btn btn-link" onClick={this.sendDataOnClick}>Generate</button>
+          </div>
+        </form>
+      </div>)
   }
 }

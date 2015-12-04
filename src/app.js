@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom'
 import Airwaves from 'airwaves'
 
 import UserInput from './UserInput'
-import TimeEpocheHelper from './TimeEpocheHelper'
 import HashOutput from './HashOutput'
 
 import HashBox from './HashBox'
@@ -17,6 +16,5 @@ let box = new HashBox(radio, config)
 
 window.onload = () => {
   ReactDOM.render(<UserInput radio={radio} />, document.getElementById('userInput'))
-  ReactDOM.render(<TimeEpocheHelper intervalInMin={3} radio={radio} />, document.getElementById('helperField'))
   ReactDOM.render(<HashOutput config={config} radio={radio} />, document.getElementById('hashOutput'))
 }

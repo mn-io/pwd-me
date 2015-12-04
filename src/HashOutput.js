@@ -27,7 +27,8 @@ class HashRow extends React.Component {
       fields.push(<input key={i} type="text" value={hashs[i]} readOnly={true} onFocus={this.handleFocus} style={widthStyle} />);
     }
 
-    return (<div>{index}
+    return (<div className="row">
+        {index}
         <div className="rounded" style={colorStyle}></div>
         {fields}
       </div>)

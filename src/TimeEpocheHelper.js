@@ -72,12 +72,21 @@ export default class TimeEpocheHelper extends React.Component {
       this.props.radio.broadcast('timeEpocheChanged', this.state.epocheCount)
     }
 
-    return (<div>
-        <label><input type="checkbox" checked={this.state.visible} onChange={this.toggleVisibility} className="checkbox" />Time Epoche Helper</label>
+    return (
+      <div>
+        <div className="checkbox">
+          <label><input type="checkbox" checked={this.state.visible} onChange={this.toggleVisibility} />Time Epoche Helper</label>
+        </div>
         <div className={this.state.visible ? '' : 'hidden'}>
-          Count of <input type="number" value={intervalInMin} onChange={this.tick} min="1" /> minute epoches in UNIX timestamp: {this.state.epocheCount},
-          start was: {beginCurrentEpoche},
-          end will be: {beginNextEpoche}
+          <small>Count of minute epoches from UNIX timestamp.</small>
+          <div className="form-group form-inline col-sm-12">
+            <label>Minutes: <input type="number" className="form-control" value={intervalInMin} onChange={this.tick} min="1" /></label>
+            <div>
+              count is: {this.state.epocheCount},
+              start was: {beginCurrentEpoche},
+              end will be: {beginNextEpoche}
+            </div>
+          </div>
         </div>
       </div>)
   }
