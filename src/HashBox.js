@@ -14,7 +14,7 @@ export default class HashBox {
       columns: config.outputColumns,
       tokenSalt: config.tokenSalt,
       keySalt: config.keySalt,
-      iterations: config.pbkdf2Iterations,
+      iterations: config.tokenHashingIterations,
       chars: config.validCharacters
     }
 

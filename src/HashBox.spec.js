@@ -9,13 +9,14 @@ let config = {
   "keySalt": "f134§",
   "outputRows": 17,
   "outputColumns": [6, 12, -1],
-  "pbkdf2Iterations": 128,
+  "tokenHashingIterations": 128,
   "validCharacters": "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 !$%&(){}[]-_.:,;#+*@",
 }
 
 let inAndOut = {
   "identifier": "hello",
   "token": "hello",
+  "epocheCount": 3,
   "tokenHash": "db9b4e5f73d04ef01ba9295dc2a993c9177fc75546ba73083e780f9911258e5945d3772f2d25fd033fdb3ed8008a44aa0fe2b4baefc7705d7ebef85f26ec1f16",
 }
 
@@ -106,6 +107,21 @@ describe('HashBox', () => {
       radio.broadcast('tokenChanged', "")
       assert(!box.state.token)
       assert(!box.state.tokenHash)
+    })
+  })
+
+  describe('#timeEpocheChanged', () => {
+
+    let radio;
+
+    beforeEach(() => {
+      radio = new Airwaves.Channel()
+    })
+
+    it('receives broadcast', () => {
+      let box = new HashBox(radio, config)
+      radio.broadcast('timeEpocheChanged', inAndOut.epocheCount)
+      assert.equal(inAndOut.epocheCount, box.state.epocheCount)
     })
   })
 })
