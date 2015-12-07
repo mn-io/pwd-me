@@ -7,17 +7,17 @@ import HashBox from './HashBox'
 let config = {
   "tokenSalt": "fdF6e%! #wMe",
   "keySalt": "f134§",
-  "outputRows": 17,
+  "outputRows": 2,
   "outputColumns": [6, 12, -1],
   "tokenHashingIterations": 128,
   "validCharacters": "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 !$%&(){}[]-_.:,;#+*@",
 }
 
 let inAndOut = {
-  "identifier": "hello",
-  "token": "hello",
+  "identifier": "fweq342Ö43",
+  "token": "345$%3",
   "epocheCount": 3,
-  "tokenHash": "db9b4e5f73d04ef01ba9295dc2a993c9177fc75546ba73083e780f9911258e5945d3772f2d25fd033fdb3ed8008a44aa0fe2b4baefc7705d7ebef85f26ec1f16",
+  "tokenHash": "a4a09823a46c8240a585e81cdb0a42856ce5bdf96ad390ba3f5b142dc34a7ca37620abfe9b6ad830af1a1f040925c4c145ed6ac42e435316a32e337071fea61e",
 }
 
 

@@ -4,14 +4,17 @@ import Airwaves from 'airwaves'
 
 import UserInput from './UserInput'
 import HashOutput from './HashOutput'
-
 import HashBox from './HashBox'
 
 import config from '../public/config/config.json'
 
-let radio = new Airwaves.Channel()
 
-let box = new HashBox(radio, config)
+let radio = new Airwaves.Channel()
+let callback = (hashs) => {radio.broadcast('hashsCalculated', hashs)}
+radio.subscribe('identifierChanged', box.identifierChanged)
+radio.subscribe('tokenChanged', box.tokenChanged)
+radio.subscribe('timeEpocheChanged', box.timeEpocheChanged)
+let box = new HashBox(config, callback)
 
 window.onload = () => {
   ReactDOM.render(<UserInput radio={radio} />, document.getElementById('userInput'))

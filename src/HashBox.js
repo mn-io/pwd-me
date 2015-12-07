@@ -3,18 +3,17 @@ import assert from 'assert'
 import pbkdf2 from 'pbkdf2-sha256'
 
 export default class HashBox {
-  constructor(radio, config) {
-    assert(radio)
+  constructor(config, callback) {
     assert(config)
-
-    this.radio = radio
 
     this.config = {
       rows: config.outputRows,
       columns: config.outputColumns,
       tokenSalt: config.tokenSalt,
       keySalt: config.keySalt,
-      iterations: config.tokenHashingIterations,
+      tokenIterations: config.tokenHashingIterations,
+      rowHashIterations: config.rowHashIterations,
+      hashLength: config.hashResultLengthInBytes,
       chars: config.validCharacters
     }
 
@@ -22,11 +21,17 @@ export default class HashBox {
       epocheCount: 0
     }
 
-    _.bindAll(this, 'identifierChanged', 'tokenChanged', 'timeEpocheChanged', 'createHashs', 'translateHash', 'createColumns')
+    this.callback = callback
 
-    radio.subscribe('identifierChanged', this.identifierChanged)
-    radio.subscribe('tokenChanged', this.tokenChanged)
-    radio.subscribe('timeEpocheChanged', this.timeEpocheChanged)
+    _.bindAll(this,
+      'identifierChanged',
+      'tokenChanged',
+      'timeEpocheChanged',
+      'createHashs',
+      'translateHash',
+      'createColumns',
+      'invokeCallbackWithReturn'
+    )
   }
 
   identifierChanged(identifier) {
@@ -40,8 +45,7 @@ export default class HashBox {
 
     if(null === identifier) {
       this.state.identifier = null
-      this.radio.broadcast('clearHashs')
-      return
+      return this.invokeCallbackWithReturn()
     }
 
     this.state.identifier = identifier
@@ -60,11 +64,10 @@ export default class HashBox {
     if(null === token) {
       this.state.tokenHash = hash
       this.state.token = null
-      this.radio.broadcast('clearHashs')
-      return
+      return this.invokeCallbackWithReturn()
     }
 
-    let hash = pbkdf2(token, this.config.tokenSalt , this.config.iterations , 64)
+    let hash = pbkdf2(token, this.config.tokenSalt , this.config.tokenIterations, this.config.hashLength)
     this.state.tokenHash = hash
     this.state.token = token
     this.createHashs()
@@ -84,13 +87,13 @@ export default class HashBox {
 
     let hashs = []
     for (let i = 0; i < this.config.rows; i++) {
-      let currentHash = pbkdf2(key, i + this.config.keySalt, 1, 64)
+      let currentHash = pbkdf2(key, i + this.config.keySalt, this.config.rowHashIterations, this.config.hashLength)
       let readablePwd = this.translateHash(currentHash)
       let pwds = this.createColumns(readablePwd)
       hashs.push(pwds)
     }
 
-    this.radio.broadcast('hashsCalculated', hashs)
+    return this.invokeCallbackWithReturn(hashs)
   }
 
   translateHash(hash) {
@@ -119,5 +122,15 @@ export default class HashBox {
     }
 
     return columns
+  }
+
+  invokeCallbackWithReturn(hashs) {
+    if(!hashs) {
+      hashs= []
+    }
+    if(this.callback) {
+      this.callback(hashs)
+    }
+    return hashs
   }
 }
