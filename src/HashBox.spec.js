@@ -124,4 +124,12 @@ describe('HashBox', () => {
       assert.equal(inAndOut.epocheCount, box.state.epocheCount)
     })
   })
+
+  //TODO: createHash testing
+  //TODO: translateHash testing
+  //TODO: createColumns testting
+  //TODO: happy path testing
+
+  //TODO: testing on build
+  //TODO: testing on app load
 })
