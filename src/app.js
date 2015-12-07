@@ -1,4 +1,3 @@
-require('babel/polyfill')
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Airwaves from 'airwaves'
@@ -10,7 +9,7 @@ import HashBox from './HashBox'
 
 import config from '../public/config/config.json'
 
-let radio = new Airwaves.Channel
+let radio = new Airwaves.Channel()
 
 let box = new HashBox(radio, config)
 

@@ -22,4 +22,6 @@ copy:
 	cp node_modules/bootstrap/dist/fonts/* public/fonts/
 
 fix:
-	ulimit -n 2560
+	#sysctl -w kern.maxfiles=20480
+	#sysctl -w kern.maxfilesperproc=18000
+	ulimit -S -n 10000

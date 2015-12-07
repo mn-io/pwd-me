@@ -1,9 +1,12 @@
-
 import _ from 'lodash'
+import assert from 'assert'
 import pbkdf2 from 'pbkdf2-sha256'
 
 export default class HashBox {
   constructor(radio, config) {
+    assert(radio)
+    assert(config)
+
     this.radio = radio
 
     this.config = {
@@ -27,13 +30,17 @@ export default class HashBox {
   }
 
   identifierChanged(identifier) {
-    if("" == identifier) {
-      this.state.identifier = null
-      this.radio.broadcast('clearHashs')
+    if("" === identifier) {
+      identifier = null
+    }
+
+    if(identifier === this.state.identifier) {
       return
     }
 
-    if(this.state.identifier == identifier) {
+    if(null === identifier) {
+      this.state.identifier = null
+      this.radio.broadcast('clearHashs')
       return
     }
 
@@ -42,18 +49,22 @@ export default class HashBox {
   }
 
   tokenChanged(token) {
-    if("" == token) {
+    if("" === token) {
+      token = null
+    }
+
+    if(token === this.state.token) {
+      return
+    }
+
+    if(null === token) {
+      this.state.tokenHash = hash
       this.state.token = null
       this.radio.broadcast('clearHashs')
       return
     }
 
-    if(this.state.token == token) {
-      return
-    }
-
     let hash = pbkdf2(token, this.config.tokenSalt , this.config.iterations , 64)
-    // console.log(hash.toString('hex'))
     this.state.tokenHash = hash
     this.state.token = token
     this.createHashs()
