@@ -49,7 +49,7 @@ export default class HashBox {
     }
 
     this.state.identifier = identifier
-    this.createHashs()
+    return this.createHashs()
   }
 
   tokenChanged(token) {
@@ -70,12 +70,12 @@ export default class HashBox {
     let hash = pbkdf2(token, this.config.tokenSalt , this.config.tokenIterations, this.config.hashLength)
     this.state.tokenHash = hash
     this.state.token = token
-    this.createHashs()
+    return this.createHashs()
   }
 
   timeEpocheChanged(epocheCount) {
     this.state.epocheCount = epocheCount
-    this.createHashs()
+    return this.createHashs()
   }
 
   createHashs() {
