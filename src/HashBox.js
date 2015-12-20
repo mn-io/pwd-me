@@ -97,6 +97,10 @@ export default class HashBox {
   }
 
   translateHash(hash) {
+    assert('Buffer' === hash.constructor.name)
+    assert(hash.length % 2 === 0)
+    assert(this.config.chars.length > 0)
+
     let result = []
     let position = 0
 
