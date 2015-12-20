@@ -24,8 +24,8 @@ export default class HashBox {
     this.callback = callback
 
     _.bindAll(this,
-      'identifierChanged',
-      'tokenChanged',
+      'setIdentifier',
+      'setToken',
       'timeEpocheChanged',
       'createHashs',
       'translateHash',
@@ -34,7 +34,7 @@ export default class HashBox {
     )
   }
 
-  identifierChanged(identifier) {
+  setIdentifier(identifier) {
     if("" === identifier) {
       identifier = null
     }
@@ -52,7 +52,7 @@ export default class HashBox {
     return this.createHashs()
   }
 
-  tokenChanged(token) {
+  setToken(token) {
     if("" === token) {
       token = null
     }

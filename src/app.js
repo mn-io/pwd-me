@@ -11,8 +11,8 @@ import config from '../public/config/config.json'
 
 let radio = new Airwaves.Channel()
 let callback = (hashs) => {radio.broadcast('hashsCalculated', hashs)}
-radio.subscribe('identifierChanged', box.identifierChanged)
-radio.subscribe('tokenChanged', box.tokenChanged)
+radio.subscribe('setIdentifier', box.setIdentifier)
+radio.subscribe('setToken', box.setToken)
 radio.subscribe('timeEpocheChanged', box.timeEpocheChanged)
 let box = new HashBox(config, callback)
 

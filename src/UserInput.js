@@ -48,7 +48,7 @@ export default class UserInput extends React.Component {
     }
 
     this.timer = setTimeout(() => {
-      this.props.radio.broadcast('tokenChanged', this.token)
+      this.props.radio.broadcast('setToken', this.token)
     }, 400) //TODO: extract constant
   }
 
@@ -59,7 +59,7 @@ export default class UserInput extends React.Component {
       return
     }
 
-    this.props.radio.broadcast('identifierChanged', this.identifier)
+    this.props.radio.broadcast('setIdentifier', this.identifier)
   }
 
   toggleInstantGeneration() {
@@ -77,8 +77,8 @@ export default class UserInput extends React.Component {
     if(this.state.isInstantGeneration) {
       return
     }
-    this.props.radio.broadcast('identifierChanged', this.identifier)
-    this.props.radio.broadcast('tokenChanged', this.token)
+    this.props.radio.broadcast('setIdentifier', this.identifier)
+    this.props.radio.broadcast('setToken', this.token)
   }
 
   render() {

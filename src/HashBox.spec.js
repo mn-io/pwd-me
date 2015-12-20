@@ -18,6 +18,7 @@ let inAndOut = {
   "token": "345$%3",
   "epocheCount": 3,
   "tokenHash": "a4a09823a46c8240a585e81cdb0a42856ce5bdf96ad390ba3f5b142dc34a7ca37620abfe9b6ad830af1a1f040925c4c145ed6ac42e435316a32e337071fea61e",
+  "hashs": [["+eÖa*ö","+eÖa*öfyT!M ","+eÖa*öfyT!M D7QPoGsT$dÄJ)m;ö2rZ "], ["6[(SvF","6[(SvFDq0s4W","6[(SvFDq0s4Wq#ZNA%QYybaVÄqö uHga"]]
 }
 
 describe('HashBox', () => {
@@ -39,51 +40,57 @@ describe('HashBox', () => {
     })
   })
 
-  describe('#identifierChanged', () => {
+  describe('#setIdentifier', () => {
+
+    let box
+
+    beforeEach(() => {
+      box = new HashBox(config)
+    })
 
     it('saves identifier and return no new state', () => {
-      let box = new HashBox(config)
-      let result = box.identifierChanged(inAndOut.identifier)
+      let result = box.setIdentifier(inAndOut.identifier)
       assert(!result)
       assert.equal(inAndOut.identifier, box.state.identifier)
     })
 
     it('clears hashs on empty identifier and return new state', () => {
-      let box = new HashBox(config)
-      let result = box.identifierChanged("")
+      let result = box.setIdentifier("")
       assert.deepEqual([], result)
       assert(!box.state.identifier)
     })
 
     it('clears hashs on null identifier and return new state', () => {
-      let box = new HashBox(config)
-      let result = box.identifierChanged(null)
+      let result = box.setIdentifier(null)
       assert.deepEqual([], result)
       assert(!box.state.identifier)
     })
   })
 
-  describe('#tokenChanged', () => {
+  describe('#setToken', () => {
+
+    let box
+
+    beforeEach(() => {
+      box = new HashBox(config)
+    })
 
     it('saves and hashs token and return no new state', () => {
-      let box = new HashBox(config)
-      let result = box.tokenChanged(inAndOut.token)
+      let result = box.setToken(inAndOut.token)
       assert(!result)
       assert.equal(inAndOut.token, box.state.token)
       assert.equal(inAndOut.tokenHash, box.state.tokenHash.toString('hex'))
     })
 
     it('clears hashs on empty token and return new state', () => {
-      let box = new HashBox(config)
-      let result = box.tokenChanged("")
+      let result = box.setToken("")
       assert.deepEqual([], result)
       assert(!box.state.token)
       assert(!box.state.tokenHash)
     })
 
     it('clears hashs on null token and return new state', () => {
-      let box = new HashBox(config)
-      let result = box.tokenChanged(null)
+      let result = box.setToken(null)
       assert.deepEqual([], result)
       assert(!box.state.token)
       assert(!box.state.tokenHash)
@@ -93,8 +100,8 @@ describe('HashBox', () => {
       let wrongConfig = _.cloneDeep(config)
       wrongConfig.tokenSalt = "something else"
 
-      let box = new HashBox(wrongConfig)
-      let result = box.tokenChanged(inAndOut.token)
+      box = new HashBox(wrongConfig)
+      let result = box.setToken(inAndOut.token)
 
       assert.equal(inAndOut.token, box.state.token)
       assert.notEqual(inAndOut.tokenHash, box.state.tokenHash.toString('hex'))
@@ -111,7 +118,38 @@ describe('HashBox', () => {
     })
   })
 
-  //TODO: createHash testing
+  describe('#createHashs', () => {
+
+    let box
+
+    beforeEach(() => {
+      box = new HashBox(config)
+    })
+
+    it('returns no new state if missing token', () => {
+      let result = box.createHashs()
+      assert(!result)
+
+      box.setIdentifier("dummy")
+      result = box.createHashs()
+      assert(!result)
+    })
+
+    it('returns no new state if missing identifier', () => {
+      box.setToken("dummy")
+      let result = box.createHashs()
+      assert(!result)
+    })
+
+    it('returns new state if has token and identifier', () => {
+      let box = new HashBox(config)
+      box.setIdentifier(inAndOut.identifier)
+      box.setToken(inAndOut.token)
+      let result = box.createHashs()
+      assert.deepEqual(result, inAndOut.hashs)
+    })
+  })
+
   //TODO: translateHash testing
   //TODO: createColumns testting
   //TODO: happy path testing
