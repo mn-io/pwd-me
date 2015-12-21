@@ -204,6 +204,41 @@ describe('HashBox', () => {
     })
   })
 
+  describe('#createColumns', () => {
+
+    let abc = "abcdefghijklmnopqrstuvwxyz"
+
+    it('works with default config', () => {
+      let box = new HashBox(config)
+      let result = box.createColumns(abc)
+
+      assert.deepEqual(['abcdef','abcdefghijkl','abcdefghijklmnopqrstuvwxyz'], result)
+      assert.equal(config.outputColumns[0], result[0].length)
+      assert.equal(config.outputColumns[1], result[1].length)
+      assert.equal(abc.length, result[2].length)
+    })
+
+    it('works with minimal config', () => {
+      let localConfig = _.cloneDeep(config)
+      localConfig.outputColumns = []
+
+      let box = new HashBox(localConfig)
+      let result = box.createColumns(abc)
+
+      assert.deepEqual([], result)
+    })
+
+    it('works with large config', () => {
+      let localConfig = _.cloneDeep(config)
+      localConfig.outputColumns = [abc.length + 5]
+
+      let box = new HashBox(localConfig)
+      let result = box.createColumns(abc)
+
+      assert.equal(abc.length, result[0].length)
+    })
+  })
+
   //TODO: testing on build
   //TODO: testing on app load
 })
