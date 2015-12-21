@@ -24,7 +24,6 @@ let inAndOut = {
 describe('HashBox', () => {
 
   describe('#constructor', () => {
-
     it('inits', () => {
       let box = new HashBox(config)
     })
@@ -40,7 +39,6 @@ describe('HashBox', () => {
   })
 
   describe('#setIdentifier', () => {
-
     let box
 
     beforeEach(() => {
@@ -67,7 +65,6 @@ describe('HashBox', () => {
   })
 
   describe('#setToken', () => {
-
     let box
 
     beforeEach(() => {
@@ -118,7 +115,6 @@ describe('HashBox', () => {
   })
 
   describe('#createHashs', () => {
-
     let box
 
     beforeEach(() => {
@@ -205,7 +201,6 @@ describe('HashBox', () => {
   })
 
   describe('#createColumns', () => {
-
     let abc = "abcdefghijklmnopqrstuvwxyz"
 
     it('works with default config', () => {
