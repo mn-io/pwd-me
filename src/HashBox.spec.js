@@ -151,61 +151,58 @@ describe('HashBox', () => {
 
   describe('#translateHash', () => {
 
-      it('replaces bytes to character', () => {
-        let box = new HashBox(config)
-        let buf =  new Buffer('aaaa')
-        let result = box.translateHash(buf)
-        assert.equal('BZ', result)
-      })
-
-      it('replaces bytes to character', () => {
-        let newConfig = _.cloneDeep(config)
-        newConfig.validCharacters = "abc"
-
-        let box = new HashBox(newConfig)
-        let buf =  new Buffer('aaaaaa')
-        let result = box.translateHash(buf)
-        assert.equal('cab', result)
-      })
-
-      it('does not work with invalid config', (done) => {
-        let invalidConfig = _.cloneDeep(config)
-        invalidConfig.validCharacters = ""
-
-        let box = new HashBox(invalidConfig)
-        try{
-          let buf =  new Buffer('aaaaaa')
-          box.translateHash(buf)
-        } catch(e) {
-          assert(e)
-          done()
-        }
-      })
-
-      it('does not work with invalid parameter type', (done) => {
-        let box = new HashBox(config)
-        try{
-          box.translateHash('aa')
-        } catch(e) {
-          assert(e)
-          done()
-        }
-      })
-
-      it('does not work with invalid parameter length', (done) => {
-        let box = new HashBox(config)
-        try{
-          let buf =  new Buffer('aaadaaa')
-          box.translateHash(buf)
-        } catch(e) {
-          assert(e)
-          done()
-        }
-      })
+    it('replaces bytes to character', () => {
+      let box = new HashBox(config)
+      let buf =  new Buffer('aaaa')
+      let result = box.translateHash(buf)
+      assert.equal('BZ', result)
     })
-    
-  //TODO: createColumns testting
-  //TODO: happy path testing
+
+    it('replaces bytes to character', () => {
+      let newConfig = _.cloneDeep(config)
+      newConfig.validCharacters = "abc"
+
+      let box = new HashBox(newConfig)
+      let buf =  new Buffer('aaaaaa')
+      let result = box.translateHash(buf)
+      assert.equal('cab', result)
+    })
+
+    it('does not work with invalid config', (done) => {
+      let invalidConfig = _.cloneDeep(config)
+      invalidConfig.validCharacters = ""
+
+      let box = new HashBox(invalidConfig)
+      try{
+        let buf =  new Buffer('aaaaaa')
+        box.translateHash(buf)
+      } catch(e) {
+        assert(e)
+        done()
+      }
+    })
+
+    it('does not work with invalid parameter type', (done) => {
+      let box = new HashBox(config)
+      try{
+        box.translateHash('aa')
+      } catch(e) {
+        assert(e)
+        done()
+      }
+    })
+
+    it('does not work with invalid parameter length', (done) => {
+      let box = new HashBox(config)
+      try{
+        let buf =  new Buffer('aaadaaa')
+        box.translateHash(buf)
+      } catch(e) {
+        assert(e)
+        done()
+      }
+    })
+  })
 
   //TODO: testing on build
   //TODO: testing on app load
