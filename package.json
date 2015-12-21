@@ -5,7 +5,7 @@
   "main": "./src/Application.js",
   "private": true,
   "scripts": {
-    "build": "./node_modules/.bin/browserify ./src/Application.js -t babelify | uglifyjs -c > ./public/bundle.js",
+    "build": "NODE_ENV=production ./node_modules/.bin/browserify ./src/Application.js -t babelify | uglifyjs -c > ./public/bundle.js",
     "build-debug": "./node_modules/.bin/browserify ./src/Application.js -d -v -t babelify > ./public/bundle.js",
     "watch": "./node_modules/.bin/watchify ./src/Application.js -d -v -t babelify -o ./public/bundle.js",
     "test": "mocha --compilers js:babel-register src/**/*.spec.js",
