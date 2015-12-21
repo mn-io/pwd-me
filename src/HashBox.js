@@ -26,7 +26,7 @@ export default class HashBox {
     _.bindAll(this,
       'setIdentifier',
       'setToken',
-      'timeEpocheChanged',
+      'setTimeEpoche',
       'createHashs',
       'translateHash',
       'createColumns',
@@ -73,7 +73,7 @@ export default class HashBox {
     return this.createHashs()
   }
 
-  timeEpocheChanged(epocheCount) {
+  setTimeEpoche(epocheCount) {
     this.state.epocheCount = epocheCount
     return this.createHashs()
   }

@@ -23,6 +23,18 @@ let inAndOut = {
 
 describe('HashBox', () => {
 
+  describe('happy path', () => {
+    let box = new HashBox(config)
+    let state1 = box.setIdentifier(inAndOut.identifier)
+    let state2 = box.setToken(inAndOut.token)
+
+    assert(!state1)
+    assert.deepEqual(inAndOut.hashs, state2)
+
+    let state3 = box.setTimeEpoche(inAndOut.epocheCount)
+    assert.notDeepEqual(state2, state3)
+  })
+
   describe('#constructor', () => {
     it('inits', () => {
       let box = new HashBox(config)
@@ -104,11 +116,11 @@ describe('HashBox', () => {
     })
   })
 
-  describe('#timeEpocheChanged', () => {
+  describe('#setTimeEpoche', () => {
 
     it('saves value and return no new state', () => {
       let box = new HashBox(config)
-      let result = box.timeEpocheChanged(inAndOut.epocheCount)
+      let result = box.setTimeEpoche(inAndOut.epocheCount)
       assert(!result)
       assert.equal(inAndOut.epocheCount, box.state.epocheCount)
     })
@@ -229,7 +241,7 @@ describe('HashBox', () => {
 
       let box = new HashBox(localConfig)
       let result = box.createColumns(abc)
-
+  
       assert.equal(abc.length, result[0].length)
     })
   })

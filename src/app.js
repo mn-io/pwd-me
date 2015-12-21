@@ -13,7 +13,7 @@ let radio = new Airwaves.Channel()
 let callback = (hashs) => {radio.broadcast('hashsCalculated', hashs)}
 radio.subscribe('setIdentifier', box.setIdentifier)
 radio.subscribe('setToken', box.setToken)
-radio.subscribe('timeEpocheChanged', box.timeEpocheChanged)
+radio.subscribe('setTimeEpoche', box.setTimeEpoche)
 let box = new HashBox(config, callback)
 
 window.onload = () => {

@@ -12,7 +12,7 @@ export default class TimeEpocheHelper extends React.Component {
       visible: false
     }
 
-    this.props.radio.broadcast('timeEpocheChanged', 0)
+    this.props.radio.broadcast('setTimeEpoche', 0)
 
     _.bindAll(this, 'componentDidMount', 'componentWillUnmount', 'tick', 'toggleVisibility')
   }
@@ -58,7 +58,7 @@ export default class TimeEpocheHelper extends React.Component {
     })
 
     if(!newVisisbility) {
-      this.props.radio.broadcast('timeEpocheChanged', 0)
+      this.props.radio.broadcast('setTimeEpoche', 0)
     }
   }
 
@@ -69,7 +69,7 @@ export default class TimeEpocheHelper extends React.Component {
     let intervalInMin = this.state.intervalInMs /  this.oneMinuteInMilliseconds
 
     if(this.state.visible) {
-      this.props.radio.broadcast('timeEpocheChanged', this.state.epocheCount)
+      this.props.radio.broadcast('setTimeEpoche', this.state.epocheCount)
     }
 
     return (
