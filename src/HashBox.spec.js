@@ -9,6 +9,7 @@ let config = {
   "outputRows": 2,
   "outputColumns": [6, 12, -1],
   "tokenHashingIterations": 128,
+  "rowHashIterations": 2,
   "hashResultLengthInBytes": 64,
   "validCharacters": "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 !$%&(){}[]-_.:,;#+*@",
 }
@@ -18,7 +19,7 @@ let inAndOut = {
   "token": "345$%3",
   "epocheCount": 3,
   "tokenHash": "a4a09823a46c8240a585e81cdb0a42856ce5bdf96ad390ba3f5b142dc34a7ca37620abfe9b6ad830af1a1f040925c4c145ed6ac42e435316a32e337071fea61e",
-  "hashs": [["+eÖa*ö","+eÖa*öfyT!M ","+eÖa*öfyT!M D7QPoGsT$dÄJ)m;ö2rZ "], ["6[(SvF","6[(SvFDq0s4W","6[(SvFDq0s4Wq#ZNA%QYybaVÄqö uHga"]]
+  "hashs": [["sASH Ö","sASH Ö(YQfRy","sASH Ö(YQfRy+MZt&d v&Dn4g4ÖünHt3"], ["D[4ia8","D[4ia8U o4af","D[4ia8U o4afJrtÖjOh,7N}ÜXi&yF zd"]]
 }
 
 describe('HashBox', () => {

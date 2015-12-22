@@ -36,6 +36,7 @@ export default class HashBox {
     }
 
     this.callback = callback
+  }
 
     _.bindAll(this,
       'setIdentifier',
