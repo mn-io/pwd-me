@@ -21,10 +21,10 @@ export default class HashBox {
     }
 
     this.config = {
-      rows: config.outputRows,
-      columns: config.outputColumns,
       tokenSalt: config.tokenSalt,
       keySalt: config.keySalt,
+      rows: config.outputRows,
+      columns: config.outputColumns,
       tokenIterations: config.tokenHashingIterations,
       rowHashIterations: config.rowHashIterations,
       hashLength: config.hashResultLengthInBytes,
@@ -38,15 +38,29 @@ export default class HashBox {
     this.callback = callback
   }
 
-    _.bindAll(this,
-      'setIdentifier',
-      'setToken',
-      'setTimeEpoche',
-      'createHashs',
-      'translateHash',
-      'createColumns',
-      'invokeCallbackWithReturn'
-    )
+  selfTest() {
+    this.config = {
+      tokenSalt: "fdF6e%! #wMe",
+      keySalt: "f134§",
+      rows: 2,
+      columns: [6, 12, -1],
+      tokenIterations: 128,
+      rowHashIterations: 2,
+      hashLength: 64,
+      chars: "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 !$%&(){}[]-_.:,;#+*@",
+    }
+
+    this.state = {epocheCount: 0}
+    this.setToken("345$%3")
+
+    let actualTokenHash = this.state.tokenHash.toString('hex')
+    let actualState = this.setIdentifier("fweq342Ö43")
+
+    let expectedTokenHash = "a4a09823a46c8240a585e81cdb0a42856ce5bdf96ad390ba3f5b142dc34a7ca37620abfe9b6ad830af1a1f040925c4c145ed6ac42e435316a32e337071fea61e"
+    let expectedState = [["sASH Ö","sASH Ö(YQfRy","sASH Ö(YQfRy+MZt&d v&Dn4g4ÖünHt3"], ["D[4ia8","D[4ia8U o4af","D[4ia8U o4afJrtÖjOh,7N}ÜXi&yF zd"]]
+
+    assert.equal(expectedTokenHash, actualTokenHash)
+    assert.deepEqual(actualState, expectedState)
   }
 
   setIdentifier(identifier) {
