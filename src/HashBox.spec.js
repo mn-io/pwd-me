@@ -24,20 +24,38 @@ let inAndOut = {
 describe('HashBox', () => {
 
   describe('happy path', () => {
-    let box = new HashBox(config)
-    let state1 = box.setIdentifier(inAndOut.identifier)
-    let state2 = box.setToken(inAndOut.token)
+    it('returns new state if possible', () => {
+      let box = new HashBox(config)
 
-    assert(!state1)
-    assert.deepEqual(inAndOut.hashs, state2)
+      let state1 = box.setIdentifier(inAndOut.identifier)
+      let state2 = box.setToken(inAndOut.token)
 
-    let state3 = box.setTimeEpoche(inAndOut.epocheCount)
-    assert.notDeepEqual(state2, state3)
+      assert(!state1)
+      assert.deepEqual(inAndOut.hashs, state2)
+
+      let state3 = box.setTimeEpoche(inAndOut.epocheCount)
+      assert.notDeepEqual(state2, state3)
+    })
+
+    it('returns new state by callback', (done) => {
+      let callback = (hashs) => {
+        assert.deepEqual(inAndOut.hashs, hashs)
+        done()
+      }
+
+      let box = new HashBox(config, callback, true)
+
+      let state1 = box.setIdentifier(inAndOut.identifier)
+      let state2 = box.setToken(inAndOut.token)
+
+      assert(!state1)
+      assert.deepEqual(inAndOut.hashs, state2)
+    })
   })
 
   describe('#constructor', () => {
     it('inits', () => {
-      let box = new HashBox(config)
+      let box = new HashBox(config, null, false)
     })
 
     it('does not init without config', (done) => {
@@ -54,7 +72,7 @@ describe('HashBox', () => {
     let box
 
     beforeEach(() => {
-      box = new HashBox(config)
+      box = new HashBox(config, null, false)
     })
 
     it('saves identifier and return no new state', () => {
@@ -80,7 +98,7 @@ describe('HashBox', () => {
     let box
 
     beforeEach(() => {
-      box = new HashBox(config)
+      box = new HashBox(config, null, false)
     })
 
     it('saves and hashs token and return no new state', () => {
@@ -108,7 +126,7 @@ describe('HashBox', () => {
       let wrongConfig = _.cloneDeep(config)
       wrongConfig.tokenSalt = "something else"
 
-      box = new HashBox(wrongConfig)
+      box = new HashBox(wrongConfig, null, false)
       let result = box.setToken(inAndOut.token)
 
       assert.equal(inAndOut.token, box.state.token)
@@ -119,7 +137,7 @@ describe('HashBox', () => {
   describe('#setTimeEpoche', () => {
 
     it('saves value and return no new state', () => {
-      let box = new HashBox(config)
+      let box = new HashBox(config, null, false)
       let result = box.setTimeEpoche(inAndOut.epocheCount)
       assert(!result)
       assert.equal(inAndOut.epocheCount, box.state.epocheCount)
@@ -130,7 +148,7 @@ describe('HashBox', () => {
     let box
 
     beforeEach(() => {
-      box = new HashBox(config)
+      box = new HashBox(config, null, false)
     })
 
     it('returns no new state if missing token', () => {
@@ -149,7 +167,6 @@ describe('HashBox', () => {
     })
 
     it('returns new state if has token and identifier', () => {
-      let box = new HashBox(config)
       box.setIdentifier(inAndOut.identifier)
       box.setToken(inAndOut.token)
       let result = box.createHashs()
@@ -160,7 +177,7 @@ describe('HashBox', () => {
   describe('#translateHash', () => {
 
     it('replaces bytes to character', () => {
-      let box = new HashBox(config)
+      let box = new HashBox(config, null, false)
       let buf =  new Buffer('aaaa')
       let result = box.translateHash(buf)
       assert.equal('BZ', result)
@@ -170,7 +187,7 @@ describe('HashBox', () => {
       let newConfig = _.cloneDeep(config)
       newConfig.validCharacters = "abc"
 
-      let box = new HashBox(newConfig)
+      let box = new HashBox(newConfig, null, false)
       let buf =  new Buffer('aaaaaa')
       let result = box.translateHash(buf)
       assert.equal('cab', result)
@@ -180,7 +197,7 @@ describe('HashBox', () => {
       let invalidConfig = _.cloneDeep(config)
       invalidConfig.validCharacters = ""
 
-      let box = new HashBox(invalidConfig)
+      let box = new HashBox(invalidConfig, null, false)
       try{
         let buf =  new Buffer('aaaaaa')
         box.translateHash(buf)
@@ -191,7 +208,7 @@ describe('HashBox', () => {
     })
 
     it('does not work with invalid parameter type', (done) => {
-      let box = new HashBox(config)
+      let box = new HashBox(config, null, false)
       try{
         box.translateHash('aa')
       } catch(e) {
@@ -201,7 +218,7 @@ describe('HashBox', () => {
     })
 
     it('does not work with invalid parameter length', (done) => {
-      let box = new HashBox(config)
+      let box = new HashBox(config, null, false)
       try{
         let buf =  new Buffer('aaadaaa')
         box.translateHash(buf)
@@ -216,7 +233,7 @@ describe('HashBox', () => {
     let abc = "abcdefghijklmnopqrstuvwxyz"
 
     it('works with default config', () => {
-      let box = new HashBox(config)
+      let box = new HashBox(config, null, false)
       let result = box.createColumns(abc)
 
       assert.deepEqual(['abcdef','abcdefghijkl','abcdefghijklmnopqrstuvwxyz'], result)
@@ -229,7 +246,7 @@ describe('HashBox', () => {
       let localConfig = _.cloneDeep(config)
       localConfig.outputColumns = []
 
-      let box = new HashBox(localConfig)
+      let box = new HashBox(localConfig, null, false)
       let result = box.createColumns(abc)
 
       assert.deepEqual([], result)
@@ -239,9 +256,9 @@ describe('HashBox', () => {
       let localConfig = _.cloneDeep(config)
       localConfig.outputColumns = [abc.length + 5]
 
-      let box = new HashBox(localConfig)
+      let box = new HashBox(localConfig, null, false)
       let result = box.createColumns(abc)
-  
+
       assert.equal(abc.length, result[0].length)
     })
   })

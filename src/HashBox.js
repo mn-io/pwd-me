@@ -3,8 +3,22 @@ import assert from 'assert'
 import pbkdf2 from 'pbkdf2-sha256'
 
 export default class HashBox {
-  constructor(config, callback) {
+  constructor(config, callback, runSelfTest = true) {
     assert(config)
+
+    _.bindAll(this,
+      'setIdentifier',
+      'setToken',
+      'setTimeEpoche',
+      'createHashs',
+      'translateHash',
+      'createColumns',
+      'invokeCallbackWithReturn'
+    )
+
+    if(runSelfTest) {
+      this.selfTest()
+    }
 
     this.config = {
       rows: config.outputRows,
