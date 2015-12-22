@@ -21,7 +21,14 @@ export default class UserInput extends React.Component {
 
     this.escapeHelper = new Entities.AllHtmlEntities()
 
-    _.bindAll(this, 'showPassword', 'setToken', 'setIdentifier', 'toggleInstantGeneration', 'sendDataOnClick')
+    _.bindAll(this,
+      'showPassword',
+      'setToken',
+      'setIdentifier',
+      'selectProfile',
+      'toggleInstantGeneration',
+      'sendDataOnClick'
+    )
   }
 
   showPassword(event) {
@@ -62,6 +69,10 @@ export default class UserInput extends React.Component {
     this.props.radio.broadcast('setIdentifier', this.identifier)
   }
 
+  selectProfile(event) {
+    this.props.radio.broadcast('setProfileConfig', event.target.value)
+  }
+
   toggleInstantGeneration() {
     let isEnabled = !this.state.isInstantGeneration
     this.setState({
@@ -82,6 +93,12 @@ export default class UserInput extends React.Component {
   }
 
   render() {
+    let keys = this.props.profiles ? Object.keys(this.props.profiles) : []
+    keys.unshift('')
+    let profiles = keys.map((key, i) =>{
+      return (<option key={i} value={key}>{key}</option>)
+    })
+
     return (
       <div className="col-sm-12">
         <form className="form-horizontal">
@@ -100,6 +117,14 @@ export default class UserInput extends React.Component {
           <div className="col-sm-12">
             <div className="form-group">
               <input type="text" className="form-control" placeholder="Identifier" onKeyUp={this.setIdentifier} />
+            </div>
+          </div>
+
+          <div className="col-sm-12">
+            <div className="form-group">
+              <select className="form-control" onChange={this.selectProfile}>
+                {profiles}
+              </select>
             </div>
           </div>
 

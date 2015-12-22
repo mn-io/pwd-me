@@ -10,6 +10,7 @@ export default class HashBox {
       'setIdentifier',
       'setToken',
       'setTimeEpoche',
+      'setProfileConfig',
       'createHashs',
       'translateHash',
       'createColumns',
@@ -128,6 +129,11 @@ export default class HashBox {
     }
 
     return this.invokeCallbackWithReturn(hashs)
+  }
+
+  setProfileConfig(name) {
+    
+    console.log(validCharacters, constraints)
   }
 
   translateHash(hash) {

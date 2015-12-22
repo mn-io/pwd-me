@@ -1,12 +1,26 @@
 {
-  "tokenSalt": "fdF6e%! #wMe",
-  "keySalt": "f134§",
-  "outputRows": 17,
-  "outputColumns": [6, 12, -1],
-  "tokenHashingIterations": 1,
-  "hashResultLengthInBytes": 64,
-  "rowHashIterations": 2,
-  "validCharacters": "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 !$%&(){}[]-_.:,;#+*@",
+  "hashBox": {
+    "tokenSalt": "fdF6e%! #wMe",
+    "keySalt": "f134§",
 
-  "colors": ["#3F51B5", "#2196F3", "#03A9F4", "#00BCD4", "#009688", "#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800", "#FF5722", "#F44336", "#E91E63", "#9C27B0", "#673AB7"],
+    "tokenHashingIterations": 1,
+    "rowHashIterations": 2,
+
+    "hashResultLengthInBytes": 64,
+
+    "outputRows": 17,
+    "outputColumns": [6, 12, -1],
+    "validCharacters": "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöüÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöüÄÖÜ 1234567890 \"!$%&(){}[]-_.:,;#+*@",
+  },
+
+  "profiles": {
+    "Skype": {
+      "validCharacters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890!\"#$%&,!\"#$%&,",
+      "constraints": ["(?=(.*\\d){2})"]
+    }
+  },
+
+  "UI": {
+    "colors": ["#3F51B5", "#2196F3", "#03A9F4", "#00BCD4", "#009688", "#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800", "#FF5722", "#F44336", "#E91E63", "#9C27B0", "#673AB7"],
+  }
 }
