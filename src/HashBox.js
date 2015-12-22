@@ -61,6 +61,8 @@ export default class HashBox {
 
     assert.equal(expectedTokenHash, actualTokenHash)
     assert.deepEqual(actualState, expectedState)
+
+    console.log("HashBox self test: OK")
   }
 
   setIdentifier(identifier) {
