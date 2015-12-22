@@ -27,7 +27,6 @@ describe('HashBox', () => {
   describe('happy path', () => {
     it('returns new state if possible', () => {
       let box = new HashBox(config)
-
       let state1 = box.setIdentifier(inAndOut.identifier)
       let state2 = box.setToken(inAndOut.token)
 
@@ -51,6 +50,40 @@ describe('HashBox', () => {
 
       assert(!state1)
       assert.deepEqual(inAndOut.hashs, state2)
+    })
+
+    it('returns no new state by same input', () => {
+      let box = new HashBox(config)
+      box.setIdentifier(inAndOut.identifier)
+      let state = box.setToken(inAndOut.token)
+      assert.deepEqual(inAndOut.hashs, state)
+
+      box.setIdentifier(inAndOut.identifier)
+      state = box.setToken(inAndOut.token)
+      assert(!state)
+    })
+
+    it('returns new state several times', () => {
+      let box = new HashBox(config)
+      box.setIdentifier(inAndOut.identifier)
+      let state = box.setToken(inAndOut.token)
+      assert.deepEqual(inAndOut.hashs, state)
+
+      for (let i = 0; i < 4; i++) {
+        box.setIdentifier('')
+        box.setToken('')
+
+        box.setIdentifier(inAndOut.identifier)
+        state = box.setToken(inAndOut.token)
+        assert.deepEqual(inAndOut.hashs, state)
+
+        box.setIdentifier('')
+        box.setToken('')
+
+        box.setIdentifier(inAndOut.identifier)
+        state = box.setToken(inAndOut.token)
+        assert.deepEqual(inAndOut.hashs, state)
+      }
     })
   })
 
@@ -307,7 +340,4 @@ describe('HashBox', () => {
       assert.equal(abc.length, result[0].length)
     })
   })
-
-  //TODO: testing on build
-  //TODO: testing on app load
 })
