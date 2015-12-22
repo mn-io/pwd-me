@@ -70,7 +70,7 @@ export default class UserInput extends React.Component {
   }
 
   selectProfile(event) {
-    this.props.radio.broadcast('setProfileConfig', event.target.value)
+    this.props.radio.broadcast('setProfileByName', event.target.value)
   }
 
   toggleInstantGeneration() {

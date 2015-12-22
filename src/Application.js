@@ -23,11 +23,12 @@ let xhrCallback = (err, resp) => {
 
   let callback = (hashs) => {radio.broadcast('hashsCalculated', hashs)}
   let box = new HashBox(config.hashBox, callback)
+  box.setProfilesConfig(config.profiles)
 
   radio.subscribe('setIdentifier', box.setIdentifier)
   radio.subscribe('setToken', box.setToken)
   radio.subscribe('setTimeEpoche', box.setTimeEpoche)
-  radio.subscribe('setProfileConfig', box.setProfileConfig)
+  radio.subscribe('setProfileByName', box.setProfileByName)
 
   ReactDOM.render(<UserInput profiles={config.profiles} radio={radio} />, document.getElementById('userInput'))
   ReactDOM.render(<HashOutput config={config.UI} radio={radio} />, document.getElementById('hashOutput'))

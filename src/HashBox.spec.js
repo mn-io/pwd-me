@@ -22,6 +22,13 @@ let inAndOut = {
   "hashs": [["sASH Ö","sASH Ö(YQfRy","sASH Ö(YQfRy+MZt&d v&Dn4g4ÖünHt3"], ["D[4ia8","D[4ia8U o4af","D[4ia8U o4afJrtÖjOh,7N}ÜXi&yF zd"]]
 }
 
+let profiles = {
+  Skype: {
+    validCharacters: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890!\"#$%&,!\"#$%&,",
+    constraints: ["(?=(.*\\d){2})", "(?=.*[a-zA-Z]){2}"]
+  }
+}
+
 describe('HashBox', () => {
 
   describe('happy path', () => {
@@ -339,5 +346,73 @@ describe('HashBox', () => {
 
       assert.equal(abc.length, result[0].length)
     })
+  })
+
+  describe('#verifyPwdAgainstProfileConstraints', () => {
+    let box
+
+    beforeEach(() => {
+      box = new HashBox(config, null, false)
+    })
+
+    it('doesn\'t do anything without profiles on profile select', () => {
+      box.setIdentifier(inAndOut.identifier)
+      let state = box.setToken(inAndOut.token)
+      assert.deepEqual(state, inAndOut.hashs)
+
+      state = box.setProfileByName('Skype')
+      assert(!state)
+    })
+
+    it('returns different hashes with profile', () => {
+      box.setProfilesConfig(profiles)
+      box.setIdentifier(inAndOut.identifier)
+      let state = box.setToken(inAndOut.token)
+
+      assert.deepEqual(state, inAndOut.hashs)
+      state = box.setProfileByName('Skype')
+      assert.notDeepEqual(state, inAndOut.hashs)
+    })
+
+    it('resets config with invalid profile', () => {
+      box.setProfilesConfig(profiles)
+      box.setIdentifier(inAndOut.identifier)
+      let state1 = box.setToken(inAndOut.token)
+      let state2 = box.setProfileByName('DoesNotExist')
+
+      assert.deepEqual(state1, inAndOut.hashs)
+      assert.deepEqual(state2, inAndOut.hashs)
+    })
+
+    it('returns valid hashes according to profile', () => {
+      box.setProfilesConfig(profiles)
+      box.setIdentifier(inAndOut.identifier)
+      box.setToken(inAndOut.token)
+      let state = box.setProfileByName('Skype')
+
+      _.each(state, (pwds) => {
+        _.each(pwds, (pwd) => {
+          if(!pwd) {
+            return
+          }
+          let countNumbers = 0
+          let countLetter = 0
+          for (let i = 0; i < pwd.length; i++) {
+            let char = pwd.charAt(i)
+            if(!isNaN(parseFloat(char)) && isFinite(char)) {
+              countNumbers++
+            }
+            if(char.toUpperCase() != char.toLowerCase()) {
+              countLetter++
+            }
+          }
+
+          assert(countNumbers >= 2)
+          assert(countLetter >= 2)
+        })
+      })
+
+    })
+
   })
 })

@@ -16,7 +16,7 @@
   "profiles": {
     "Skype": {
       "validCharacters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890!\"#$%&,!\"#$%&,",
-      "constraints": ["(?=(.*\\d){2})"]
+      "constraints": ["(?=(.*\\d){2})", "(?=.*[a-zA-Z]){2}"]
     }
   },
 

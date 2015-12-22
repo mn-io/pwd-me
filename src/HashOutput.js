@@ -22,7 +22,7 @@ class HashRow extends React.Component {
     let fields = []
     for (let i = 0; i < hashs.length; i++) {
       let widthStyle = {
-        width: hashs[i].length + "rem"
+        width: hashs[i] ? hashs[i].length + "rem" : "3rem"
       }
       fields.push(<input key={i} type="text" value={hashs[i]} readOnly={true} onFocus={this.handleFocus} style={widthStyle} />);
     }

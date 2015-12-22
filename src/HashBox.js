@@ -10,10 +10,12 @@ export default class HashBox {
       'setIdentifier',
       'setToken',
       'setTimeEpoche',
-      'setProfileConfig',
+      'setProfileByName',
       'createHashs',
       'translateHash',
       'createColumns',
+      'setProfilesConfig',
+      'verifyPwdAgainstProfileConstraints',
       'invokeCallbackWithReturn'
     )
 
@@ -29,7 +31,9 @@ export default class HashBox {
       tokenIterations: config.tokenHashingIterations,
       rowHashIterations: config.rowHashIterations,
       hashLength: config.hashResultLengthInBytes,
-      chars: config.validCharacters
+      chars: config.validCharacters,
+      defaultChars: config.validCharacters,
+      pwdConstraints: null
     }
 
     this.state = {
@@ -64,6 +68,10 @@ export default class HashBox {
     assert.deepEqual(actualState, expectedState)
 
     console.log("HashBox self test: OK")
+  }
+
+  setProfilesConfig(profiles) {
+    this.profilesConfig = profiles
   }
 
   setIdentifier(identifier) {
@@ -110,8 +118,32 @@ export default class HashBox {
     return this.createHashs()
   }
 
-  createHashs() {
-    if(!this.state.identifier || !this.state.tokenHash) {
+  setProfileByName(name) {
+    if(!this.profilesConfig) {
+      return
+    }
+
+    if(this.state.selectedProfileByName && name === this.state.selectedProfileByName) {
+      return
+    }
+
+    let profile = this.profilesConfig[name]
+    if(profile) {
+      if(profile.validCharacters) {
+        this.config.chars = profile.validCharacters
+      }
+      this.config.pwdConstraints = _.map(profile.constraints, (constraint) => new RegExp(constraint))
+    } else {
+      this.config.chars = this.config.defaultChars
+      this.config.pwdConstraints = null
+    }
+
+    this.state.selectedProfileByName = name
+    return this.createHashs(true)
+  }
+
+  createHashs(force = false) {
+    if(!force && (!this.state.identifier || !this.state.tokenHash)) {
       return
     }
 
@@ -125,15 +157,16 @@ export default class HashBox {
       let currentHash = pbkdf2(key, i + this.config.keySalt, this.config.rowHashIterations, this.config.hashLength)
       let readablePwd = this.translateHash(currentHash)
       let pwds = this.createColumns(readablePwd)
+      pwds = _.map(pwds, (pwd) => {
+        if(!this.verifyPwdAgainstProfileConstraints(pwd)) {
+          return null
+        }
+        return pwd
+      })
       hashs.push(pwds)
     }
 
     return this.invokeCallbackWithReturn(hashs)
-  }
-
-  setProfileConfig(name) {
-    
-    console.log(validCharacters, constraints)
   }
 
   translateHash(hash) {
@@ -166,6 +199,14 @@ export default class HashBox {
     }
 
     return columns
+  }
+
+  verifyPwdAgainstProfileConstraints(pwd) {
+    let valid = true
+    _.each(this.config.pwdConstraints, (constraint) => {
+      valid = valid && constraint.test(pwd)
+    })
+    return valid
   }
 
   invokeCallbackWithReturn(hashs) {
