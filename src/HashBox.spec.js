@@ -173,6 +173,50 @@ describe('HashBox', () => {
       let result = box.createHashs()
       assert.deepEqual(result, inAndOut.hashs)
     })
+
+    it('returns different hashs with changed rowHashIterations', () => {
+      let newConfig = _.cloneDeep(config)
+      newConfig.rowHashIterations = 3
+      box = new HashBox(newConfig, null, false)
+
+      box.setIdentifier(inAndOut.identifier)
+      box.setToken(inAndOut.token)
+      let result = box.createHashs()
+      assert.notDeepEqual(result, inAndOut.hashs)
+    })
+
+    it('returns different hashs with changed tokenHashingIterations', () => {
+      let newConfig = _.cloneDeep(config)
+      newConfig.tokenHashingIterations = 129
+      box = new HashBox(newConfig, null, false)
+
+      box.setIdentifier(inAndOut.identifier)
+      box.setToken(inAndOut.token)
+      let result = box.createHashs()
+      assert.notDeepEqual(result, inAndOut.hashs)
+    })
+
+    it('returns different hashs with changed hashResultLengthInBytes', () => {
+      let newConfig = _.cloneDeep(config)
+      newConfig.tokenHashingIterations = 65
+      box = new HashBox(newConfig, null, false)
+
+      box.setIdentifier(inAndOut.identifier)
+      box.setToken(inAndOut.token)
+      let result = box.createHashs()
+      assert.notDeepEqual(result, inAndOut.hashs)
+    })
+
+    it('returns different hashs with changed keySalt', () => {
+      let newConfig = _.cloneDeep(config)
+      newConfig.keySalt = "this is a test"
+      box = new HashBox(newConfig, null, false)
+
+      box.setIdentifier(inAndOut.identifier)
+      box.setToken(inAndOut.token)
+      let result = box.createHashs()
+      assert.notDeepEqual(result, inAndOut.hashs)
+    })
   })
 
   describe('#translateHash', () => {

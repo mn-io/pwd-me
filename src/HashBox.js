@@ -98,6 +98,9 @@ export default class HashBox {
       return
     }
 
+    assert(this.config.keySalt)
+    assert(this.config.rowHashIterations > 0)
+
     let key = "id=" + this.state.identifier + "&token=" + this.state.tokenHash + "&epoche=" + this.state.epocheCount
 
     let hashs = []
