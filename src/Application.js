@@ -9,7 +9,7 @@ import HashBox from './HashBox'
 
 import builtinConfig from '../public/config.json'
 
-let configUrl = 'https://mnio.net/pwd/config.json'
+let configUrl = 'config.json'
 let radio = new Airwaves.Channel()
 
 window.onload = () => {
