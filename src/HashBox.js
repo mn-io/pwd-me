@@ -139,11 +139,11 @@ export default class HashBox {
     }
 
     this.state.selectedProfileByName = name
-    return this.createHashs(true)
+    return this.createHashs()
   }
 
-  createHashs(force = false) {
-    if(!force && (!this.state.identifier || !this.state.tokenHash)) {
+  createHashs() {
+    if(!this.state.identifier || !this.state.tokenHash) {
       return
     }
 
