@@ -1,15 +1,37 @@
 import React from 'react'
 import _ from 'lodash'
 
+import HashBox from './HashBox'
+
 export default class ShowConfigToggle extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      visible: false
+      visible: false,
+      config: this.props.config
     }
 
-    _.bindAll(this, 'toggleVisibility')
+    _.bindAll(this, 'toggleVisibility', 'setProfile')
+  }
+
+  componentDidMount() {
+   this.props.radio.subscribe('setProfileByName', this.setProfile)
+  }
+
+  componentWillUnmount() {
+    this.props.radio.unsubscribe('setProfileByName', this.setProfile)
+  }
+
+  setProfile(name) {
+    let profile = this.props.profiles[name]
+    let config = this.props.config
+
+    if(profile) {
+      config = HashBox.createConfig(config, profile)
+    }
+
+    this.setState({config: config})
   }
 
   toggleVisibility() {
@@ -22,14 +44,14 @@ export default class ShowConfigToggle extends React.Component {
     let renderConfigTable = () => {
       let configRows = []
 
-      let keys = Object.keys(this.props.config)
+      let keys = Object.keys(this.state.config)
       for (let index in keys) {
         let currentKey = keys[index]
-        let currentValue = this.props.config[currentKey]
+        let currentValue = this.state.config[currentKey]
 
         currentKey = currentKey.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
         if('object' === typeof(currentValue)) {
-          currentValue = JSON.stringify(currentValue)
+          currentValue = currentValue.toString()
         }
         if(currentValue.length > 30) {
           currentValue = (<input type="text" readOnly={true} value={currentValue} />)

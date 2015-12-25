@@ -22,11 +22,11 @@ export default class TimeEpocheHelper extends React.Component {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timeout);
+    clearTimeout(this.timeout)
   }
 
   tick(event) {
-    clearTimeout(this.timeout);
+    clearTimeout(this.timeout)
 
     let now = Date.now()
     let count = Math.floor(now / this.state.intervalInMs)

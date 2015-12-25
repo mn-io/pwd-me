@@ -259,6 +259,25 @@ describe('HashBox', () => {
     })
   })
 
+  describe('#createConfig', () => {
+    it('creates a copy of normal config', () => {
+      let config = {'test': 'me'}
+      let copy = HashBox.createConfig(config)
+
+      assert.deepEqual(config, copy)
+      config['test2'] = 'me2'
+      assert.notDeepEqual(config, copy)
+    })
+
+    it('merges current config with default config', () => {
+      let config = {'test': 'me', 'test1': 'me11'}
+      let config2 = {'test1': 'me12', 'test2': 'me2'}
+      let copy = HashBox.createConfig(config, config2)
+
+      assert.deepEqual({'test': 'me', 'test1': 'me12', 'test2': 'me2'}, copy)
+    })
+  })
+
   describe('#translateHash', () => {
 
     it('replaces bytes to character', () => {

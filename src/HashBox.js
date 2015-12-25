@@ -23,18 +23,7 @@ export default class HashBox {
       this.selfTest()
     }
 
-    this.config = {
-      tokenSalt: config.tokenSalt,
-      keySalt: config.keySalt,
-      outputRows: config.outputRows,
-      outputColumns: config.outputColumns,
-      tokenHashingIterations: config.tokenHashingIterations,
-      rowHashIterations: config.rowHashIterations,
-      hashResultLengthInBytes: config.hashResultLengthInBytes,
-      validCharacters: config.validCharacters,
-      constraints: config.constraints
-    }
-
+    this.config = HashBox.createConfig(config)
     this.defaultConfig = _.cloneDeep(this.config)
 
     this.state = {
@@ -130,16 +119,27 @@ export default class HashBox {
 
     let profile = this.profilesConfig[name]
     if(profile) {
-      if(profile.validCharacters) {
-        this.config.validCharacters = profile.validCharacters
-      }
-      this.config.constraints = _.map(profile.constraints, (constraint) => new RegExp(constraint))
+      this.config = HashBox.createConfig(this.defaultConfig, profile)
     } else {
       this.config = this.defaultConfig
     }
 
     this.state.selectedProfileByName = name
     return this.createHashs()
+  }
+
+  static createConfig(rootConfig, currentConfig) {
+    let config = _.cloneDeep(rootConfig)
+
+    if(currentConfig) {
+      _.merge(config, currentConfig)
+    }
+
+    if(config.constraints) {
+      config.constraints = _.map(config.constraints, (constraint) => new RegExp(constraint))
+    }
+
+    return config
   }
 
   createHashs() {

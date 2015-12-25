@@ -134,7 +134,7 @@ export default class UserInput extends React.Component {
               {renderProfiles()}
             </select>
 
-          <ShowConfigToggle config={this.props.config} />
+          <ShowConfigToggle config={this.props.config} profiles={this.props.profiles} radio={this.props.radio} />
 
           <div className="checkbox">
             <label>
