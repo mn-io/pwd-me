@@ -24,14 +24,18 @@ class HashRow extends React.Component {
       let widthStyle = {
         width: hashs[i] ? hashs[i].length + "rem" : "3rem"
       }
-      fields.push(<input key={i} type="text" value={hashs[i]} readOnly={true} onFocus={this.handleFocus} style={widthStyle} />);
+      fields.push(<div className="table-cell" key={i}><input type="text" value={hashs[i]} readOnly={true} onFocus={this.handleFocus} style={widthStyle} /></div>);
     }
 
-    return (<div className="row">
+    return (<div className="table-row">
+      <div className="table-cell">
         {index}
+      </div>
+      <div className="table-cell">
         <div className="rounded" style={colorStyle}></div>
-        {fields}
-      </div>)
+      </div>
+      {fields}
+    </div>)
   }
 }
 
@@ -66,7 +70,7 @@ export default class HashOutput extends React.Component {
 
   render() {
     let hashs = this.state.hashs
-    if(!hashs) {
+    if(!hashs || hashs.length === 0) {
       return (<div></div>)
     }
 
@@ -75,6 +79,6 @@ export default class HashOutput extends React.Component {
       rows.push(<HashRow key={i} index={i+1} hashs={hashs[i]} config={this.props.config} />);
     }
 
-    return (<div>{rows}</div>)
+    return (<div className="table">{rows}</div>)
   }
 }
