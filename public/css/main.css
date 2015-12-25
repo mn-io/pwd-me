@@ -118,6 +118,10 @@ body {
   padding-bottom: 0.5rem;
 }
 
+#hashOutput .table-cell input {
+  border: 0;
+}
+
 @media (max-width: 300px) {
   .container-main {
     margin-top: 0;
