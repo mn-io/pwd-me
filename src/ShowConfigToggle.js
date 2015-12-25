@@ -74,7 +74,7 @@ export default class ShowConfigToggle extends React.Component {
       <div>
         <div className="checkbox">
           <label>
-            <input type="checkbox" checked={this.state.visible} onChange={this.toggleVisibility} />Show current configuration
+            <input type="checkbox" checked={this.state.visible} onChange={this.toggleVisibility} />show current configuration
           </label>
         </div>
 

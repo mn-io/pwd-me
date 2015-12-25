@@ -138,14 +138,14 @@ export default class UserInput extends React.Component {
 
           <div className="checkbox">
             <label>
-              <input type="checkbox" checked={this.state.isInstantGeneration} onChange={this.toggleInstantGeneration} />Instant
+              <input type="checkbox" checked={this.state.isInstantGeneration} onChange={this.toggleInstantGeneration} />instant
             </label>
           </div>
 
           <TimeEpocheHelper intervalInMin={3} radio={this.props.radio} />
 
           <div className="pull-right">
-            <button type="button" className="btn btn-link btn-minimal" onClick={this.sendDataOnClick}>Generate</button>
+            <button type="button" className="btn btn-link btn-minimal" onClick={this.sendDataOnClick}>generate</button>
           </div>
         </form>
       </div>)
