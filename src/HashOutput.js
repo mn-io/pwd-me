@@ -46,16 +46,16 @@ export default class HashOutput extends React.Component {
     this.state = {
       hashs : []
     }
+
+    _.bindAll(this, 'fillFields')
   }
 
   componentDidMount() {
-    this.props.radio.subscribe('hashsCalculated', (hashs) => this.fillFields(hashs))
-    this.props.radio.subscribe('clearHashs', () => this.fillFields([]))
+    this.props.radio.subscribe('hashsCalculated', this.fillFields)
   }
 
   componentWillUnmount() {
-    this.props.radio.unubscribe('hashsCalculated')
-    this.props.radio.unsubscribe('clearHashs')
+    this.props.radio.unubscribe('hashsCalculated', this.fillFields)
   }
 
   fillFields(hashs) {
