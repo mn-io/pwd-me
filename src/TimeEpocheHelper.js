@@ -72,6 +72,30 @@ export default class TimeEpocheHelper extends React.Component {
       this.props.radio.broadcast('setTimeEpoche', this.state.epocheCount)
     }
 
+
+    let helper = !this.state.visible ? (<div></div>) : (<div className="form-inline">
+          <div className="with-spacer">
+            <small>Count of minute epoches from UNIX timestamp.</small>
+          </div>
+          <label className="with-spacer">Minutes:
+            <input type="number" className="form-control input-epoche" value={intervalInMin} onChange={this.tick} min="1"/>
+            </label>
+          <div className="table info-epoche">
+            <div className="table-row">
+              <div className="table-cell">count is:</div>
+              <div className="table-cell">{this.state.epocheCount}</div>
+            </div>
+            <div className="table-row">
+              <div className="table-cell">start was:</div>
+              <div className="table-cell">{beginCurrentEpoche}</div>
+            </div>
+            <div className="table-row">
+              <div className="table-cell">end will be:</div>
+              <div className="table-cell">{beginNextEpoche}</div>
+            </div>
+          </div>
+        </div>)
+
     return (
       <div>
         <div className="checkbox">
@@ -80,30 +104,7 @@ export default class TimeEpocheHelper extends React.Component {
           </label>
         </div>
 
-        <div className={this.state.visible ? '' : 'hidden'}>
-          <div className="form-inline">
-            <div className="with-spacer">
-              <small>Count of minute epoches from UNIX timestamp.</small>
-            </div>
-            <label className="with-spacer">Minutes:
-              <input type="number" className="form-control input-epoche" value={intervalInMin} onChange={this.tick} min="1"/>
-              </label>
-            <div className="table info-epoche">
-              <div className="table-row">
-                <div className="table-cell">count is:</div>
-                <div className="table-cell">{this.state.epocheCount}</div>
-              </div>
-              <div className="table-row">
-                <div className="table-cell">start was:</div>
-                <div className="table-cell">{beginCurrentEpoche}</div>
-              </div>
-              <div className="table-row">
-                <div className="table-cell">end will be:</div>
-                <div className="table-cell">{beginNextEpoche}</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {helper}
 
       </div>)
   }
