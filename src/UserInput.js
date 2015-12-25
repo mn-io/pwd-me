@@ -40,7 +40,7 @@ export default class UserInput extends React.Component {
       this.setState({
         tokenFieldType: 'password'
       })
-    }, 1000) //TODO: extract constant
+    }, 1000)
   }
 
   setToken(event) {
@@ -56,7 +56,7 @@ export default class UserInput extends React.Component {
 
     this.timer = setTimeout(() => {
       this.props.radio.broadcast('setToken', this.token)
-    }, 400) //TODO: extract constant
+    }, 400)
   }
 
   setIdentifier(event) {

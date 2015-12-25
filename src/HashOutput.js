@@ -24,7 +24,9 @@ class HashRow extends React.Component {
       let widthStyle = {
         width: hashs[i] ? hashs[i].length + "rem" : "3rem"
       }
-      fields.push(<div className="table-cell" key={i}><input type="text" value={hashs[i]} readOnly={true} onFocus={this.handleFocus} style={widthStyle} /></div>);
+      fields.push(<div className="table-cell" key={i}>
+        <input type="text" value={hashs[i]} readOnly={true} onFocus={this.handleFocus} style={widthStyle} />
+      </div>);
     }
 
     return (<div className="table-row">
@@ -42,6 +44,8 @@ class HashRow extends React.Component {
 export default class HashOutput extends React.Component {
   constructor(props) {
     super(props)
+
+    this.isFirstTime = true
 
     this.state = {
       hashs : []
@@ -65,7 +69,17 @@ export default class HashOutput extends React.Component {
       })
     }
 
-    setTimeout(setStateAsync, 20) //TODO: extract constant
+    if(this.isFirstTime) {
+      let scrollRight = () => {
+        document.body.scrollLeft += 300
+        document.documentElement.scrollLeft += 300
+      }
+
+      setTimeout(scrollRight, 40)
+      this.isFirstTime = false
+    }
+
+    setTimeout(setStateAsync, 20)
   }
 
   render() {
