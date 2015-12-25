@@ -15,7 +15,7 @@ export default class HashBox {
       'translateHash',
       'createColumns',
       'setProfilesConfig',
-      'verifyPwdAgainstProfileConstraints',
+      'verifyPwdAgainstConstraints',
       'invokeCallbackWithReturn'
     )
 
@@ -26,15 +26,16 @@ export default class HashBox {
     this.config = {
       tokenSalt: config.tokenSalt,
       keySalt: config.keySalt,
-      rows: config.outputRows,
-      columns: config.outputColumns,
-      tokenIterations: config.tokenHashingIterations,
+      outputRows: config.outputRows,
+      outputColumns: config.outputColumns,
+      tokenHashingIterations: config.tokenHashingIterations,
       rowHashIterations: config.rowHashIterations,
-      hashLength: config.hashResultLengthInBytes,
-      chars: config.validCharacters,
-      defaultChars: config.validCharacters,
-      pwdConstraints: null
+      hashResultLengthInBytes: config.hashResultLengthInBytes,
+      validCharacters: config.validCharacters,
+      constraints: config.constraints
     }
+
+    this.defaultConfig = _.cloneDeep(this.config)
 
     this.state = {
       epocheCount: 0
@@ -47,12 +48,12 @@ export default class HashBox {
     this.config = {
       tokenSalt: "fdF6e%! #wMe",
       keySalt: "f134§",
-      rows: 2,
-      columns: [6, 12, -1],
-      tokenIterations: 128,
+      outputRows: 2,
+      outputColumns: [6, 12, -1],
+      tokenHashingIterations: 128,
       rowHashIterations: 2,
-      hashLength: 64,
-      chars: "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 !$%&(){}[]-_.:,;#+*@",
+      hashResultLengthInBytes: 64,
+      validCharacters: "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 !$%&(){}[]-_.:,;#+*@",
     }
 
     this.state = {epocheCount: 0}
@@ -107,7 +108,7 @@ export default class HashBox {
       return this.invokeCallbackWithReturn()
     }
 
-    let hash = pbkdf2(token, this.config.tokenSalt , this.config.tokenIterations, this.config.hashLength)
+    let hash = pbkdf2(token, this.config.tokenSalt , this.config.tokenHashingIterations, this.config.hashResultLengthInBytes)
     this.state.tokenHash = hash
     this.state.token = token
     return this.createHashs()
@@ -130,12 +131,11 @@ export default class HashBox {
     let profile = this.profilesConfig[name]
     if(profile) {
       if(profile.validCharacters) {
-        this.config.chars = profile.validCharacters
+        this.config.validCharacters = profile.validCharacters
       }
-      this.config.pwdConstraints = _.map(profile.constraints, (constraint) => new RegExp(constraint))
+      this.config.constraints = _.map(profile.constraints, (constraint) => new RegExp(constraint))
     } else {
-      this.config.chars = this.config.defaultChars
-      this.config.pwdConstraints = null
+      this.config = this.defaultConfig
     }
 
     this.state.selectedProfileByName = name
@@ -149,17 +149,18 @@ export default class HashBox {
 
     assert(this.config.keySalt)
     assert(this.config.rowHashIterations > 0)
+    assert(this.config.hashResultLengthInBytes > 0)
 
     let key = "id=" + this.state.identifier + "&token=" + this.state.tokenHash + "&epoche=" + this.state.epocheCount
 
     let hashs = []
-    for (let i = 0; i < this.config.rows; i++) {
-      let currentHash = pbkdf2(key, i + this.config.keySalt, this.config.rowHashIterations, this.config.hashLength)
+    for (let i = 0; i < this.config.outputRows; i++) {
+      let currentHash = pbkdf2(key, i + this.config.keySalt, this.config.rowHashIterations, this.config.hashResultLengthInBytes)
       let readablePwd = this.translateHash(currentHash)
       let pwds = this.createColumns(readablePwd)
       pwds = _.map(pwds, (pwd) => {
-        if(!this.verifyPwdAgainstProfileConstraints(pwd)) {
-          return null
+        if(!this.verifyPwdAgainstConstraints(pwd)) {
+          return _.repeat('_', pwd.length)
         }
         return pwd
       })
@@ -172,15 +173,15 @@ export default class HashBox {
   translateHash(hash) {
     assert('Buffer' === hash.constructor.name)
     assert(hash.length % 2 === 0)
-    assert(this.config.chars.length > 0)
+    assert(this.config.validCharacters.length > 0)
 
     let result = []
     let position = 0
 
     for (let i = 0; i < hash.length-1; i=i+2) {
       position = position + hash[i]
-      let validPosition = (position + hash[i+1]) % this.config.chars.length
-      result.push(this.config.chars[validPosition])
+      let validPosition = (position + hash[i+1]) % this.config.validCharacters.length
+      result.push(this.config.validCharacters[validPosition])
     }
 
     return result.join("")
@@ -189,8 +190,8 @@ export default class HashBox {
   createColumns(pwd) {
     let columns = []
 
-    for (let i = 0; i < this.config.columns.length; i++) {
-      let end = this.config.columns[i]
+    for (let i = 0; i < this.config.outputColumns.length; i++) {
+      let end = this.config.outputColumns[i]
       let value = pwd
       if(end > 0) {
         value = pwd.substring(0, end)
@@ -201,9 +202,9 @@ export default class HashBox {
     return columns
   }
 
-  verifyPwdAgainstProfileConstraints(pwd) {
+  verifyPwdAgainstConstraints(pwd) {
     let valid = true
-    _.each(this.config.pwdConstraints, (constraint) => {
+    _.each(this.config.constraints, (constraint) => {
       valid = valid && constraint.test(pwd)
     })
     return valid

@@ -392,7 +392,7 @@ describe('HashBox', () => {
 
       _.each(state, (pwds) => {
         _.each(pwds, (pwd) => {
-          if(!pwd) {
+          if(_.startsWith(pwd, '___')) {
             return
           }
           let countNumbers = 0
