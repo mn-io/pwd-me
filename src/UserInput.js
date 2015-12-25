@@ -11,6 +11,7 @@ export default class UserInput extends React.Component {
 
     this.token = ""
     this.identifier = ""
+    this.profile = ""
 
     let isMobile = !!(new MobileDetect(navigator.userAgent).mobile())
 
@@ -70,8 +71,13 @@ export default class UserInput extends React.Component {
   }
 
   selectProfile(event) {
-    //TODO: fix for instant mode
-    this.props.radio.broadcast('setProfileByName', event.target.value)
+    this.profile = event.target.value
+
+    if(!this.state.isInstantGeneration) {
+      return
+    }
+
+    this.props.radio.broadcast('setProfileByName', this.profile)
   }
 
   toggleInstantGeneration() {
@@ -88,6 +94,11 @@ export default class UserInput extends React.Component {
   sendDataOnClick() {
     if(this.state.isInstantGeneration) {
       return
+    }
+
+    if(this.profile) {
+      this.props.radio.broadcast('setProfileByName', this.profile)
+
     }
     this.props.radio.broadcast('setIdentifier', this.identifier)
     this.props.radio.broadcast('setToken', this.token)
