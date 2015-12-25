@@ -70,6 +70,7 @@ export default class UserInput extends React.Component {
   }
 
   selectProfile(event) {
+    //TODO: fix for instant mode
     this.props.radio.broadcast('setProfileByName', event.target.value)
   }
 
@@ -93,54 +94,44 @@ export default class UserInput extends React.Component {
   }
 
   render() {
-    let keys = this.props.profiles ? Object.keys(this.props.profiles) : []
-    keys.unshift('')
-    let profiles = keys.map((key, i) =>{
-      return (<option key={i} value={key}>{key}</option>)
-    })
+    let renderProfiles = () => {
+      let keys = this.props.profiles ? Object.keys(this.props.profiles) : []
+      keys.unshift('')
+      return keys.map((key, i) =>{
+        return (<option key={i} value={key}>{key}</option>)
+      })
+    }
 
     return (
-      <div className="col-sm-12">
+      <div>
+        <h1 id="title">key derivator</h1>
         <form className="form-horizontal">
-          <div className="col-sm-12">
-            <div className="form-group">
-              <div className="input-group">
-                <input type={this.state.tokenFieldType} className="form-control" aria-label="Token (slow calculation)" onKeyUp={this.setToken} />
-                <div className="input-group-btn">
-                  <button type="button" className="btn btn-default" aria-label="Hint" onClick={this.showPassword}>
-                    <span className="glyphicon glyphicon-eye-open"></span>
-                  </button>
-                </div>
+
+            <div className="input-group with-spacer">
+              <input type={this.state.tokenFieldType} className="form-control" aria-label="Token (slow calculation)" onKeyUp={this.setToken} />
+              <div className="input-group-btn">
+                <button type="button" className="btn btn-default" aria-label="Hint" onClick={this.showPassword}>
+                  <span className="glyphicon glyphicon-eye-open"></span>
+                </button>
               </div>
             </div>
-          </div>
-          <div className="col-sm-12">
-            <div className="form-group">
-              <input type="text" className="form-control" placeholder="Identifier" onKeyUp={this.setIdentifier} />
-            </div>
+
+            <input type="text" className="form-control with-spacer" placeholder="Identifier" onKeyUp={this.setIdentifier} />
+
+            <select className="form-control with-spacer" onChange={this.selectProfile}>
+              {renderProfiles()}
+            </select>
+
+          <div className="checkbox">
+            <label>
+              <input type="checkbox" checked={this.state.isInstantGeneration} onChange={this.toggleInstantGeneration} />Instant
+            </label>
           </div>
 
-          <div className="col-sm-12">
-            <div className="form-group">
-              <select className="form-control" onChange={this.selectProfile}>
-                {profiles}
-              </select>
-            </div>
-          </div>
+          <TimeEpocheHelper intervalInMin={3} radio={this.props.radio} />
 
-          <div className="col-sm-12">
-            <div className="checkbox">
-              <label>
-                <input type="checkbox" checked={this.state.isInstantGeneration} onChange={this.toggleInstantGeneration} />Instant
-              </label>
-            </div>
-          </div>
-
-          <div className="col-sm-12">
-            <TimeEpocheHelper intervalInMin={3} radio={this.props.radio} />
-          </div>
-          <div className="row">
-            <button type="button" className="btn btn-link" onClick={this.sendDataOnClick}>Generate</button>
+          <div className="pull-right">
+            <button type="button" className="btn btn-link btn-minimal" onClick={this.sendDataOnClick}>Generate</button>
           </div>
         </form>
       </div>)

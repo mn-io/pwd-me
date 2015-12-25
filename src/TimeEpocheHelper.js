@@ -75,19 +75,36 @@ export default class TimeEpocheHelper extends React.Component {
     return (
       <div>
         <div className="checkbox">
-          <label><input type="checkbox" checked={this.state.visible} onChange={this.toggleVisibility} />Time Epoche Helper</label>
+          <label><input type="checkbox" checked={this.state.visible} onChange={this.toggleVisibility} />
+            Time Epoche Helper
+          </label>
         </div>
+
         <div className={this.state.visible ? '' : 'hidden'}>
-          <small>Count of minute epoches from UNIX timestamp.</small>
-          <div className="form-group form-inline col-sm-12">
-            <label>Minutes: <input type="number" className="form-control" value={intervalInMin} onChange={this.tick} min="1" /></label>
-            <div>
-              count is: {this.state.epocheCount},
-              start was: {beginCurrentEpoche},
-              end will be: {beginNextEpoche}
+          <div className="form-inline">
+            <div className="with-spacer">
+              <small>Count of minute epoches from UNIX timestamp.</small>
+            </div>
+            <label className="with-spacer">Minutes:
+              <input type="number" className="form-control input-epoche" value={intervalInMin} onChange={this.tick} min="1"/>
+              </label>
+            <div className="table info-epoche">
+              <div className="table-row">
+                <div className="table-cell">count is:</div>
+                <div className="table-cell">{this.state.epocheCount}</div>
+              </div>
+              <div className="table-row">
+                <div className="table-cell">start was:</div>
+                <div className="table-cell">{beginCurrentEpoche}</div>
+              </div>
+              <div className="table-row">
+                <div className="table-cell">end will be:</div>
+                <div className="table-cell">{beginNextEpoche}</div>
+              </div>
             </div>
           </div>
         </div>
+
       </div>)
   }
 }
