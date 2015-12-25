@@ -100,7 +100,7 @@ export default class TimeEpocheHelper extends React.Component {
       <div>
         <div className="checkbox">
           <label><input type="checkbox" checked={this.state.visible} onChange={this.toggleVisibility} />
-            Time Epoche Helper
+            time epoche helper
           </label>
         </div>
 

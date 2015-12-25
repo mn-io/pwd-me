@@ -4,6 +4,7 @@ import _ from 'lodash'
 import Entities from 'html-entities'
 
 import TimeEpocheHelper from './TimeEpocheHelper'
+import ShowConfigToggle from './ShowConfigToggle'
 
 export default class UserInput extends React.Component {
   constructor(props) {
@@ -132,6 +133,8 @@ export default class UserInput extends React.Component {
             <select className="form-control with-spacer" onChange={this.selectProfile}>
               {renderProfiles()}
             </select>
+
+          <ShowConfigToggle config={this.props.config} />
 
           <div className="checkbox">
             <label>

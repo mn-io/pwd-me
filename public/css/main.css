@@ -74,6 +74,11 @@ body {
   margin-bottom: 1rem;
 }
 
+#userInput .info-config {
+  margin-top: 1rem;
+  margin-bottom: 1rem
+}
+
 #userInput .input-epoche {
   width: 7rem;
   margin-left: 1rem;

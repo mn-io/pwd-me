@@ -41,7 +41,7 @@ window.onload = () => {
     radio.subscribe('setTimeEpoche', box.setTimeEpoche)
     radio.subscribe('setProfileByName', box.setProfileByName)
 
-    ReactDOM.render(<UserInput profiles={config.profiles} radio={radio} />, document.getElementById('userInput'))
+    ReactDOM.render(<UserInput profiles={config.profiles} config={config.hashBox} radio={radio} />, document.getElementById('userInput'))
     ReactDOM.render(<HashOutput config={config.UI} radio={radio} />, document.getElementById('hashOutput'))
   }
 
