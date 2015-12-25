@@ -14,7 +14,6 @@ body {
 
 .center {
     margin: auto;
-    width: 300px;
 }
 
 .table {
@@ -52,6 +51,7 @@ body {
 /* specific */
 
 .container-main {
+  width: 300px;
   margin-top: 10%;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -94,9 +94,21 @@ body {
   text-decoration: none;
 }
 
-
-/*@media (min-width: 500px) {
+@media (max-width: 300px) {
   .container-main {
-    width: 500px;
+    margin-top:0;
+    width: 300px;
+    border: 0;
   }
-}*/
+  .container-input #title {
+    font-size: 2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* bootstrap hacks */
+.form-inline .form-control {
+  display: inline-block;
+  vertical-align: middle;
+}
