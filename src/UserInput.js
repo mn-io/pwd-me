@@ -46,6 +46,7 @@ export default class UserInput extends React.Component {
   }
 
   setToken(event) {
+    this.setState({hasSend: false})
     if(this.timerToken) {
       clearTimeout(this.timerToken)
     }
@@ -62,6 +63,7 @@ export default class UserInput extends React.Component {
   }
 
   setIdentifier(event) {
+    this.setState({hasSend: false})
     if(this.timerIdentifier) {
       clearTimeout(this.timerIdentifier)
     }
@@ -78,6 +80,7 @@ export default class UserInput extends React.Component {
   }
 
   selectProfile(event) {
+    this.setState({hasSend: false})
     this.profile = event.target.value
 
     if(!this.state.isInstantGeneration) {
@@ -103,9 +106,10 @@ export default class UserInput extends React.Component {
       return
     }
 
+    this.setState({hasSend: true})
+
     if(this.profile) {
       this.props.radio.broadcast('setProfileByName', this.profile)
-
     }
     this.props.radio.broadcast('setIdentifier', this.identifier)
     this.props.radio.broadcast('setToken', this.token)
@@ -115,7 +119,7 @@ export default class UserInput extends React.Component {
     let renderProfiles = () => {
       let keys = this.props.profiles ? Object.keys(this.props.profiles) : []
       keys.unshift('')
-      return keys.map((key, i) =>{
+      return keys.map((key, i) => {
         return (<option key={i} value={key}>{key}</option>)
       })
     }
@@ -151,7 +155,7 @@ export default class UserInput extends React.Component {
           <TimeEpocheHelper intervalInMin={3} radio={this.props.radio} />
 
           <div className="pull-right">
-            <button type="button" className="btn btn-link btn-minimal" onClick={this.sendDataOnClick}>generate</button>
+            <button type="button" className="btn btn-link btn-minimal" onClick={this.sendDataOnClick} disabled={this.state.hasSend || this.state.isInstantGeneration}>generate</button>
           </div>
         </form>
       </div>)
