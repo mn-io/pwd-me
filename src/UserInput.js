@@ -46,8 +46,8 @@ export default class UserInput extends React.Component {
   }
 
   setToken(event) {
-    if(this.timer) {
-      clearTimeout(this.timer)
+    if(this.timerToken) {
+      clearTimeout(this.timerToken)
     }
 
     this.token = event.target.value
@@ -56,19 +56,25 @@ export default class UserInput extends React.Component {
       return
     }
 
-    this.timer = setTimeout(() => {
+    this.timerToken = setTimeout(() => {
       this.props.radio.broadcast('setToken', this.token)
     }, 400)
   }
 
   setIdentifier(event) {
+    if(this.timerIdentifier) {
+      clearTimeout(this.timerIdentifier)
+    }
+
     this.identifier = event.target.value
 
     if(!this.state.isInstantGeneration) {
       return
     }
 
-    this.props.radio.broadcast('setIdentifier', this.identifier)
+    this.timerIdentifier = setTimeout(() => {
+      this.props.radio.broadcast('setIdentifier', this.identifier)
+    }, 200)
   }
 
   selectProfile(event) {
