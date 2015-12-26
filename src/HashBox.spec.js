@@ -276,6 +276,43 @@ describe('HashBox', () => {
 
       assert.deepEqual({'test': 'me', 'test1': 'me12', 'test2': 'me2'}, copy)
     })
+
+    it('merges config with constraints', () => {
+      let constraints = ["(?=(.*\\d){2})", "(?=.*[a-zA-Z]){2}"]
+      let config = {'test': 'me', 'test1': 'me11',
+        constraints: [constraints[0]]
+      }
+      let config2 = {'test1': 'me12', 'test2': 'me2',
+        constraints: [constraints[1]]
+      }
+      let copy = HashBox.createConfig(config, config2)
+
+      assert.deepEqual({'test': 'me', 'test1': 'me12', 'test2': 'me2',
+        constraints: [new RegExp(constraints[1])]
+        }, copy)
+    })
+
+    it('re-merges config with constraints', () => {
+      let constraints = ["(?=(.*\\d){2})", "(?=.*[a-zA-Z]){2}"]
+      let config = {'test': 'me', 'test1': 'me11',
+        constraints: [constraints[0]]
+      }
+      let config2 = {'test1': 'me12', 'test2': 'me2',
+        constraints: [constraints[1]]
+      }
+      let copy = HashBox.createConfig(config, config2)
+      copy = HashBox.createConfig(copy, config)
+
+      assert.deepEqual({'test': 'me', 'test1': 'me11', 'test2': 'me2',
+        constraints: [new RegExp(constraints[0])]
+        }, copy)
+
+      copy = HashBox.createConfig(config, copy)
+
+      assert.deepEqual({'test': 'me', 'test1': 'me11', 'test2': 'me2',
+        constraints: [new RegExp(constraints[0])]
+        }, copy)
+    })
   })
 
   describe('#translateHash', () => {

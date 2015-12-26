@@ -87,6 +87,10 @@ export default class HashBox {
       token = null
     }
 
+    assert(this.config.tokenSalt)
+    assert(this.config.tokenHashingIterations > 0)
+    assert(this.config.hashResultLengthInBytes > 0)
+
     let tokenHashCurrentConfig = this.config.tokenSalt + this.config.tokenHashingIterations + this.config.hashResultLengthInBytes
     if(token === this.state.token && tokenHashCurrentConfig === this.state.tokenHashUsedConfig) {
       return
@@ -140,7 +144,9 @@ export default class HashBox {
     }
 
     if(config.constraints) {
-      config.constraints = _.map(config.constraints, (constraint) => new RegExp(constraint))
+      config.constraints = _.map(config.constraints, (constraint) => {
+        return 'string' === typeof(constraint) ? new RegExp(constraint) : constraint
+      })
     }
 
     return config
