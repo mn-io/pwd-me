@@ -12,10 +12,7 @@ export default class HashBox {
       'setTimeEpoche',
       'setProfileByName',
       'createHashs',
-      'translateHash',
-      'createColumns',
       'setProfilesConfig',
-      'verifyPwdAgainstConstraints',
       'invokeCallbackWithReturn'
     )
 
@@ -120,7 +117,7 @@ export default class HashBox {
       return
     }
 
-    if(this.state.selectedProfileByName && name === this.state.selectedProfileByName) {
+    if(name === this.state.selectedProfileByName) {
       return
     }
 
@@ -166,10 +163,10 @@ export default class HashBox {
     let hashs = []
     for (let i = 0; i < this.config.outputRows; i++) {
       let currentHash = pbkdf2(key, i + this.config.keySalt, this.config.rowHashIterations, this.config.hashResultLengthInBytes)
-      let readablePwd = this.translateHash(currentHash)
-      let pwds = this.createColumns(readablePwd)
+      let readablePwd = HashBox.translateHash(currentHash, this.config.validCharacters)
+      let pwds = HashBox.createColumns(readablePwd, this.config.outputColumns)
       pwds = _.map(pwds, (pwd) => {
-        if(!this.verifyPwdAgainstConstraints(pwd)) {
+        if(!HashBox.verifyPwdAgainstConstraints(pwd, this.config.constraints)) {
           return _.repeat('_', pwd.length)
         }
         return pwd
@@ -180,28 +177,28 @@ export default class HashBox {
     return this.invokeCallbackWithReturn(hashs)
   }
 
-  translateHash(hash) {
+  static translateHash(hash, chars) {
     assert('Buffer' === hash.constructor.name)
     assert(hash.length % 2 === 0)
-    assert(this.config.validCharacters.length > 0)
+    assert(chars.length > 0)
 
     let result = []
     let position = 0
 
     for (let i = 0; i < hash.length-1; i=i+2) {
       position = position + hash[i]
-      let validPosition = (position + hash[i+1]) % this.config.validCharacters.length
-      result.push(this.config.validCharacters[validPosition])
+      let validPosition = (position + hash[i+1]) % chars.length
+      result.push(chars[validPosition])
     }
 
     return result.join("")
   }
 
-  createColumns(pwd) {
+  static createColumns(pwd, columnsSpec) {
     let columns = []
 
-    for (let i = 0; i < this.config.outputColumns.length; i++) {
-      let end = this.config.outputColumns[i]
+    for (let i = 0; i < columnsSpec.length; i++) {
+      let end = columnsSpec[i]
       let value = pwd
       if(end > 0) {
         value = pwd.substring(0, end)
@@ -212,9 +209,9 @@ export default class HashBox {
     return columns
   }
 
-  verifyPwdAgainstConstraints(pwd) {
+  static verifyPwdAgainstConstraints(pwd, constraints) {
     let valid = true
-    _.each(this.config.constraints, (constraint) => {
+    _.each(constraints, (constraint) => {
       valid = valid && constraint.test(pwd)
     })
     return valid

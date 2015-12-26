@@ -318,30 +318,21 @@ describe('HashBox', () => {
   describe('#translateHash', () => {
 
     it('replaces bytes to character', () => {
-      let box = new HashBox(config, null, false)
       let buf =  new Buffer('aaaa')
-      let result = box.translateHash(buf)
+      let result = HashBox.translateHash(buf, config.validCharacters)
       assert.equal('BZ', result)
     })
 
     it('replaces bytes to character', () => {
-      let newConfig = _.cloneDeep(config)
-      newConfig.validCharacters = "abc"
-
-      let box = new HashBox(newConfig, null, false)
       let buf =  new Buffer('aaaaaa')
-      let result = box.translateHash(buf)
+      let result = HashBox.translateHash(buf, "abc")
       assert.equal('cab', result)
     })
 
     it('does not work with invalid config', (done) => {
-      let invalidConfig = _.cloneDeep(config)
-      invalidConfig.validCharacters = ""
-
-      let box = new HashBox(invalidConfig, null, false)
       try{
         let buf =  new Buffer('aaaaaa')
-        box.translateHash(buf)
+        hashBox.translateHash(buf, "")
       } catch(e) {
         assert(e)
         done()
@@ -374,8 +365,7 @@ describe('HashBox', () => {
     let abc = "abcdefghijklmnopqrstuvwxyz"
 
     it('works with default config', () => {
-      let box = new HashBox(config, null, false)
-      let result = box.createColumns(abc)
+      let result = HashBox.createColumns(abc, config.outputColumns)
 
       assert.deepEqual(['abcdef','abcdefghijkl','abcdefghijklmnopqrstuvwxyz'], result)
       assert.equal(config.outputColumns[0], result[0].length)
@@ -384,21 +374,13 @@ describe('HashBox', () => {
     })
 
     it('works with minimal config', () => {
-      let localConfig = _.cloneDeep(config)
-      localConfig.outputColumns = []
-
-      let box = new HashBox(localConfig, null, false)
-      let result = box.createColumns(abc)
+      let result = HashBox.createColumns(abc, [])
 
       assert.deepEqual([], result)
     })
 
     it('works with large config', () => {
-      let localConfig = _.cloneDeep(config)
-      localConfig.outputColumns = [abc.length + 5]
-
-      let box = new HashBox(localConfig, null, false)
-      let result = box.createColumns(abc)
+      let result = HashBox.createColumns(abc, [abc.length + 5])
 
       assert.equal(abc.length, result[0].length)
     })
