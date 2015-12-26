@@ -24,7 +24,7 @@ export default class UserInput extends React.Component {
     this.escapeHelper = new Entities.AllHtmlEntities()
 
     _.bindAll(this,
-      'showPassword',
+      'showToken',
       'setToken',
       'setIdentifier',
       'selectProfile',
@@ -33,7 +33,7 @@ export default class UserInput extends React.Component {
     )
   }
 
-  showPassword(event) {
+  showToken(event) {
     this.setState({
       tokenFieldType: 'text'
     })
@@ -122,7 +122,7 @@ export default class UserInput extends React.Component {
             <div className="input-group with-spacer">
               <input type={this.state.tokenFieldType} className="form-control" aria-label="Token (slow calculation)" onKeyUp={this.setToken} />
               <div className="input-group-btn">
-                <button type="button" className="btn btn-default" aria-label="Hint" onClick={this.showPassword}>
+                <button type="button" className="btn btn-default" aria-label="Hint" onClick={this.showToken}>
                   <span className="glyphicon glyphicon-eye-open"></span>
                 </button>
               </div>
