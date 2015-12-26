@@ -87,7 +87,8 @@ export default class HashBox {
       token = null
     }
 
-    if(token === this.state.token) {
+    let tokenHashCurrentConfig = this.config.tokenSalt + this.config.tokenHashingIterations + this.config.hashResultLengthInBytes
+    if(token === this.state.token && tokenHashCurrentConfig === this.state.tokenHashUsedConfig) {
       return
     }
 
@@ -98,8 +99,10 @@ export default class HashBox {
     }
 
     let hash = pbkdf2(token, this.config.tokenSalt , this.config.tokenHashingIterations, this.config.hashResultLengthInBytes)
+    this.state.tokenHashUsedConfig = tokenHashCurrentConfig
     this.state.tokenHash = hash
     this.state.token = token
+
     return this.createHashs()
   }
 
@@ -125,7 +128,8 @@ export default class HashBox {
     }
 
     this.state.selectedProfileByName = name
-    return this.createHashs()
+    let hashes = this.setToken(this.state.token)
+    return hashes ? hashes : this.createHashs()
   }
 
   static createConfig(rootConfig, currentConfig) {

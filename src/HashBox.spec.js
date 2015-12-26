@@ -24,7 +24,7 @@ let inAndOut = {
 
 let profiles = {
   Skype: {
-    tokenSalt: "fdF6e%! #wMe",
+    tokenSalt: "fdF6e%! #wM2",
     validCharacters: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890!\"#$%&,!\"#$%&,",
     constraints: ["(?=(.*\\d){2})", "(?=.*[a-zA-Z]){2}"]
   }
@@ -394,9 +394,15 @@ describe('HashBox', () => {
       box.setIdentifier(inAndOut.identifier)
       let state = box.setToken(inAndOut.token)
 
+      assert.equal(box.state.tokenHash.toString('hex'), inAndOut.tokenHash)
       assert.deepEqual(state, inAndOut.hashs)
       state = box.setProfileByName('Skype')
+      assert.notEqual(box.state.tokenHash.toString('hex'), inAndOut.tokenHash)
       assert.notDeepEqual(state, inAndOut.hashs)
+
+      state = box.setProfileByName('')
+      assert.equal(box.state.tokenHash.toString('hex'), inAndOut.tokenHash)
+      assert.deepEqual(state, inAndOut.hashs)
     })
 
     it('resets config with invalid profile', () => {
