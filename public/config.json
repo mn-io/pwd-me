@@ -3,12 +3,12 @@
     "tokenSalt": "fdF6e%! #wMe",
     "keySalt": "f134§",
 
-    "tokenHashingIterations": 6500,
-    "rowHashIterations": 65,
+    "tokenHashingIterations": 6400,
+    "rowHashIterations": 64,
 
     "hashResultLengthInBytes": 128,
 
-    "outputRows": 24,
+    "outputRows": 12,
     "outputColumns": [12, 24, -1],
     "validCharacters": "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöüÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöüÄÖÜ 1234567890 \"!$%&(){}[]-_.:,;#+*@"
   },

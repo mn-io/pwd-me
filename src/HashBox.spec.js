@@ -4,26 +4,27 @@ import _ from 'lodash'
 import HashBox from './HashBox'
 
 let config = {
-  "tokenSalt": "fdF6e%! #wMe",
-  "keySalt": "f134§",
-  "outputRows": 2,
-  "outputColumns": [6, 12, -1],
-  "tokenHashingIterations": 128,
-  "rowHashIterations": 2,
-  "hashResultLengthInBytes": 64,
-  "validCharacters": "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 !$%&(){}[]-_.:,;#+*@",
+  tokenSalt: "fdF6e%! #wMe",
+  keySalt: "f134§",
+  outputRows: 2,
+  outputColumns: [6, 12, -1],
+  tokenHashingIterations: 128,
+  rowHashIterations: 2,
+  hashResultLengthInBytes: 64,
+  validCharacters: "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 !$%&(){}[]-_.:,;#+*@",
 }
 
 let inAndOut = {
-  "identifier": "fweq342Ö43",
-  "token": "345$%3",
-  "epocheCount": 3,
-  "tokenHash": "a4a09823a46c8240a585e81cdb0a42856ce5bdf96ad390ba3f5b142dc34a7ca37620abfe9b6ad830af1a1f040925c4c145ed6ac42e435316a32e337071fea61e",
-  "hashs": [["sASH Ö","sASH Ö(YQfRy","sASH Ö(YQfRy+MZt&d v&Dn4g4ÖünHt3"], ["D[4ia8","D[4ia8U o4af","D[4ia8U o4afJrtÖjOh,7N}ÜXi&yF zd"]]
+  identifier: "fweq342Ö43",
+  token: "345$%3",
+  epocheCount: 3,
+  tokenHash: "a4a09823a46c8240a585e81cdb0a42856ce5bdf96ad390ba3f5b142dc34a7ca37620abfe9b6ad830af1a1f040925c4c145ed6ac42e435316a32e337071fea61e",
+  hashs: [["sASH Ö","sASH Ö(YQfRy","sASH Ö(YQfRy+MZt&d v&Dn4g4ÖünHt3"], ["D[4ia8","D[4ia8U o4af","D[4ia8U o4afJrtÖjOh,7N}ÜXi&yF zd"]]
 }
 
 let profiles = {
   Skype: {
+    tokenSalt: "fdF6e%! #wMe",
     validCharacters: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890!\"#$%&,!\"#$%&,",
     constraints: ["(?=(.*\\d){2})", "(?=.*[a-zA-Z]){2}"]
   }
@@ -176,7 +177,6 @@ describe('HashBox', () => {
   })
 
   describe('#setTimeEpoche', () => {
-
     it('saves value and return no new state', () => {
       let box = new HashBox(config, null, false)
       let result = box.setTimeEpoche(inAndOut.epocheCount)
@@ -367,7 +367,7 @@ describe('HashBox', () => {
     })
   })
 
-  describe('#verifyPwdAgainstProfileConstraints', () => {
+  describe('#setProfileByName', () => {
     let box
 
     beforeEach(() => {
@@ -375,6 +375,12 @@ describe('HashBox', () => {
     })
 
     it('doesn\'t do anything without profiles on profile select', () => {
+      let result = box.setProfileByName("Skype")
+      assert(!result)
+      assert(!box.state.selectedProfileByName)
+    })
+
+    it('doesn\'t do anything without profiles on profile select with other inputs', () => {
       box.setIdentifier(inAndOut.identifier)
       let state = box.setToken(inAndOut.token)
       assert.deepEqual(state, inAndOut.hashs)
