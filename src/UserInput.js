@@ -50,7 +50,6 @@ export default class UserInput extends React.Component {
   setToken(event) {
     let token = event.target.value
     this.setState({
-      hasSend: false,
       inputToken: token
     })
 
@@ -70,7 +69,6 @@ export default class UserInput extends React.Component {
   setIdentifier(event) {
     let identifier = event.target.value
     this.setState({
-      hasSend: false,
       inputIdentifier: identifier
     })
 
@@ -136,11 +134,15 @@ export default class UserInput extends React.Component {
   }
 
   sendData(event) {
+    if(event) {
+      event.preventDefault()
+    }
+
     if(this.state.isInstantGeneration) {
       return
     }
 
-    this.setState({hasSend: true})
+    this.setState({})
 
     if(this.profile) {
       this.props.radio.broadcast('setProfileByName', this.profile)
@@ -203,7 +205,7 @@ export default class UserInput extends React.Component {
 
           <div className="pull-right">
             <button type="submit" className="btn btn-link btn-minimal" onClick={this.sendData}
-              disabled={this.state.hasSend || this.state.isInstantGeneration} tabIndex="4">generate</button>
+              disabled={this.state.isInstantGeneration} tabIndex="4">generate</button>
           </div>
         </form>
       </div>)
