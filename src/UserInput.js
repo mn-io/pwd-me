@@ -28,7 +28,7 @@ export default class UserInput extends React.Component {
       'setIdentifier',
       'selectProfile',
       'toggleInstantGeneration',
-      'sendDataOnClick',
+      'sendData',
       'setAutoDestroy',
       'clearAutoDestroy',
       'toggleAutoDestroy'
@@ -106,7 +106,7 @@ export default class UserInput extends React.Component {
     })
 
     if(isEnabled) {
-      this.sendDataOnClick()
+      this.sendData()
     }
   }
 
@@ -135,7 +135,7 @@ export default class UserInput extends React.Component {
     }
   }
 
-  sendDataOnClick() {
+  sendData(event) {
     if(this.state.isInstantGeneration) {
       return
     }
@@ -165,7 +165,7 @@ export default class UserInput extends React.Component {
     return (
       <div>
         <h1 id="title">key derivator</h1>
-        <form className="form-horizontal">
+        <form className="form-horizontal"  onSubmit={this.sendData}>
 
             <div className="input-group with-spacer">
               <input type={this.state.tokenFieldType} className="form-control"
@@ -202,7 +202,7 @@ export default class UserInput extends React.Component {
           <TimeEpocheHelper intervalInMin={3} radio={this.props.radio} />
 
           <div className="pull-right">
-            <button type="button" className="btn btn-link btn-minimal" onClick={this.sendDataOnClick}
+            <button type="submit" className="btn btn-link btn-minimal" onClick={this.sendData}
               disabled={this.state.hasSend || this.state.isInstantGeneration} tabIndex="4">generate</button>
           </div>
         </form>
