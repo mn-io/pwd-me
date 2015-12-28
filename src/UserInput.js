@@ -14,7 +14,8 @@ export default class UserInput extends React.Component {
     this.profile = ""
 
     this.state = {
-      tokenFieldType: 'password'
+      tokenFieldType: 'password',
+      isAutoDestroy: true
     }
 
     this.escapeHelper = new Entities.AllHtmlEntities()
@@ -25,7 +26,10 @@ export default class UserInput extends React.Component {
       'setIdentifier',
       'selectProfile',
       'toggleInstantGeneration',
-      'sendDataOnClick'
+      'sendDataOnClick',
+      'setAutoDestroy',
+      'clearAutoDestroy',
+      'toggleAutoDestroy'
     )
   }
 
@@ -97,6 +101,34 @@ export default class UserInput extends React.Component {
     }
   }
 
+  toggleAutoDestroy() {
+    let isEnabled = !this.state.isAutoDestroy
+    this.setState({
+      isAutoDestroy: isEnabled
+    })
+
+    if(isEnabled) {
+      this.setAutoDestroy()
+    } else {
+      this.clearAutoDestroy()
+    }
+  }
+
+  setAutoDestroy() {
+    let autoDestroyCallback = () => {
+      console.log("destroy")
+    //  this.setIdentifier(event)
+    }
+
+    this.autoDestroyTimeout = setTimeout(autoDestroyCallback, 1000)
+  }
+
+  clearAutoDestroy() {
+    if(this.autoDestroyTimeout) {
+      clearTimeout(this.autoDestroyTimeout)
+    }
+  }
+
   sendDataOnClick() {
     if(this.state.isInstantGeneration) {
       return
@@ -109,6 +141,10 @@ export default class UserInput extends React.Component {
     }
     this.props.radio.broadcast('setIdentifier', this.identifier)
     this.props.radio.broadcast('setToken', this.token)
+
+    if(this.state.isAutoDestroy) {
+      this.setAutoDestroy()
+    }
   }
 
   render() {
@@ -146,6 +182,12 @@ export default class UserInput extends React.Component {
           <div className="checkbox">
             <label>
               <input type="checkbox" checked={this.state.isInstantGeneration} onChange={this.toggleInstantGeneration} />instant generate
+            </label>
+          </div>
+
+          <div className="checkbox">
+            <label>
+              <input type="checkbox" checked={this.state.isAutoDestroy} onChange={this.toggleAutoDestroy} />clear after 5 sec
             </label>
           </div>
 
