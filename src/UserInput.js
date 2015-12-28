@@ -15,7 +15,9 @@ export default class UserInput extends React.Component {
 
     this.state = {
       tokenFieldType: 'password',
-      isAutoDestroy: true
+      isAutoDestroy: true,
+      inputIdentifier: '',
+      inputToken: ''
     }
 
     this.escapeHelper = new Entities.AllHtmlEntities()
@@ -46,36 +48,43 @@ export default class UserInput extends React.Component {
   }
 
   setToken(event) {
-    this.setState({hasSend: false})
+    let token = event.target.value
+    this.setState({
+      hasSend: false,
+      inputToken: token
+    })
+
     if(this.timerToken) {
       clearTimeout(this.timerToken)
     }
-
-    this.token = event.target.value
 
     if(!this.state.isInstantGeneration) {
       return
     }
 
     this.timerToken = setTimeout(() => {
-      this.props.radio.broadcast('setToken', this.token)
+      this.props.radio.broadcast('setToken', Token)
     }, 400)
   }
 
   setIdentifier(event) {
-    this.setState({hasSend: false})
+    let identifier = event.target.value
+    this.setState({
+      hasSend: false,
+      inputIdentifier: identifier
+    })
+
+
     if(this.timerIdentifier) {
       clearTimeout(this.timerIdentifier)
     }
-
-    this.identifier = event.target.value
 
     if(!this.state.isInstantGeneration) {
       return
     }
 
     this.timerIdentifier = setTimeout(() => {
-      this.props.radio.broadcast('setIdentifier', this.identifier)
+      this.props.radio.broadcast('setIdentifier', identifier)
     }, 200)
   }
 
@@ -115,12 +124,9 @@ export default class UserInput extends React.Component {
   }
 
   setAutoDestroy() {
-    let autoDestroyCallback = () => {
-      console.log("destroy")
-    //  this.setIdentifier(event)
-    }
-
-    this.autoDestroyTimeout = setTimeout(autoDestroyCallback, 1000)
+    this.autoDestroyTimeout = setTimeout(() => {
+      location.reload()
+    }, 10000)
   }
 
   clearAutoDestroy() {
@@ -139,8 +145,8 @@ export default class UserInput extends React.Component {
     if(this.profile) {
       this.props.radio.broadcast('setProfileByName', this.profile)
     }
-    this.props.radio.broadcast('setIdentifier', this.identifier)
-    this.props.radio.broadcast('setToken', this.token)
+    this.props.radio.broadcast('setIdentifier', this.state.inputIdentifier)
+    this.props.radio.broadcast('setToken', this.state.inputToken)
 
     if(this.state.isAutoDestroy) {
       this.setAutoDestroy()
@@ -187,7 +193,7 @@ export default class UserInput extends React.Component {
 
           <div className="checkbox">
             <label>
-              <input type="checkbox" checked={this.state.isAutoDestroy} onChange={this.toggleAutoDestroy} />clear after 5 sec
+              <input type="checkbox" checked={this.state.isAutoDestroy} onChange={this.toggleAutoDestroy} />reload page after 10 sec
             </label>
           </div>
 
