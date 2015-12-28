@@ -165,7 +165,7 @@ export default class UserInput extends React.Component {
     return (
       <div>
         <h1 id="title">key derivator</h1>
-        <form className="form-horizontal"  onSubmit={this.sendData}>
+        <form className="form-horizontal" onSubmit={this.sendData}>
 
             <div className="input-group with-spacer">
               <input type={this.state.tokenFieldType} className="form-control"
