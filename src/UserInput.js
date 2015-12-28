@@ -169,7 +169,8 @@ export default class UserInput extends React.Component {
 
             <div className="input-group with-spacer">
               <input type={this.state.tokenFieldType} className="form-control"
-                aria-label="Token (slow calculation)" onKeyUp={this.setToken} />
+                aria-label="Token (slow calculation)" onKeyUp={this.setToken}
+                tabIndex="1" autoFocus={true} />
               <div className="input-group-btn">
                 <button type="button" className="btn btn-default" aria-label="Hint" onClick={this.showToken}>
                   <span className="glyphicon glyphicon-eye-open"></span>
@@ -177,9 +178,10 @@ export default class UserInput extends React.Component {
               </div>
             </div>
 
-            <input type="text" className="form-control with-spacer" placeholder="Identifier" onKeyUp={this.setIdentifier} />
+            <input type="text" className="form-control with-spacer" placeholder="Identifier"
+              onKeyUp={this.setIdentifier} tabIndex="2" />
 
-            <select className="form-control with-spacer" onChange={this.selectProfile}>
+            <select className="form-control with-spacer" onChange={this.selectProfile} tabIndex="3">
               {renderProfiles()}
             </select>
 
@@ -201,7 +203,7 @@ export default class UserInput extends React.Component {
 
           <div className="pull-right">
             <button type="button" className="btn btn-link btn-minimal" onClick={this.sendDataOnClick}
-              disabled={this.state.hasSend || this.state.isInstantGeneration}>generate</button>
+              disabled={this.state.hasSend || this.state.isInstantGeneration} tabIndex="4">generate</button>
           </div>
         </form>
       </div>)
