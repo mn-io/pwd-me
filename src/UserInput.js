@@ -28,8 +28,17 @@ export default class UserInput extends React.Component {
       'sendData',
       'setAutoDestroy',
       'clearAutoDestroy',
-      'toggleAutoDestroy'
+      'toggleAutoDestroy',
+      'outputGenerated'
     )
+  }
+
+  componentDidMount() {
+    this.props.radio.subscribe('hashsCalculated', this.outputGenerated)
+  }
+
+  componentWillUnmount() {
+    this.props.radio.unubscribe('hashsCalculated', this.outputGenerated)
   }
 
   showToken(event) {
@@ -50,6 +59,7 @@ export default class UserInput extends React.Component {
       inputToken: token
     })
 
+    this.clearAutoDestroy()
     if(this.timerToken) {
       clearTimeout(this.timerToken)
     }
@@ -57,7 +67,6 @@ export default class UserInput extends React.Component {
     if(!this.state.isInstantGeneration) {
       return
     }
-    this.clearAutoDestroy()
 
     this.timerToken = setTimeout(() => {
       this.props.radio.broadcast('setToken', token)
@@ -70,7 +79,7 @@ export default class UserInput extends React.Component {
       inputIdentifier: identifier
     })
 
-
+    this.clearAutoDestroy()
     if(this.timerIdentifier) {
       clearTimeout(this.timerIdentifier)
     }
@@ -90,6 +99,7 @@ export default class UserInput extends React.Component {
       inputProfile: profile
     })
 
+    this.clearAutoDestroy()
     if(!this.state.isInstantGeneration) {
       return
     }
@@ -98,6 +108,8 @@ export default class UserInput extends React.Component {
   }
 
   toggleInstantGeneration() {
+    this.clearAutoDestroy()
+
     let isEnabled = !this.state.isInstantGeneration
     this.setState({
       isInstantGeneration: isEnabled
@@ -114,9 +126,7 @@ export default class UserInput extends React.Component {
       isAutoDestroy: isEnabled
     })
 
-    if(isEnabled) {
-      this.setAutoDestroy()
-    } else {
+    if(!isEnabled) {
       this.clearAutoDestroy()
     }
   }
@@ -148,9 +158,19 @@ export default class UserInput extends React.Component {
     this.props.radio.broadcast('setProfileByName', this.state.inputProfile)
     this.props.radio.broadcast('setIdentifier', this.state.inputIdentifier)
     this.props.radio.broadcast('setToken', this.state.inputToken)
+  }
 
-    if(this.state.isAutoDestroy) {
+  outputGenerated(hashs) {
+    if(!hashs) {
+      this.clearAutoDestroy()
+      return
+    }
+
+    let isEnabled = this.state.isAutoDestroy
+    if(isEnabled) {
       this.setAutoDestroy()
+    } else {
+      this.clearAutoDestroy()
     }
   }
 

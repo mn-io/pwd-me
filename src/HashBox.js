@@ -31,7 +31,7 @@ export default class HashBox {
   }
 
   selfTest() {
-    this.config = {
+    let config = {
       tokenSalt: "fdF6e%! #wMe",
       keySalt: "f134§",
       outputRows: 2,
@@ -41,12 +41,12 @@ export default class HashBox {
       hashResultLengthInBytes: 64,
       validCharacters: "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 !$%&(){}[]-_.:,;#+*@",
     }
+    let tmpInstance = new HashBox(config, null, false)
 
-    this.state = {epocheCount: 0}
-    this.setToken("345$%3")
+    tmpInstance.setToken("345$%3")
 
-    let actualTokenHash = this.state.tokenHash.toString('hex')
-    let actualState = this.setIdentifier("fweq342Ö43")
+    let actualTokenHash = tmpInstance.state.tokenHash.toString('hex')
+    let actualState = tmpInstance.setIdentifier("fweq342Ö43")
 
     let expectedTokenHash = "a4a09823a46c8240a585e81cdb0a42856ce5bdf96ad390ba3f5b142dc34a7ca37620abfe9b6ad830af1a1f040925c4c145ed6ac42e435316a32e337071fea61e"
     let expectedState = [["sASH Ö","sASH Ö(YQfRy","sASH Ö(YQfRy+MZt&d v&Dn4g4ÖünHt3"], ["D[4ia8","D[4ia8U o4af","D[4ia8U o4afJrtÖjOh,7N}ÜXi&yF zd"]]
