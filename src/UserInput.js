@@ -9,15 +9,12 @@ export default class UserInput extends React.Component {
   constructor(props) {
     super(props)
 
-    this.token = ""
-    this.identifier = ""
-    this.profile = ""
-
     this.state = {
       tokenFieldType: 'password',
       isAutoDestroy: true,
       inputIdentifier: '',
-      inputToken: ''
+      inputToken: '',
+      inputProfile: ''
     }
 
     this.escapeHelper = new Entities.AllHtmlEntities()
@@ -88,14 +85,16 @@ export default class UserInput extends React.Component {
   }
 
   selectProfile(event) {
-    this.setState({hasSend: false})
-    this.profile = event.target.value
+    let profile = event.target.value
+    this.setState({
+      inputProfile: profile
+    })
 
     if(!this.state.isInstantGeneration) {
       return
     }
 
-    this.props.radio.broadcast('setProfileByName', this.profile)
+    this.props.radio.broadcast('setProfileByName', profile)
   }
 
   toggleInstantGeneration() {
@@ -146,7 +145,7 @@ export default class UserInput extends React.Component {
 
     this.setState({})
 
-    this.props.radio.broadcast('setProfileByName', this.profile)
+    this.props.radio.broadcast('setProfileByName', this.state.inputProfile)
     this.props.radio.broadcast('setIdentifier', this.state.inputIdentifier)
     this.props.radio.broadcast('setToken', this.state.inputToken)
 
