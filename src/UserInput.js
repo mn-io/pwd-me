@@ -60,9 +60,10 @@ export default class UserInput extends React.Component {
     if(!this.state.isInstantGeneration) {
       return
     }
+    this.clearAutoDestroy()
 
     this.timerToken = setTimeout(() => {
-      this.props.radio.broadcast('setToken', Token)
+      this.props.radio.broadcast('setToken', token)
     }, 400)
   }
 
@@ -122,9 +123,10 @@ export default class UserInput extends React.Component {
   }
 
   setAutoDestroy() {
+    this.clearAutoDestroy()
     this.autoDestroyTimeout = setTimeout(() => {
       location.reload()
-    }, 10000)
+    }, 45000)
   }
 
   clearAutoDestroy() {
@@ -144,9 +146,7 @@ export default class UserInput extends React.Component {
 
     this.setState({})
 
-    if(this.profile) {
-      this.props.radio.broadcast('setProfileByName', this.profile)
-    }
+    this.props.radio.broadcast('setProfileByName', this.profile)
     this.props.radio.broadcast('setIdentifier', this.state.inputIdentifier)
     this.props.radio.broadcast('setToken', this.state.inputToken)
 
@@ -197,7 +197,7 @@ export default class UserInput extends React.Component {
 
           <div className="checkbox">
             <label>
-              <input type="checkbox" checked={this.state.isAutoDestroy} onChange={this.toggleAutoDestroy} />reload page after 10 sec
+              <input type="checkbox" checked={this.state.isAutoDestroy} onChange={this.toggleAutoDestroy} />reload page after 45 sec
             </label>
           </div>
 

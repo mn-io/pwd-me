@@ -17,6 +17,14 @@
     "Skype": {
       "validCharacters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890!\"#$%&,!\"#$%&,",
       "constraints": ["(?=(.*\\d){2})", "(?=.*[a-zA-Z]){2}"]
+    },
+    "Ebay": {
+      "validCharacters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890!@#$~-",
+      "constraints": ["(?=(.*\\d){1})", "(?=.*[a-zA-Z]){1}", "(?=.*[!@#$~-]){1}"]
+    },
+    "Google": {
+      "validCharacters": "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890!\"#$%&'()*+,-./:;<=>?@[\\]^{|}~",
+      "constraints": ["(^\\S).*", ".*\\S$"]
     }
   },
 
