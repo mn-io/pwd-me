@@ -80,7 +80,7 @@ export default class HashBox {
   }
 
   setToken(token) {
-    if("" === token) {
+    if("" === token || undefined === token) {
       token = null
     }
 
