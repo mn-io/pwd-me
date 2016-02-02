@@ -25,6 +25,9 @@
     "Google": {
       "validCharacters": "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890!\"#$%&'()*+,-./:;<=>?@[\\]^{|}~",
       "constraints": ["(^\\S).*", ".*\\S$"]
+    },
+    "VeraCrypt": {
+      "validCharacters": "!\"#$%&'()*+,- ./0123456789:;<=> ?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~ "
     }
   },
 
