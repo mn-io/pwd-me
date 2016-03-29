@@ -119,6 +119,7 @@ body {
 
 #hashOutput .table-cell input {
   border: 0;
+  background-color: white;
 }
 
 @media (max-width: 300px) {
