@@ -2,7 +2,9 @@ import React from 'react'
 import _ from 'lodash'
 import moment from 'moment'
 
-export default class TimeEpocheHelper extends React.Component {
+import ReactComponent from './ReactComponent.react'
+
+export default class TimeEpocheHelper extends ReactComponent {
   constructor(props) {
     super(props)
 
@@ -13,8 +15,6 @@ export default class TimeEpocheHelper extends React.Component {
     }
 
     this.props.radio.broadcast('setTimeEpoche', 0)
-
-    _.bindAll(this, 'componentDidMount', 'componentWillUnmount', 'tick', 'toggleVisibility')
   }
 
   componentDidMount() {

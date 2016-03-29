@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import Airwaves from 'airwaves'
 import xhr from 'xhr'
 
-import UserInput from './UserInput'
-import HashOutput from './HashOutput'
+import UserInput from './UserInput.react'
+import HashOutput from './HashOutput.react'
 import HashBox from './HashBox'
 
 import builtinConfig from '../public/config.json'

@@ -1,9 +1,10 @@
 import React from 'react'
 import _ from 'lodash'
 
+import ReactComponent from './ReactComponent.react'
 import HashBox from './HashBox'
 
-export default class ShowConfigToggle extends React.Component {
+export default class ShowConfigToggle extends ReactComponent {
   constructor(props) {
     super(props)
 
@@ -11,8 +12,6 @@ export default class ShowConfigToggle extends React.Component {
       visible: false,
       config: this.props.config
     }
-
-    _.bindAll(this, 'toggleVisibility', 'setProfile')
   }
 
   componentDidMount() {

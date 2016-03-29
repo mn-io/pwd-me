@@ -2,10 +2,11 @@ import React from 'react'
 import _ from 'lodash'
 import Entities from 'html-entities'
 
-import TimeEpocheHelper from './TimeEpocheHelper'
-import ShowConfigToggle from './ShowConfigToggle'
+import ReactComponent from './ReactComponent.react'
+import TimeEpocheHelper from './TimeEpocheHelper.react'
+import ShowConfigToggle from './ShowConfigToggle.react'
 
-export default class UserInput extends React.Component {
+export default class UserInput extends ReactComponent {
   constructor(props) {
     super(props)
 
@@ -18,19 +19,6 @@ export default class UserInput extends React.Component {
     }
 
     this.escapeHelper = new Entities.AllHtmlEntities()
-
-    _.bindAll(this,
-      'showToken',
-      'setToken',
-      'setIdentifier',
-      'selectProfile',
-      'toggleInstantGeneration',
-      'sendData',
-      'setAutoDestroy',
-      'clearAutoDestroy',
-      'toggleAutoDestroy',
-      'outputGenerated'
-    )
   }
 
   componentDidMount() {

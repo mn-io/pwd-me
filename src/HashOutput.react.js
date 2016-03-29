@@ -1,7 +1,9 @@
 import React from 'react'
 import _ from 'lodash'
 
-class HashRow extends React.Component {
+import ReactComponent from './ReactComponent.react'
+
+class HashRow extends ReactComponent {
   handleFocus(event) {
     let target = event.target;
     setTimeout(() => {
@@ -41,7 +43,7 @@ class HashRow extends React.Component {
   }
 }
 
-export default class HashOutput extends React.Component {
+export default class HashOutput extends ReactComponent {
   constructor(props) {
     super(props)
 
@@ -50,8 +52,6 @@ export default class HashOutput extends React.Component {
     this.state = {
       hashs : []
     }
-
-    _.bindAll(this, 'fillFields')
   }
 
   componentDidMount() {
