@@ -22,7 +22,7 @@ class HashRow extends ReactComponent {
 
     let form = new FormData()
     form.append('accessToken', this.props.otm.accessToken)
-    form.append('payload', this.props.hashs)
+    form.append('payload', this.props.hashs.join('\n\n'))
 
     xhr.post(this.props.otm.uri, {body: form}, xhrCallback)
   }
