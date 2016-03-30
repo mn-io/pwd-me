@@ -3,12 +3,15 @@ import _ from 'lodash'
 
 import ReactComponent from './ReactComponent.react'
 
+let scrollRight = () => {
+  document.body.scrollLeft += 300
+  document.documentElement.scrollLeft += 300
+}
+
 class HashRow extends ReactComponent {
   handleFocus(event) {
-    let target = event.target;
-    setTimeout(() => {
-      target.select();
-    }, 0);
+    let select = () => event.target.select()
+    setTimeout(select, 0)
   }
 
   render() {
@@ -21,17 +24,16 @@ class HashRow extends ReactComponent {
       background: currentColor
     }
 
-    let fields = []
-    for (let i = 0; i < hashs.length; i++) {
+    let fields = _.map(hashs, (hash, i) => {
       let widthStyle = {
-        width: hashs[i] ? hashs[i].length + 'rem' : '3rem'
+        width: hash ? hash.length + 'rem' : '3rem'
       }
-      fields.push(<div className='table-cell' key={i}>
+      return <div className='table-cell' key={i}>
         <input type='text' value={hashs[i]} readOnly={true} onFocus={this.handleFocus} style={widthStyle} />
-      </div>);
-    }
+      </div>
+    })
 
-    return (<div className='table-row'>
+    return <div className='table-row'>
       <div className='table-cell'>
         {index}
       </div>
@@ -39,7 +41,7 @@ class HashRow extends ReactComponent {
         <div className='rounded' style={colorStyle}></div>
       </div>
       {fields}
-    </div>)
+    </div>
   }
 }
 
@@ -63,18 +65,9 @@ export default class HashOutput extends ReactComponent {
   }
 
   fillFields(hashs) {
-    let setStateAsync = () => {
-      this.setState({
-        hashs: hashs
-      })
-    }
+    let setStateAsync = () => this.setState({hashs})
 
     if(this.isFirstTime) {
-      let scrollRight = () => {
-        document.body.scrollLeft += 300
-        document.documentElement.scrollLeft += 300
-      }
-
       setTimeout(scrollRight, 40)
       this.isFirstTime = false
     }
@@ -85,14 +78,13 @@ export default class HashOutput extends ReactComponent {
   render() {
     let hashs = this.state.hashs
     if(!hashs || hashs.length === 0) {
-      return (<div></div>)
+      return false
     }
 
-    let rows = [];
-    for (let i = 0; i < hashs.length; i++) {
-      rows.push(<HashRow key={i} index={i+1} hashs={hashs[i]} config={this.props.config} />);
-    }
+    let rows = _.map(hashs, (hash, i) => {
+      return <HashRow key={i} index={i+1} hashs={hashs[i]} config={this.props.config} />
+    })
 
-    return (<div className='table'>{rows}</div>)
+    return <div className='table'>{rows}</div>
   }
 }

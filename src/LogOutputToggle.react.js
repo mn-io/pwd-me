@@ -40,10 +40,10 @@ export default class LogOutputToggle extends ReactComponent {
       switch (log.channel) {
         case 'warn':
             colorLevel = 'color-warn'
-          break;
+          break
         case 'error':
           colorLevel = 'color-error'
-          break;
+          break
         default:
           colorLevel = 'color-log'
       }
