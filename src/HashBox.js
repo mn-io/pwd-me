@@ -16,18 +16,15 @@ export default class HashBox {
       'invokeCallbackWithReturn'
     )
 
-    if(runSelfTest) {
-      this.selfTest()
-    }
+    runSelfTest && this.selfTest()
 
     this.config = HashBox.createConfig(config)
     this.defaultConfig = _.cloneDeep(this.config)
+    this.callback = callback
 
     this.state = {
       epocheCount: 0
     }
-
-    this.callback = callback
   }
 
   selfTest() {
@@ -88,8 +85,12 @@ export default class HashBox {
     assert(this.config.tokenHashingIterations > 0)
     assert(this.config.hashResultLengthInBytes > 0)
 
-    let tokenHashCurrentConfig = this.config.tokenSalt + this.config.tokenHashingIterations + this.config.hashResultLengthInBytes
-    if(token === this.state.token && tokenHashCurrentConfig === this.state.tokenHashUsedConfig) {
+    let tokenHashCurrentConfig = this.config.tokenSalt +
+      this.config.tokenHashingIterations +
+      this.config.hashResultLengthInBytes
+
+    if(token === this.state.token
+      && tokenHashCurrentConfig === this.state.tokenHashUsedConfig) {
       return
     }
 
@@ -99,7 +100,11 @@ export default class HashBox {
       return this.invokeCallbackWithReturn()
     }
 
-    let hash = pbkdf2(token, this.config.tokenSalt , this.config.tokenHashingIterations, this.config.hashResultLengthInBytes)
+    let hash = pbkdf2(token,
+      this.config.tokenSalt ,
+      this.config.tokenHashingIterations,
+      this.config.hashResultLengthInBytes)
+
     this.state.tokenHashUsedConfig = tokenHashCurrentConfig
     this.state.tokenHash = hash
     this.state.token = token
@@ -123,8 +128,10 @@ export default class HashBox {
 
     let profile = this.profilesConfig[name]
     if(profile) {
+      console.log(`Using profile with name ${name}`)
       this.config = HashBox.createConfig(this.defaultConfig, profile)
     } else {
+      console.log(`Using default profile, name ${name} not found`)
       this.config = this.defaultConfig
     }
 
@@ -141,7 +148,7 @@ export default class HashBox {
     }
 
     if(config.constraints) {
-      config.constraints = _.map(config.constraints, (constraint) => {
+      config.constraints = _.map(config.constraints, constraint => {
         return 'string' === typeof(constraint) ? new RegExp(constraint) : constraint
       })
     }
@@ -158,19 +165,23 @@ export default class HashBox {
     assert(this.config.rowHashIterations > 0)
     assert(this.config.hashResultLengthInBytes > 0)
 
-    let key = 'id=' + this.state.identifier + '&token=' + this.state.tokenHash + '&epoche=' + this.state.epocheCount
+    let key = `id=${this.state.identifier}&token=${this.state.tokenHash}&epoche=${this.state.epocheCount}`
 
     let hashs = []
     for (let i = 0; i < this.config.outputRows; i++) {
-      let currentHash = pbkdf2(key, i + this.config.keySalt, this.config.rowHashIterations, this.config.hashResultLengthInBytes)
+      let currentHash = pbkdf2(key, i + this.config.keySalt,
+        this.config.rowHashIterations,
+        this.config.hashResultLengthInBytes)
       let readablePwd = HashBox.translateHash(currentHash, this.config.validCharacters)
       let pwds = HashBox.createColumns(readablePwd, this.config.outputColumns)
-      pwds = _.map(pwds, (pwd) => {
+
+      pwds = _.map(pwds, pwd => {
         if(!HashBox.verifyPwdAgainstConstraints(pwd, this.config.constraints)) {
           return _.repeat('_', pwd.length)
         }
         return pwd
       })
+
       hashs.push(pwds)
     }
 
@@ -211,7 +222,7 @@ export default class HashBox {
 
   static verifyPwdAgainstConstraints(pwd, constraints) {
     let valid = true
-    _.each(constraints, (constraint) => {
+    _.each(constraints, constraint => {
       valid = valid && constraint.test(pwd)
     })
     return valid

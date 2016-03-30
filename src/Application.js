@@ -20,7 +20,7 @@ window.onload = () => xhr.get(configUrl, xhrCallback)
 let xhrCallback = (err, resp) => {
   let config = loadConfig(err, resp, builtinConfig)
 
-  let callback = (hashs) => {radio.broadcast('hashsCalculated', hashs)}
+  let callback = hashs => {radio.broadcast('hashsCalculated', hashs)}
   let box = new HashBox(config.hashBox, callback)
   box.setProfilesConfig(config.profiles)
 

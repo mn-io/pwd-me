@@ -45,8 +45,8 @@ describe('HashBox', () => {
       assert.notDeepEqual(state2, state3)
     })
 
-    it('returns new state by callback', (done) => {
-      let callback = (hashs) => {
+    it('returns new state by callback', done => {
+      let callback = hashs => {
         assert.deepEqual(inAndOut.hashs, hashs)
         done()
       }
@@ -100,7 +100,7 @@ describe('HashBox', () => {
       let box = new HashBox(config, null, false)
     })
 
-    it('does not init without config', (done) => {
+    it('does not init without config', done => {
       try{
         let box = new HashBox()
       } catch(e) {
@@ -422,6 +422,14 @@ describe('HashBox', () => {
       state = box.setProfileByName('')
       assert.equal(box.state.tokenHash.toString('hex'), inAndOut.tokenHash)
       assert.deepEqual(state, inAndOut.hashs)
+
+      state = box.setProfileByName('Skype')
+      assert.notEqual(box.state.tokenHash.toString('hex'), inAndOut.tokenHash)
+      assert.notDeepEqual(state, inAndOut.hashs)
+
+      state = box.setProfileByName('')
+      assert.equal(box.state.tokenHash.toString('hex'), inAndOut.tokenHash)
+      assert.deepEqual(state, inAndOut.hashs)
     })
 
     it('resets config with invalid profile', () => {
@@ -440,8 +448,8 @@ describe('HashBox', () => {
       box.setToken(inAndOut.token)
       let state = box.setProfileByName('Skype')
 
-      _.each(state, (pwds) => {
-        _.each(pwds, (pwd) => {
+      _.each(state, pwds => {
+        _.each(pwds, pwd => {
           if(_.startsWith(pwd, '___')) {
             return
           }
