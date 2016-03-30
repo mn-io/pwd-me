@@ -15,7 +15,7 @@ export default class ShowConfigToggle extends ReactComponent {
   }
 
   componentDidMount() {
-   this.props.radio.subscribe('setProfileByName', this.setProfile)
+    this.props.radio.subscribe('setProfileByName', this.setProfile)
   }
 
   componentWillUnmount() {
@@ -39,45 +39,41 @@ export default class ShowConfigToggle extends ReactComponent {
     })
   }
 
-  render() {
-    let renderConfigTable = () => {
-      let configRows = []
-
-      let keys = Object.keys(this.state.config)
-      for (let index in keys) {
-        let currentKey = keys[index]
-        let currentValue = this.state.config[currentKey]
-
-        currentKey = currentKey.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
-        if('object' === typeof(currentValue)) {
-          currentValue = currentValue.toString()
-        }
-        if(currentValue.length > 30) {
-          currentValue = (<input type='text' readOnly={true} value={currentValue} />)
-        }
-
-        configRows.push(<tr key={index}>
-            <td>{currentKey}</td>
-            <td>{currentValue}</td>
-          </tr>)
+  renderConfigTable() {
+    let configRows = _.map(this.state.config, (value, key) => {
+      let readableKey = key.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
+      if('object' === typeof(value)) {
+        value = value.toString()
+      }
+      if(value.length > 30) {
+        value = (<input type='text' readOnly={true} value={value} />)
       }
 
-      return (<table className='table table-condensed table-striped info-config'>
-          <tbody>{configRows}</tbody>
-        </table>)
-    }
+    return <tr key={key}>
+        <td>{readableKey}</td>
+        <td>{value}</td>
+      </tr>
+    })
 
-    let configTable = this.state.visible ? renderConfigTable() : (<div></div>)
+    return <table className='table table-condensed table-striped info-config'>
+        <tbody>{configRows}</tbody>
+      </table>
+  }
 
-    return (
-      <div>
+  render() {
+    let configTable = this.state.visible && this.renderConfigTable()
+
+    return <div>
         <div className='checkbox'>
           <label>
-            <input type='checkbox' checked={this.state.visible} onChange={this.toggleVisibility} />show current configuration
+            <input type='checkbox'
+              checked={this.state.visible}
+              onChange={this.toggleVisibility} />
+            show current configuration
           </label>
         </div>
 
       {configTable}
-      </div>)
+      </div>
   }
 }
