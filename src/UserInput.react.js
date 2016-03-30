@@ -16,7 +16,7 @@ export default class UserInput extends ReactComponent {
       isAutoDestroy: true,
       inputIdentifier: '',
       inputToken: '',
-      inputProfile: ''
+      inputProfile: Object.keys(this.props.profiles)[0]
     }
 
     this.escapeHelper = new Entities.AllHtmlEntities()
@@ -68,6 +68,7 @@ export default class UserInput extends ReactComponent {
 
   selectProfile(event) {
     let profile = event.target.value
+
     this.setState({
       inputProfile: profile
     })
@@ -125,73 +126,70 @@ export default class UserInput extends ReactComponent {
     }
   }
 
+  renderProfiles() {
+    return _.map(this.props.profiles, (profile, key) => {
+      return <option key={key} value={key}>{key}</option>
+    })
+  }
+
   render() {
-    let renderProfiles = () => {
-      let keys = this.props.profiles ? Object.keys(this.props.profiles) : []
-      keys.unshift('')
-      return keys.map((key, i) => {
-        return (<option key={i} value={key}>{key}</option>)
-      })
-    }
+    return <div>
+      <h1 id='title'>key derivator</h1>
+      <form className='form-horizontal' onSubmit={this.sendData}>
 
-    return (
-      <div>
-        <h1 id='title'>key derivator</h1>
-        <form className='form-horizontal' onSubmit={this.sendData}>
-
-            <div className='input-group with-spacer'>
-              <input type={this.state.tokenFieldType}
-                className='form-control'
-                aria-label='Token (slow calculation)'
-                onKeyUp={this.setToken}
-                tabIndex='1'
-                autoFocus={true} />
-              <div className='input-group-btn'>
-                <button type='button'
-                  className='btn btn-default'
-                  aria-label='Hint'
-                  onClick={this.showToken}>
-                  <span className='glyphicon glyphicon-eye-open'></span>
-                </button>
-              </div>
+          <div className='input-group with-spacer'>
+            <input type={this.state.tokenFieldType}
+              className='form-control'
+              aria-label='Token (slow calculation)'
+              onKeyUp={this.setToken}
+              tabIndex='1'
+              autoFocus={true} />
+            <div className='input-group-btn'>
+              <button type='button'
+                className='btn btn-default'
+                aria-label='Hint'
+                onClick={this.showToken}>
+                <span className='glyphicon glyphicon-eye-open'></span>
+              </button>
             </div>
-
-            <input type='text'
-              className='form-control with-spacer'
-              placeholder='Identifier'
-              onKeyUp={this.setIdentifier}
-              tabIndex='2' />
-
-            <select className='form-control with-spacer'
-              onChange={this.selectProfile}
-              tabIndex='3'>
-              {renderProfiles()}
-            </select>
-
-          <ConfigToggle config={this.props.config}
-            profiles={this.props.profiles}
-            radio={this.props.radio} />
-
-          <LogOutputToggle radio={this.props.radio} />
-
-          <div className='checkbox'>
-            <label>
-              <input type='checkbox'
-                checked={this.state.isAutoDestroy}
-                onChange={this.toggleAutoDestroy} />
-            reload page after 45 sec
-            </label>
           </div>
 
-          <TimeEpocheHelper intervalInMin={3} radio={this.props.radio} />
+          <input type='text'
+            className='form-control with-spacer'
+            placeholder='Identifier'
+            onKeyUp={this.setIdentifier}
+            tabIndex='2' />
 
-          <div className='pull-right'>
-            <button type='submit'
-              className='btn btn-link btn-minimal'
-              onClick={this.sendData}
-              tabIndex='4'>generate</button>
-          </div>
-        </form>
-      </div>)
+          <select className='form-control with-spacer'
+            onChange={this.selectProfile}
+            tabIndex='3'>
+            {this.renderProfiles()}
+          </select>
+
+        <ConfigToggle config={this.props.config}
+          profiles={this.props.profiles}
+          radio={this.props.radio} />
+
+        <LogOutputToggle radio={this.props.radio} />
+
+        <div className='checkbox'>
+          <label>
+            <input type='checkbox'
+              checked={this.state.isAutoDestroy}
+              onChange={this.toggleAutoDestroy} />
+          reload page after 45 sec
+          </label>
+        </div>
+
+        <TimeEpocheHelper intervalInMin={3} radio={this.props.radio} />
+
+        <div className='pull-right'>
+          <button type='submit'
+            className='btn btn-link btn-minimal'
+            onClick={this.sendData}
+            tabIndex='4'>generate</button>
+        </div>
+      </form>
+    </div>
   }
 }
