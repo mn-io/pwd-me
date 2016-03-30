@@ -136,6 +136,16 @@ body {
   }
 }
 
+.color-log, .color-info {
+  color: black;
+}
+.color-warn {
+  color: #BB8717;
+}
+.color-error {
+  color: #D33F3F;
+}
+
 /* bootstrap hacks */
 .form-inline .form-control {
   display: inline-block;

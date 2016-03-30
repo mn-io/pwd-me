@@ -5,6 +5,7 @@ import xhr from 'xhr'
 
 import UserInput from './UserInput.react'
 import HashOutput from './HashOutput.react'
+import {Logger} from './LogOutputToggle.react'
 import HashBox from './HashBox'
 
 import builtinConfig from '../public/config.json'
@@ -12,10 +13,12 @@ import builtinConfig from '../public/config.json'
 let configUrl = 'config.json'
 let radio = new Airwaves.Channel()
 
+Logger.interceptConsole(radio)
+
 window.onload = () => {
   let loadConfig = (err, resp, defaultConfig) => {
     if(err || !resp.body) {
-      console.log('Loading configuration from "' + configUrl + '": FAILED, using builtin fallback, error occured on loading: "' +  err + '"')
+      console.warn('Loading configuration from "' + configUrl + '": FAILED, using builtin fallback, error occured on loading: "' +  err + '"')
       return defaultConfig
     }
 
@@ -24,7 +27,7 @@ window.onload = () => {
       console.log('Loading configuration from "' + configUrl + '": OK')
       return config
     } catch (e) {
-      console.log('Loading configuration from "' + configUrl + '": FAILED, using builtin fallback, error occured on parsing: "' +  e + '"')
+      console.warn('Loading configuration from "' + configUrl + '": FAILED, using builtin fallback, error occured on parsing: "' +  e + '"')
       return defaultConfig
     }
   }

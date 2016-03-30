@@ -8,23 +8,22 @@ export default class LogOutputToggle extends ReactComponent {
     super(props)
 
     this.state = {
-      visible: false,
-      entries: []
+      visible: false
     }
   }
 
   componentDidMount() {
-   this.props.radio.subscribe('toggleLog', this.toggleVisibility)
    this.props.radio.subscribe('addLogEntry', this.addLogEntry)
   }
 
   componentWillUnmount() {
-    this.props.radio.unsubscribe('toggleLog', this.toggleVisibility)
     this.props.radio.unsubscribe('addLogEntry', this.addLogEntry)
   }
 
-  addLogEntry(msg) {
-
+  addLogEntry(msg, channel) {
+    if(this.state.visible) {
+      this.setState()
+    }
   }
 
   toggleVisibility() {
@@ -34,17 +33,25 @@ export default class LogOutputToggle extends ReactComponent {
   }
 
   renderLogTable() {
-    let logRows = []
+    let logs = Logger.getInstance().getLogs()
+    let logRows = _.map(logs, (log, i) => {
+      let colorLevel
 
-    for (let index in this.state.entries) {
-      let current = this.state.entries[index]
+      switch (log.channel) {
+        case 'warn':
+            colorLevel = 'color-warn'
+          break;
+        case 'error':
+          colorLevel = 'color-error'
+          break;
+        default:
+          colorLevel = 'color-log'
+      }
 
-      logRows.push(<tr key={index}>
-          <td>{current}</td>
-        </tr>)
-    }
+      return <tr key={i}><td className={colorLevel}>{log.msg}</td></tr>
+    })
 
-    return <table className="table table-condensed table-striped info-config">
+    return <table className='table table-condensed table-striped info-config'>
         <tbody>{logRows}</tbody>
       </table>
   }
@@ -53,13 +60,55 @@ export default class LogOutputToggle extends ReactComponent {
     let logTable = this.state.visible && this.renderLogTable()
 
     return <div>
-        <div className="checkbox">
+        <div className='checkbox'>
           <label>
-            <input type="checkbox" checked={this.state.visible} onChange={this.toggleVisibility} />show log
+            <input type='checkbox'
+              checked={this.state.visible}
+              onChange={this.toggleVisibility} />
+            show log
           </label>
         </div>
 
       {logTable}
       </div>
+  }
+}
+
+let loggerInstance
+export class Logger {
+
+  constructor() {
+    this.logs = []
+  }
+
+  static getInstance() {
+    if (!loggerInstance) {
+      loggerInstance = new Logger()
+    }
+    return loggerInstance
+  }
+
+  log(channel, radio, console) {
+    return msg => {
+      console[channel](msg)
+      this.logs.push({msg, channel})
+      radio.broadcast('addLogEntry', msg, channel)
+    }
+  }
+
+  getLogs() {
+    return this.logs
+  }
+
+  static interceptConsole(radio) {
+    let l = Logger.getInstance()
+
+    let winConsole = window.console
+    window.console = {
+      log: l.log('log', radio, winConsole),
+      info: l.log('info', radio, winConsole),
+      warn: l.log('warn', radio, winConsole),
+      error: l.log('error', radio, winConsole)
+    }
   }
 }
