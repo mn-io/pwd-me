@@ -7,9 +7,8 @@ export default class LogOutputToggle extends ReactComponent {
   constructor(props) {
     super(props)
 
-    this.state = {
-      visible: false
-    }
+    let visible = false
+    this.state = {visible}
   }
 
   componentDidMount() {
@@ -22,7 +21,7 @@ export default class LogOutputToggle extends ReactComponent {
 
   addLogEntry(msg, channel) {
     if(this.state.visible) {
-      this.setState()
+      this.forceUpdate()
     }
   }
 
@@ -36,7 +35,6 @@ export default class LogOutputToggle extends ReactComponent {
     let logs = Logger.getInstance().getLogs()
     let logRows = _.map(logs, (log, i) => {
       let colorLevel
-
       switch (log.channel) {
         case 'warn':
             colorLevel = 'color-warn'
@@ -48,7 +46,11 @@ export default class LogOutputToggle extends ReactComponent {
           colorLevel = 'color-log'
       }
 
-      return <tr key={i}><td className={colorLevel}>{log.msg}</td></tr>
+      let msg = log.msg
+      if(!_.isString(msg)) {
+        msg = JSON.stringify(msg)
+      }
+      return <tr key={i}><td className={colorLevel}>{msg}</td></tr>
     })
 
     return <table className='table table-condensed table-striped info-config'>
@@ -89,7 +91,11 @@ export class Logger {
   }
 
   log(channel, radio, console) {
-    return msg => {
+    return (...msg) => {
+      if(msg && msg.length == 1) {
+        msg = msg[0]
+      }
+
       console[channel](msg)
       this.logs.push({msg, channel})
       radio.broadcast('addLogEntry', msg, channel)

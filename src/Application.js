@@ -30,7 +30,7 @@ let xhrCallback = (err, resp) => {
   radio.subscribe('setProfileByName', box.setProfileByName)
 
   ReactDOM.render(<UserInput profiles={config.profiles} config={config.hashBox} radio={radio} />, document.getElementById('userInput'))
-  ReactDOM.render(<HashOutput config={config.UI} radio={radio} />, document.getElementById('hashOutput'))
+  ReactDOM.render(<HashOutput colors={config.UI.colors} otm={config.OTM} radio={radio} />, document.getElementById('hashOutput'))
 }
 
 let loadConfig = (err, resp, defaultConfig) => {

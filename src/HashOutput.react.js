@@ -1,5 +1,6 @@
 import React from 'react'
 import _ from 'lodash'
+import xhr from 'xhr'
 
 import ReactComponent from './ReactComponent.react'
 
@@ -14,31 +15,46 @@ class HashRow extends ReactComponent {
     setTimeout(select, 0)
   }
 
-  render() {
-    let index = this.props.index
-    let colors = this.props.config.colors
-    let hashs = this.props.hashs
+  createOTM(event) {
+    let xhrCallback = (err, resp) => {
+      console.log(`Hash stored at ${this.props.otm.uri}${resp.body}`)
+    }
 
-    let currentColor = colors[index % colors.length]
+    let form = new FormData()
+    form.append('accessToken', this.props.otm.accessToken)
+    form.append('payload', this.props.hashs)
+
+    xhr.post(this.props.otm.uri, {body: form}, xhrCallback)
+  }
+
+  render() {
+    let currentColor = this.props.colors[this.props.index % this.props.colors.length]
     let colorStyle = {
       background: currentColor
     }
 
-    let fields = _.map(hashs, (hash, i) => {
+    let fields = _.map(this.props.hashs, (hash, i) => {
       let widthStyle = {
         width: hash ? hash.length + 'rem' : '3rem'
       }
       return <div className='table-cell' key={i}>
-        <input type='text' value={hashs[i]} readOnly={true} onFocus={this.handleFocus} style={widthStyle} />
+        <input type='text'
+          value={hash}
+          readOnly={true}
+          onFocus={this.handleFocus}
+          style={widthStyle} />
       </div>
     })
 
     return <div className='table-row'>
       <div className='table-cell'>
-        {index}
+        {this.props.index}
       </div>
       <div className='table-cell'>
-        <div className='rounded' style={colorStyle}></div>
+        <div className='rounded'
+          style={colorStyle}
+          onClick={this.createOTM}>
+        </div>
       </div>
       {fields}
     </div>
@@ -51,9 +67,7 @@ export default class HashOutput extends ReactComponent {
 
     this.isFirstTime = true
 
-    this.state = {
-      hashs : []
-    }
+    this.state = {hashs : []}
   }
 
   componentDidMount() {
@@ -82,7 +96,11 @@ export default class HashOutput extends ReactComponent {
     }
 
     let rows = _.map(hashs, (hash, i) => {
-      return <HashRow key={i} index={i+1} hashs={hashs[i]} config={this.props.config} />
+      return <HashRow key={i}
+        index={i+1}
+        hashs={hashs[i]}
+        colors={this.props.colors}
+        otm={this.props.otm} />
     })
 
     return <div className='table'>{rows}</div>
