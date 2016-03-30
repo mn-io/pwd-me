@@ -4,7 +4,8 @@ import Entities from 'html-entities'
 
 import ReactComponent from './ReactComponent.react'
 import TimeEpocheHelper from './TimeEpocheHelper.react'
-import ShowConfigToggle from './ShowConfigToggle.react'
+import ConfigToggle from './ConfigToggle.react'
+import LogOutputToggle from './LogOutputToggle.react'
 
 export default class UserInput extends ReactComponent {
   constructor(props) {
@@ -194,7 +195,8 @@ export default class UserInput extends ReactComponent {
               {renderProfiles()}
             </select>
 
-          <ShowConfigToggle config={this.props.config} profiles={this.props.profiles} radio={this.props.radio} />
+          <ConfigToggle config={this.props.config} profiles={this.props.profiles} radio={this.props.radio} />
+          <LogOutputToggle radio={this.props.radio} />
 
           <div className="checkbox">
             <label>
