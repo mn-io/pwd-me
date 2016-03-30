@@ -9,11 +9,13 @@
     "hashResultLengthInBytes": 128,
 
     "outputRows": 12,
-    "outputColumns": [12, 24, -1],
-    "validCharacters": "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöüÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöüÄÖÜ 1234567890 \"!$%&(){}[]-_.:,;#+*@"
+    "outputColumns": [12, 24, -1]
   },
 
   "profiles": {
+    "Default Config": {
+      "validCharacters": "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöüÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöüÄÖÜ 1234567890 \"!$%&(){}[]-_.:,;#+*@"
+    },
     "Simple": {
       "validCharacters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!#$%&,"
     },
