@@ -4,29 +4,29 @@ import _ from 'lodash'
 import HashBox from './HashBox'
 
 let config = {
-  tokenSalt: "fdF6e%! #wMe",
-  keySalt: "f134§",
+  tokenSalt: 'fdF6e%! #wMe',
+  keySalt: 'f134§',
   outputRows: 2,
   outputColumns: [6, 12, -1],
   tokenHashingIterations: 128,
   rowHashIterations: 2,
   hashResultLengthInBytes: 64,
-  validCharacters: "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 !$%&(){}[]-_.:,;#+*@",
+  validCharacters: 'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 !$%&(){}[]-_.:,;#+*@',
 }
 
 let inAndOut = {
-  identifier: "fweq342Ö43",
-  token: "345$%3",
+  identifier: 'fweq342Ö43',
+  token: '345$%3',
   epocheCount: 3,
-  tokenHash: "a4a09823a46c8240a585e81cdb0a42856ce5bdf96ad390ba3f5b142dc34a7ca37620abfe9b6ad830af1a1f040925c4c145ed6ac42e435316a32e337071fea61e",
-  hashs: [["sASH Ö","sASH Ö(YQfRy","sASH Ö(YQfRy+MZt&d v&Dn4g4ÖünHt3"], ["D[4ia8","D[4ia8U o4af","D[4ia8U o4afJrtÖjOh,7N}ÜXi&yF zd"]]
+  tokenHash: 'a4a09823a46c8240a585e81cdb0a42856ce5bdf96ad390ba3f5b142dc34a7ca37620abfe9b6ad830af1a1f040925c4c145ed6ac42e435316a32e337071fea61e',
+  hashs: [['sASH Ö','sASH Ö(YQfRy','sASH Ö(YQfRy+MZt&d v&Dn4g4ÖünHt3'], ['D[4ia8','D[4ia8U o4af','D[4ia8U o4afJrtÖjOh,7N}ÜXi&yF zd']]
 }
 
 let profiles = {
   Skype: {
-    tokenSalt: "fdF6e%! #wM2",
-    validCharacters: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890!\"#$%&,!\"#$%&,",
-    constraints: ["(?=(.*\\d){2})", "(?=.*[a-zA-Z]){2}"]
+    tokenSalt: 'fdF6e%! #wM2',
+    validCharacters: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890!\'#$%&,!\'#$%&,',
+    constraints: ['(?=(.*\\d){2})', '(?=.*[a-zA-Z]){2}']
   }
 }
 
@@ -124,7 +124,7 @@ describe('HashBox', () => {
     })
 
     it('clears hashs on empty identifier and return new state', () => {
-      let result = box.setIdentifier("")
+      let result = box.setIdentifier('')
       assert.deepEqual([], result)
       assert(!box.state.identifier)
     })
@@ -151,7 +151,7 @@ describe('HashBox', () => {
     })
 
     it('clears hashs on empty token and return new state', () => {
-      let result = box.setToken("")
+      let result = box.setToken('')
       assert.deepEqual([], result)
       assert(!box.state.token)
       assert(!box.state.tokenHash)
@@ -166,7 +166,7 @@ describe('HashBox', () => {
 
     it('calculates invalid hash with wrong config', () => {
       let wrongConfig = _.cloneDeep(config)
-      wrongConfig.tokenSalt = "something else"
+      wrongConfig.tokenSalt = 'something else'
 
       box = new HashBox(wrongConfig, null, false)
       let result = box.setToken(inAndOut.token)
@@ -196,13 +196,13 @@ describe('HashBox', () => {
       let result = box.createHashs()
       assert(!result)
 
-      box.setIdentifier("dummy")
+      box.setIdentifier('dummy')
       result = box.createHashs()
       assert(!result)
     })
 
     it('returns no new state if missing identifier', () => {
-      box.setToken("dummy")
+      box.setToken('dummy')
       let result = box.createHashs()
       assert(!result)
     })
@@ -249,7 +249,7 @@ describe('HashBox', () => {
 
     it('returns different hashs with changed keySalt', () => {
       let newConfig = _.cloneDeep(config)
-      newConfig.keySalt = "this is a test"
+      newConfig.keySalt = 'this is a test'
       box = new HashBox(newConfig, null, false)
 
       box.setIdentifier(inAndOut.identifier)
@@ -278,7 +278,7 @@ describe('HashBox', () => {
     })
 
     it('merges config with constraints', () => {
-      let constraints = ["(?=(.*\\d){2})", "(?=.*[a-zA-Z]){2}"]
+      let constraints = ['(?=(.*\\d){2})', '(?=.*[a-zA-Z]){2}']
       let config = {'test': 'me', 'test1': 'me11',
         constraints: [constraints[0]]
       }
@@ -293,7 +293,7 @@ describe('HashBox', () => {
     })
 
     it('re-merges config with constraints', () => {
-      let constraints = ["(?=(.*\\d){2})", "(?=.*[a-zA-Z]){2}"]
+      let constraints = ['(?=(.*\\d){2})', '(?=.*[a-zA-Z]){2}']
       let config = {'test': 'me', 'test1': 'me11',
         constraints: [constraints[0]]
       }
@@ -325,14 +325,14 @@ describe('HashBox', () => {
 
     it('replaces bytes to character', () => {
       let buf =  new Buffer('aaaaaa')
-      let result = HashBox.translateHash(buf, "abc")
+      let result = HashBox.translateHash(buf, 'abc')
       assert.equal('cab', result)
     })
 
     it('does not work with invalid config', (done) => {
       try{
         let buf =  new Buffer('aaaaaa')
-        hashBox.translateHash(buf, "")
+        hashBox.translateHash(buf, '')
       } catch(e) {
         assert(e)
         done()
@@ -362,7 +362,7 @@ describe('HashBox', () => {
   })
 
   describe('#createColumns', () => {
-    let abc = "abcdefghijklmnopqrstuvwxyz"
+    let abc = 'abcdefghijklmnopqrstuvwxyz'
 
     it('works with default config', () => {
       let result = HashBox.createColumns(abc, config.outputColumns)
@@ -394,7 +394,7 @@ describe('HashBox', () => {
     })
 
     it('doesn\'t do anything without profiles on profile select', () => {
-      let result = box.setProfileByName("Skype")
+      let result = box.setProfileByName('Skype')
       assert(!result)
       assert(!box.state.selectedProfileByName)
     })

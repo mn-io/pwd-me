@@ -174,47 +174,47 @@ export default class UserInput extends ReactComponent {
 
     return (
       <div>
-        <h1 id="title">key derivator</h1>
-        <form className="form-horizontal" onSubmit={this.sendData}>
+        <h1 id='title'>key derivator</h1>
+        <form className='form-horizontal' onSubmit={this.sendData}>
 
-            <div className="input-group with-spacer">
-              <input type={this.state.tokenFieldType} className="form-control"
-                aria-label="Token (slow calculation)" onKeyUp={this.setToken}
-                tabIndex="1" autoFocus={true} />
-              <div className="input-group-btn">
-                <button type="button" className="btn btn-default" aria-label="Hint" onClick={this.showToken}>
-                  <span className="glyphicon glyphicon-eye-open"></span>
+            <div className='input-group with-spacer'>
+              <input type={this.state.tokenFieldType} className='form-control'
+                aria-label='Token (slow calculation)' onKeyUp={this.setToken}
+                tabIndex='1' autoFocus={true} />
+              <div className='input-group-btn'>
+                <button type='button' className='btn btn-default' aria-label='Hint' onClick={this.showToken}>
+                  <span className='glyphicon glyphicon-eye-open'></span>
                 </button>
               </div>
             </div>
 
-            <input type="text" className="form-control with-spacer" placeholder="Identifier"
-              onKeyUp={this.setIdentifier} tabIndex="2" />
+            <input type='text' className='form-control with-spacer' placeholder='Identifier'
+              onKeyUp={this.setIdentifier} tabIndex='2' />
 
-            <select className="form-control with-spacer" onChange={this.selectProfile} tabIndex="3">
+            <select className='form-control with-spacer' onChange={this.selectProfile} tabIndex='3'>
               {renderProfiles()}
             </select>
 
           <ConfigToggle config={this.props.config} profiles={this.props.profiles} radio={this.props.radio} />
           <LogOutputToggle radio={this.props.radio} />
 
-          <div className="checkbox">
+          <div className='checkbox'>
             <label>
-              <input type="checkbox" checked={this.state.isInstantGeneration} onChange={this.toggleInstantGeneration} />instant generate
+              <input type='checkbox' checked={this.state.isInstantGeneration} onChange={this.toggleInstantGeneration} />instant generate
             </label>
           </div>
 
-          <div className="checkbox">
+          <div className='checkbox'>
             <label>
-              <input type="checkbox" checked={this.state.isAutoDestroy} onChange={this.toggleAutoDestroy} />reload page after 45 sec
+              <input type='checkbox' checked={this.state.isAutoDestroy} onChange={this.toggleAutoDestroy} />reload page after 45 sec
             </label>
           </div>
 
           <TimeEpocheHelper intervalInMin={3} radio={this.props.radio} />
 
-          <div className="pull-right">
-            <button type="submit" className="btn btn-link btn-minimal" onClick={this.sendData}
-              disabled={this.state.isInstantGeneration} tabIndex="4">generate</button>
+          <div className='pull-right'>
+            <button type='submit' className='btn btn-link btn-minimal' onClick={this.sendData}
+              disabled={this.state.isInstantGeneration} tabIndex='4'>generate</button>
           </div>
         </form>
       </div>)

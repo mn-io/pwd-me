@@ -32,29 +32,29 @@ export default class HashBox {
 
   selfTest() {
     let config = {
-      tokenSalt: "fdF6e%! #wMe",
-      keySalt: "f134§",
+      tokenSalt: 'fdF6e%! #wMe',
+      keySalt: 'f134§',
       outputRows: 2,
       outputColumns: [6, 12, -1],
       tokenHashingIterations: 128,
       rowHashIterations: 2,
       hashResultLengthInBytes: 64,
-      validCharacters: "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 !$%&(){}[]-_.:,;#+*@",
+      validCharacters: 'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöü ÄÖÜ 1234567890 !$%&(){}[]-_.:,;#+*@',
     }
     let tmpInstance = new HashBox(config, null, false)
 
-    tmpInstance.setToken("345$%3")
+    tmpInstance.setToken('345$%3')
 
     let actualTokenHash = tmpInstance.state.tokenHash.toString('hex')
-    let actualState = tmpInstance.setIdentifier("fweq342Ö43")
+    let actualState = tmpInstance.setIdentifier('fweq342Ö43')
 
-    let expectedTokenHash = "a4a09823a46c8240a585e81cdb0a42856ce5bdf96ad390ba3f5b142dc34a7ca37620abfe9b6ad830af1a1f040925c4c145ed6ac42e435316a32e337071fea61e"
-    let expectedState = [["sASH Ö","sASH Ö(YQfRy","sASH Ö(YQfRy+MZt&d v&Dn4g4ÖünHt3"], ["D[4ia8","D[4ia8U o4af","D[4ia8U o4afJrtÖjOh,7N}ÜXi&yF zd"]]
+    let expectedTokenHash = 'a4a09823a46c8240a585e81cdb0a42856ce5bdf96ad390ba3f5b142dc34a7ca37620abfe9b6ad830af1a1f040925c4c145ed6ac42e435316a32e337071fea61e'
+    let expectedState = [['sASH Ö','sASH Ö(YQfRy','sASH Ö(YQfRy+MZt&d v&Dn4g4ÖünHt3'], ['D[4ia8','D[4ia8U o4af','D[4ia8U o4afJrtÖjOh,7N}ÜXi&yF zd']]
 
     assert.equal(expectedTokenHash, actualTokenHash)
     assert.deepEqual(actualState, expectedState)
 
-    console.log("HashBox self test: OK")
+    console.log('HashBox self test: OK')
   }
 
   setProfilesConfig(profiles) {
@@ -62,7 +62,7 @@ export default class HashBox {
   }
 
   setIdentifier(identifier) {
-    if("" === identifier) {
+    if('' === identifier) {
       identifier = null
     }
 
@@ -80,7 +80,7 @@ export default class HashBox {
   }
 
   setToken(token) {
-    if("" === token || undefined === token) {
+    if('' === token || undefined === token) {
       token = null
     }
 
@@ -158,7 +158,7 @@ export default class HashBox {
     assert(this.config.rowHashIterations > 0)
     assert(this.config.hashResultLengthInBytes > 0)
 
-    let key = "id=" + this.state.identifier + "&token=" + this.state.tokenHash + "&epoche=" + this.state.epocheCount
+    let key = 'id=' + this.state.identifier + '&token=' + this.state.tokenHash + '&epoche=' + this.state.epocheCount
 
     let hashs = []
     for (let i = 0; i < this.config.outputRows; i++) {
@@ -191,7 +191,7 @@ export default class HashBox {
       result.push(chars[validPosition])
     }
 
-    return result.join("")
+    return result.join('')
   }
 
   static createColumns(pwd, columnsSpec) {

@@ -53,7 +53,7 @@ export default class ShowConfigToggle extends ReactComponent {
           currentValue = currentValue.toString()
         }
         if(currentValue.length > 30) {
-          currentValue = (<input type="text" readOnly={true} value={currentValue} />)
+          currentValue = (<input type='text' readOnly={true} value={currentValue} />)
         }
 
         configRows.push(<tr key={index}>
@@ -62,7 +62,7 @@ export default class ShowConfigToggle extends ReactComponent {
           </tr>)
       }
 
-      return (<table className="table table-condensed table-striped info-config">
+      return (<table className='table table-condensed table-striped info-config'>
           <tbody>{configRows}</tbody>
         </table>)
     }
@@ -71,9 +71,9 @@ export default class ShowConfigToggle extends ReactComponent {
 
     return (
       <div>
-        <div className="checkbox">
+        <div className='checkbox'>
           <label>
-            <input type="checkbox" checked={this.state.visible} onChange={this.toggleVisibility} />show current configuration
+            <input type='checkbox' checked={this.state.visible} onChange={this.toggleVisibility} />show current configuration
           </label>
         </div>
 

@@ -73,33 +73,33 @@ export default class TimeEpocheHelper extends ReactComponent {
     }
 
 
-    let helper = !this.state.visible ? (<div></div>) : (<div className="form-inline">
-          <div className="with-spacer">
+    let helper = !this.state.visible ? (<div></div>) : (<div className='form-inline'>
+          <div className='with-spacer'>
             <small>Count of minute epoches from UNIX timestamp.</small>
           </div>
-          <label className="with-spacer">Minutes:
-            <input type="number" className="form-control input-epoche" value={intervalInMin} onChange={this.tick} min="1"/>
+          <label className='with-spacer'>Minutes:
+            <input type='number' className='form-control input-epoche' value={intervalInMin} onChange={this.tick} min='1'/>
             </label>
-          <div className="table info-epoche">
-            <div className="table-row">
-              <div className="table-cell">count is:</div>
-              <div className="table-cell">{this.state.epocheCount}</div>
+          <div className='table info-epoche'>
+            <div className='table-row'>
+              <div className='table-cell'>count is:</div>
+              <div className='table-cell'>{this.state.epocheCount}</div>
             </div>
-            <div className="table-row">
-              <div className="table-cell">start was:</div>
-              <div className="table-cell">{beginCurrentEpoche}</div>
+            <div className='table-row'>
+              <div className='table-cell'>start was:</div>
+              <div className='table-cell'>{beginCurrentEpoche}</div>
             </div>
-            <div className="table-row">
-              <div className="table-cell">end will be:</div>
-              <div className="table-cell">{beginNextEpoche}</div>
+            <div className='table-row'>
+              <div className='table-cell'>end will be:</div>
+              <div className='table-cell'>{beginNextEpoche}</div>
             </div>
           </div>
         </div>)
 
     return (
       <div>
-        <div className="checkbox">
-          <label><input type="checkbox" checked={this.state.visible} onChange={this.toggleVisibility} />
+        <div className='checkbox'>
+          <label><input type='checkbox' checked={this.state.visible} onChange={this.toggleVisibility} />
             time epoche helper
           </label>
         </div>
