@@ -11,8 +11,9 @@ let scrollRight = () => {
 
 class HashRow extends ReactComponent {
   handleFocus(event) {
+    event.persist()
     let select = () => event.target.select()
-    setTimeout(select, 0)
+    setTimeout(select, 10)
   }
 
   createOTM(event) {
