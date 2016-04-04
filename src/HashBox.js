@@ -214,6 +214,7 @@ export default class HashBox {
       if(end > 0) {
         value = pwd.substring(0, end)
       }
+      value = value.trim()
       columns.push(value)
     }
 
