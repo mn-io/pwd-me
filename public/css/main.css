@@ -1,5 +1,4 @@
-/* basics */
-
+/* general */
 body {
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -10,7 +9,6 @@ body {
   cursor: default;
 }
 
-/* general */
 .table {
   display: table;
 }
@@ -43,8 +41,17 @@ body {
   top: 2px;
 }
 
-/* specific */
+.color-log, .color-info {
+  color: black;
+}
+.color-warn {
+  color: #BB8717;
+}
+.color-error {
+  color: #D33F3F;
+}
 
+/* specific */
 .container-main {
   width: auto;
   margin: auto;
@@ -112,7 +119,7 @@ body {
 }
 
 #hashOutput .table-cell {
-  text-align: right;
+  text-align: left;
   padding-right: 0.5rem;
   padding-bottom: 0.5rem;
 }
@@ -134,16 +141,6 @@ body {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
   }
-}
-
-.color-log, .color-info {
-  color: black;
-}
-.color-warn {
-  color: #BB8717;
-}
-.color-error {
-  color: #D33F3F;
 }
 
 /* bootstrap hacks */
