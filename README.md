@@ -17,3 +17,7 @@ More information about the basic idea can be found here: https://en.wikipedia.or
 Checkout `Makefile` for a set of basic scenarios like executing tests and building.
 
 Just type `make <task name>` into your terminal.
+
+
+
+![Screenshot](https://raw.githubusercontent.com/mn-io/key-derivator/master/screenshot.png)
