@@ -18,6 +18,5 @@ Checkout `Makefile` for a set of basic scenarios like executing tests and buildi
 
 Just type `make <task name>` into your terminal.
 
-
-
+## Screenshot
 ![Screenshot](https://raw.githubusercontent.com/mn-io/key-derivator/master/screenshot.png)
