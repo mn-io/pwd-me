@@ -19,10 +19,6 @@
     "Simple": {
       "validCharacters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!#$%&,"
     },
-    "Skype": {
-      "validCharacters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890!\"#$%&,!\"#$%&,",
-      "constraints": ["(?=(.*\\d){2})", "(?=.*[a-zA-Z]){2}"]
-    },
     "Ebay": {
       "validCharacters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890!@#$~-",
       "constraints": ["(?=(.*\\d){1})", "(?=.*[a-zA-Z]){1}", "(?=.*[!@#$~-]){1}"]

@@ -7,3 +7,4 @@ npm-debug.log
 .tags1
 
 public/.config.json.bak
+buildAndUpload.sh
