@@ -52,7 +52,7 @@ body {
 }
 
 /* specific */
-.container-main {
+.container-main-web {
   width: auto;
   margin: auto;
   margin-top: 10%;
@@ -75,6 +75,10 @@ body {
   font-size: 2rem;
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+
+#userInput #title-placeholder {
+  padding-top: 1rem;
 }
 
 #userInput .with-spacer {
@@ -138,7 +142,7 @@ body {
 }
 
 @media (max-width: 300px) {
-  .container-main {
+  .container-main-web {
     margin-top: 0;
     margin-bottom: 0;
     border: 0;

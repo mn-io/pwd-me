@@ -15,6 +15,12 @@ let radio = new Airwaves.Channel()
 
 Logger.interceptConsole(radio)
 
+let isNativeApp = navigator.userAgent.includes('Electron')
+let root = document.getElementById('root')
+if(!isNativeApp) {
+  root.className += ' container-main-web'
+}
+
 window.onload = () => xhr.get(configUrl, xhrCallback)
 
 let xhrCallback = (err, resp) => {
@@ -29,7 +35,7 @@ let xhrCallback = (err, resp) => {
   radio.subscribe('setTimeEpoche', box.setTimeEpoche)
   radio.subscribe('setProfileByName', box.setProfileByName)
 
-  ReactDOM.render(<UserInput profiles={config.profiles} config={config.hashBox} radio={radio} />, document.getElementById('userInput'))
+  ReactDOM.render(<UserInput profiles={config.profiles} config={config.hashBox} radio={radio} isNative={isNativeApp} />, document.getElementById('userInput'))
   ReactDOM.render(<HashOutput colors={config.UI.colors} otm={config.OTM} radio={radio} />, document.getElementById('hashOutput'))
 }
 

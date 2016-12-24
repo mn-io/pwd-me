@@ -133,8 +133,10 @@ export default class UserInput extends ReactComponent {
   }
 
   render() {
+    let title = !this.props.isNative ? <h1 id='title'>key derivator</h1> : <div id='title-placeholder'></div>
+    let buttonStyle = this.props.isNative ? 'btn btn-default' : 'btn btn-link btn-minimal'
     return <div>
-      <h1 id='title'>key derivator</h1>
+      {title}
       <form className='form-horizontal' onSubmit={this.sendData}>
 
           <div className='input-group with-spacer'>
@@ -185,7 +187,7 @@ export default class UserInput extends ReactComponent {
 
         <div className='pull-right'>
           <button type='submit'
-            className='btn btn-link btn-minimal'
+            className={buttonStyle}
             onClick={this.sendData}
             tabIndex='4'>generate</button>
         </div>
