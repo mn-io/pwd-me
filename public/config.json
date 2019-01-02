@@ -1,43 +1,66 @@
 {
-  "hashBox": {
-    "tokenSalt": "fdF6e%! #wasdkhke",
+  "hashBoxConfig": {
     "keySalt": "f13ds334§",
-
-    "tokenHashingIterations": 6400,
+    "tokenSalt": "fdF6e%! #wasdkhke",
     "rowHashIterations": 64,
-
+    "tokenHashingIterations": 6400,
     "hashResultLengthInBytes": 128,
-
-    "outputRows": 12,
-    "outputColumns": [12, 24, -1]
+    "outputColumns": [
+      12,
+      24,
+      -1
+    ],
+    "outputRows": 12
   },
-
-  "profiles": {
-    "Default Config": {
-      "validCharacters": "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöüÄÖÜ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ äöüÄÖÜ 1234567890 \"!$%&(){}[]-_.:,;#+*@"
+  "profiles": [
+    {
+      "charGroups": [
+        "abcdefghijklmnopqrstuvwxyzäöüABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ1234567890!$%(){}[]-_.:,;+*@~abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+      ],
+      "name": "Default"
     },
-    "Simple": {
-      "validCharacters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!#$%&,"
+    {
+      "charGroups": [
+        "abcdefghijklmnopqrstuvwxyzäöüABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ1234567890!@#$~-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+      ],
+      "name": "Ebay"
     },
-    "Ebay": {
-      "validCharacters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüÄÖÜ1234567890!@#$~-",
-      "constraints": ["(?=(.*\\d){1})", "(?=.*[a-zA-Z]){1}", "(?=.*[!@#$~-]){1}"]
+    {
+      "charGroups": [
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+        "!\"#$%&'()*+,-./:;<=>?@[\\]^{|}~abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+      ],
+      "name": "Google"
     },
-    "Google": {
-      "validCharacters": "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890!\"#$%&'()*+,-./:;<=>?@[\\]^{|}~",
-      "constraints": ["(^\\S).*", ".*\\S$"]
-    },
-    "VeraCrypt": {
-      "validCharacters": "!\"#$%&'()*+,- ./0123456789:;<=> ?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_` abcdefghijklmnopqrstuvwxyz{|}~ "
+    {
+      "charGroups": [
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!\"#$%&'()*+,- ./:;<=> ?@{|}~[\\]^_`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+      ],
+      "name": "VeraCrypt"
     }
+  ],
+  "otm": {
+    "accessToken": "",
+    "uri": ""
   },
-
-  "OTM": {
-    "uri": "",
-    "accessToken": ""
-  },
-
-  "UI": {
-    "colors": ["#3F51B5", "#2196F3", "#03A9F4", "#00BCD4", "#009688", "#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800", "#FF5722", "#F44336", "#E91E63", "#9C27B0", "#673AB7"]
+  "ui": {
+    "colors": [
+      "#3F51B5",
+      "#2196F3",
+      "#03A9F4",
+      "#00BCD4",
+      "#009688",
+      "#4CAF50",
+      "#8BC34A",
+      "#CDDC39",
+      "#FFEB3B",
+      "#FFC107",
+      "#FF9800",
+      "#FF5722",
+      "#F44336",
+      "#E91E63",
+      "#9C27B0",
+      "#673AB7"
+    ]
   }
 }

@@ -1,45 +1,38 @@
 {
   "name": "key-derivator",
-  "version": "1.0.0",
   "description": "",
-  "private": true,
-  "main": "electron.js",
-  "scripts": {
-    "build": "NODE_ENV=production ./node_modules/.bin/browserify ./src/Application.js -t babelify | uglifyjs -c > ./public/bundle.js",
-    "build-debug": "./node_modules/.bin/browserify ./src/Application.js -d -v -t babelify > ./public/bundle.js",
-    "watch": "./node_modules/.bin/watchify ./src/Application.js -d -v -t babelify -o ./public/bundle.js",
-    "test": "mocha --compilers js:babel-register src/**/*.spec.js",
-    "testwatch": "mocha --compilers js:babel-register --watch src/**/*.spec.js"
-  },
-  "repository": "git@github.com:mn-io/pwd-me.git",
+  "version": "2.0.0",
+  "private": false,
   "author": "Mario Neises",
-  "license": "ISC",
-  "devDependencies": {
-    "airwaves": "^0.3.0",
-    "babel-core": "~6.1.4",
-    "babel-polyfill": "~6.1.4",
-    "babel-preset-es2015": "^6.1.4",
-    "babel-preset-react": "^6.1.18",
-    "babel-register": "^6.3.13",
-    "babelify": "^7.2.0",
-    "bootstrap": "^3.3.6",
-    "browserify": "^12.0.1",
-    "electron-packager": "^8.4.0",
-    "electron-prebuilt": "^1.4.13",
-    "html-entities": "^1.2.0",
-    "lodash": "^3.10.1",
-    "mobile-detect": "^1.3.0",
-    "mocha": "^2.3.4",
-    "moment": "^2.10.6",
-    "pbkdf2-sha256": "^1.1.1",
-    "react": "^0.14.3",
-    "react-bootstrap": "^0.28.1",
-    "react-dom": "^0.14.3",
-    "uglifyjs": "^2.4.10",
-    "watchify": "^3.6.1",
-    "xhr": "^2.2.0"
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@material-ui/core": "^3.6.1",
+    "@material-ui/icons": "^3.0.1",
+    "lodash": "4.17.11",
+    "moment": "^2.22.2",
+    "pbkdf2": "3.0.17",
+    "react": "16.5.2",
+    "react-dom": "16.5.2",
+    "react-scripts-ts": "3.1.0"
   },
-  "engines": {
-    "node": "5.x.x"
-  }
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "GENERATE_SOURCEMAP=false react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject",
+    "lint": "tslint --project tsconfig.json 'src/**/*.tsx' 'src/**/*.ts' --fix",
+    "analyze": "node analyzeBuild.js"
+  },
+  "devDependencies": {
+    "@types/jest": "23.3.7",
+    "@types/lodash": "4.14.117",
+    "@types/node": "10.12.0",
+    "@types/pbkdf2": "3.0.0",
+    "@types/react": "16.4.18",
+    "@types/react-dom": "16.0.9",
+    "json": "^9.0.6",
+    "typescript": "3.1.3",
+    "webpack-bundle-analyzer": "^3.0.3"
+  },
+  "homepage": ""
 }
