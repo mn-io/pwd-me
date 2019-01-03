@@ -3,7 +3,7 @@
     "keySalt": "f13ds334§",
     "tokenSalt": "fdF6e%! #wasdkhke",
     "rowHashIterations": 64,
-    "tokenHashingIterations": 6400,
+    "tokenHashingIterations": 64,
     "hashResultLengthInBytes": 128,
     "outputColumns": [
       12,

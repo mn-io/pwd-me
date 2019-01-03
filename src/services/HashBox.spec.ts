@@ -10,16 +10,16 @@ describe('HashBox', () => {
   beforeEach(() => {
     hashBoxConfig = {
       hashResultLengthInBytes: 64,
-      keySalt: 'f134§',
+      keySalt: '123',
       outputColumns: [3, 6, 9, 12, -1],
       outputRows: 3,
       rowHashIterations: 2,
       tokenHashingIterations: 64,
-      tokenSalt: 'fdF6e%! #wMe',
+      tokenSalt: '456',
     }
 
     profile = {
-      charGroups: ['abcdefghijklmnopqrstuvwxyzäöü', 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ ', '1234567890', '!$%(){}[]-_.:,;+*@~'],
+      charGroups: ['abcdefghijklmnopqrstuvwxyzäöü', 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ', '1234567890', '!$%(){}[]-_.:,;+*@~'],
       name: 'test',
     }
   })
@@ -34,9 +34,9 @@ describe('HashBox', () => {
     expect(actualColumnsCount).toEqual(fill(Array(actualRowCount), hashBoxConfig.outputColumns.length))
 
     expect(hashes).toEqual([
-      ["rG7", "rG7~rA", "rG7~rA4)u", "rG7~rA4)uZ9!", "rG7~rA4)uZ9!äB1.sI8(cB5$qU5+gI0}"],
-      ["öQ9", "öQ9[aS", "öQ9[aS4@k", "öQ9[aS4@kF1*", "öQ9[aS4@kF1*zW8*iW7!cP4,vH4.zÄ3["],
-      ["äO4", "äO4[uQ", "äO4[uQ8:q", "äO4[uQ8:qY3*", "äO4[uQ8:qY3*öW1;üL3;sA6)kQ3:äO9~"],
+      ["kZ8", "kZ8.rV", "kZ8.rV8]l", "kZ8.rV8]lN8%", "kZ8.rV8]lN8%fÜ8%yF1}vY4[oR7$tÜ1,"],
+      ["öA0", "öA0@xN", "öA0@xN8{i", "öA0@xN8{iW8!", "öA0@xN8{iW8!fH1}oO2%lZ9_nE9}eW9@"],
+      ["cM1", "cM1:hX", "cM1:hX9@v", "cM1:hX9@vH0[", "cM1:hX9@vH0[sÖ5~aQ9$zZ3@zU6*pÜ7_"],
     ])
   })
 

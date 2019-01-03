@@ -7,14 +7,14 @@ export default class HashBox {
   public static async run(config: IHashBoxConfig, profile: IProfile, input: string): Promise<string[][]> {
     HashBox.verifyConfig(config)
 
-    // TODO: use tokenHashingIterations
     // TODO: add tests to check if parameters are used
+    const inputHashed = await HashBox.calculateHash(input, config.keySalt, config.tokenHashingIterations, 128)
 
     const results = Array(config.outputRows)
 
     for (let i = 0; i < config.outputRows; i++) {
-      const salt = i + config.keySalt
-      const hash = await HashBox.calculateHash(input, salt, config.rowHashIterations, config.hashResultLengthInBytes)
+      const salt = i + config.tokenSalt
+      const hash = await HashBox.calculateHash(inputHashed, salt, config.rowHashIterations, config.hashResultLengthInBytes)
       const readableString = HashBox.translateBufferToReadableString(hash, profile.charGroups)
       const columns = HashBox.createColumnsMatchingSize(readableString, config.outputColumns)
 
@@ -36,11 +36,19 @@ export default class HashBox {
     }
 
     const profile = {
-      charGroups: ['abcdefghijklmnopqrstuvwxyzäöü', 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ', '1234567890', '!$%(){}[]-_.:,;+*@~'],
+      charGroups: [
+        'abcdefghijklmnopqrstuvwxyzäöü',
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ',
+        '1234567890',
+        '!$%(){}[]-_.:,;+*@~',
+      ],
       name: 'selfTest',
     }
 
-    const expectedHashes = [['dW2', 'dW2!lO', 'dW2!lO'], ['uE9', 'uE9;hE', 'uE9;hE']]
+    const expectedHashes = [
+      ['eQ9', 'eQ9{aY', 'eQ9{aY'],
+      ['eR7', 'eR7$qR', 'eR7$qR'],
+    ]
     const actualHashes = await HashBox.run(hashBox, profile, 'hello world')
 
     if (isEqual(actualHashes, expectedHashes)) {
@@ -59,7 +67,7 @@ export default class HashBox {
     }
   }
 
-  public static calculateHash(input: string, salt: string, rowHashIterations: number, hashResultLengthInBytes: number): Promise<Buffer> {
+  public static calculateHash(input: string | Buffer, salt: string, rowHashIterations: number, hashResultLengthInBytes: number): Promise<Buffer> {
     return new Promise((resolve, reject) => {
       const cb = (err: Error, derivedKey: Buffer): void => {
         if (err) {

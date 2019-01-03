@@ -6,7 +6,7 @@ const config: IConfig = {
     tokenSalt: "fdF6e%! #wasdkhke",
 
     rowHashIterations: 64,
-    tokenHashingIterations: 6400,
+    tokenHashingIterations: 64,
 
     hashResultLengthInBytes: 128,
 
