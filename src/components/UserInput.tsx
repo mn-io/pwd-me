@@ -146,7 +146,7 @@ class UserInput extends React.Component<Props, State> {
                 color="primary"
               />
             }
-            label="show Config"
+            label="show config"
           />
 
           {this.state.showConfig && <ConfigView profile={config.profiles[this.state.inputProfileIndex]} hashBoxConfig={config.hashBoxConfig} />}
@@ -159,7 +159,7 @@ class UserInput extends React.Component<Props, State> {
                 color="primary"
               />
             }
-            label="show Log"
+            label="show log"
           />
 
           {this.state.showLog && <LogView />}
