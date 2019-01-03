@@ -19,6 +19,10 @@ const config: IConfig = {
     name: "Default",
   },
   {
+    charGroups: ["abcdefghijklmnopqrstuvwxyzBCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"],
+    name: "Simple Id",
+  },
+  {
     charGroups: ["abcdefghijklmnopqrstuvwxyzäöüABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ1234567890!@#$~-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"],
     name: "Ebay",
   },
