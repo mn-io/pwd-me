@@ -53,9 +53,6 @@ const styles = (theme: Theme) => ({
   spacingBottom: {
     marginBottom: theme.spacing.unit * 2,
   },
-  spacingTop: {
-    marginTop: theme.spacing.unit * 2,
-  },
 }) as StyleRules
 
 class UserInput extends React.Component<Props, State> {
@@ -132,6 +129,15 @@ class UserInput extends React.Component<Props, State> {
             {profileOptions}
           </TextField>
 
+          <Button
+            type='submit'
+            variant="outlined"
+            onClick={this.submitForm}
+            tabIndex={4}
+            className={classes.spacingBottom}>
+            {isGenerating ? 'is generating' : 'generate'}
+          </Button>
+
           <FormControlLabel
             control={
               <Switch
@@ -140,7 +146,7 @@ class UserInput extends React.Component<Props, State> {
                 color="primary"
               />
             }
-            label="Show Config"
+            label="show Config"
           />
 
           {this.state.showConfig && <ConfigView profile={config.profiles[this.state.inputProfileIndex]} hashBoxConfig={config.hashBoxConfig} />}
@@ -153,7 +159,7 @@ class UserInput extends React.Component<Props, State> {
                 color="primary"
               />
             }
-            label="Show Log"
+            label="show Log"
           />
 
           {this.state.showLog && <LogView />}
@@ -188,15 +194,6 @@ class UserInput extends React.Component<Props, State> {
           />
 
           {this.state.showTimeEpochHelper && <TimeEpochHelper intervalInMin={3} onNewTimeEpoch={this.setTimeEpoch} />}
-
-          <Button
-            type='submit'
-            variant="outlined"
-            onClick={this.submitForm}
-            tabIndex={4}
-            className={classes.spacingTop}>
-            {isGenerating ? 'is generating' : 'generate'}
-          </Button>
         </FormGroup>
       }
     </form>
