@@ -39,7 +39,7 @@ export class Logger {
   private log(channel: string, emitter: EventEmitter, windowConsole: Console) {
     return (...messages: string[]) => {
       windowConsole[channel](...messages)
-      this.logs.push({ channel, messages })
+      this.logs.unshift({ channel, messages })
       emitter.emit(Logger.EVENT_NAME, channel, messages)
     }
   }
