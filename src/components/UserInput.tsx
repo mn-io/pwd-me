@@ -108,7 +108,7 @@ class UserInput extends React.Component<Props, State> {
           <RevealPasswordInput
             label={'Token'}
             tabIndex={1}
-            timeout={5000}
+            timeout={15000}
             value={this.state.inputToken}
             onChange={this.handleInputTokenChange}
             className={classes.spacingBottom}
@@ -116,7 +116,7 @@ class UserInput extends React.Component<Props, State> {
 
           <TextField
             label='Identifier'
-            onKeyUp={this.setIdentifier}
+            onChange={this.handleInputIdentifierChange}
             tabIndex={2}
             className={classes.spacingBottom}
           />
@@ -259,7 +259,7 @@ class UserInput extends React.Component<Props, State> {
     this.cancelAutoDestroy()
   }
 
-  private setIdentifier = (event: any) => {
+  private handleInputIdentifierChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputIdentifier = event.target.value
     this.setState({ inputIdentifier })
     this.cancelAutoDestroy()
