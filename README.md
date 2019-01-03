@@ -19,7 +19,7 @@ More information about the basic idea can be found here: https://en.wikipedia.or
 ## To Dos
 
 - Minimize bundle with proper tree shaking, especially for lodash
-- Resolve To Dos
+- Refactoring: varaible names, use state destruction
 - Add https://david-dm.org/mn-io/key-derivator?type=dev
 - Increase test coverage for non criticial code
 - Use CI
