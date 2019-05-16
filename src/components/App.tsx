@@ -50,6 +50,7 @@ class App extends React.Component<Props, State> {
 
   private previousInput = ''
   private previousProfile?: IProfile
+  private mounted = false
 
   constructor(props: Props) {
     super(props)
@@ -86,11 +87,19 @@ class App extends React.Component<Props, State> {
     )
   }
 
+  public componentDidMount() {
+    this.mounted = true
+  }
+
+  public componentWillUnmount() {
+    this.mounted = false
+  }
+
   private loadConfig = () => {
     const request = new XMLHttpRequest()
     request.open('GET', configUrl, true)
     request.onreadystatechange = () => {
-      if (request.readyState !== 4) {
+      if (!this.mounted || request.readyState !== 4) {
         return
       }
 

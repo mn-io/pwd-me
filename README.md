@@ -28,6 +28,6 @@ More information about the basic idea can be found here: https://en.wikipedia.or
 
 - Minimize bundle with proper tree shaking, especially for lodash
 - Refactoring: varaible names, use state destruction
-- Add https://david-dm.org/mn-io/key-derivator?type=dev
 - Increase test coverage for non criticial code
-- Use CI
+- default use low caps letters on input fields
+- cache config in localStorage
