@@ -1,4 +1,5 @@
-import { findIndex, isEqual } from 'lodash'
+import findIndex from 'lodash/findIndex'
+import isEqual from 'lodash/isEqual'
 import { pbkdf2 } from 'pbkdf2'
 import { IHashBoxConfig, IProfile } from '../@types/Config'
 

@@ -1,4 +1,4 @@
-import { fill } from 'lodash'
+import fill from 'lodash/fill'
 import { IHashBoxConfig, IProfile } from '../@types/Config'
 import HashBox from './HashBox'
 

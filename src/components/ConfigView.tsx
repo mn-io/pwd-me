@@ -1,6 +1,6 @@
 import { StyleRules, Theme, withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-import { toPairs } from 'lodash'
+import toPairs from 'lodash/toPairs'
 import * as React from 'react'
 import { IHashBoxConfig, IProfile } from '../@types/Config'
 import { WithStyleProps } from '../@types/Styles'

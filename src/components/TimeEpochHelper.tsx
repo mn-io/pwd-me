@@ -1,7 +1,7 @@
 import { Typography } from '@material-ui/core'
 import { StyleRules, Theme, withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-import * as moment from 'moment'
+import moment from 'moment'
 import * as React from 'react'
 import { WithStyleProps } from '../@types/Styles'
 
