@@ -16,6 +16,10 @@ More information about the basic idea can be found here: https://en.wikipedia.or
 ## Screenshot
 ![Screenshot](https://raw.githubusercontent.com/mn-io/key-derivator/master/screenshot.png)
 
+## Status
+
+[![CircleCI](https://circleci.com/gh/mn-io/key-derivator/tree/master.svg?style=svg)](https://circleci.com/gh/mn-io/key-derivator/tree/master)
+
 ## To Dos
 
 - Minimize bundle with proper tree shaking, especially for lodash
