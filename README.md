@@ -22,6 +22,8 @@ More information about the basic idea can be found here: https://en.wikipedia.or
 
 [![codecov](https://codecov.io/gh/mn-io/key-derivator/branch/master/graph/badge.svg)](https://codecov.io/gh/mn-io/key-derivator)
 
+[![Dependencies Status](https://david-dm.org/mn-io/key-derivator/status.svg)](https://david-dm.org/mn-io/key-derivator)
+
 [![devDependencies Status](https://david-dm.org/mn-io/key-derivator/dev-status.svg)](https://david-dm.org/mn-io/key-derivator?type=dev)
 
 ## To Dos
