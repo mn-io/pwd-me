@@ -20,6 +20,8 @@ More information about the basic idea can be found here: https://en.wikipedia.or
 
 [![CircleCI](https://circleci.com/gh/mn-io/key-derivator/tree/master.svg?style=svg)](https://circleci.com/gh/mn-io/key-derivator/tree/master)
 
+[![codecov](https://codecov.io/gh/mn-io/key-derivator/branch/master/graph/badge.svg)](https://codecov.io/gh/mn-io/key-derivator)
+
 ## To Dos
 
 - Minimize bundle with proper tree shaking, especially for lodash
