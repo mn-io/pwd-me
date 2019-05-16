@@ -13,4 +13,3 @@ jobs:
       - run: npm test -- --coverage
       - codecov/upload:
           file: 'coverage/lcov.info'
-          file: 'coverage/clover.xml'
