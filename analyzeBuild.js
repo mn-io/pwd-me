@@ -1,9 +1,5 @@
-// https://github.com/facebook/create-react-app/issues/3518
-
 process.env.NODE_ENV = "production"
-var BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-    .BundleAnalyzerPlugin
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const webpackConfigProd = require("react-scripts-ts/config/webpack.config.prod")
 
 webpackConfigProd.plugins.push(
