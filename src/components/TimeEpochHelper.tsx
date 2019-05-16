@@ -1,6 +1,6 @@
-import { Typography } from '@material-ui/core'
 import { StyleRules, Theme, withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
 import { format } from 'date-fns'
 import * as React from 'react'
 import { WithStyleProps } from '../@types/Styles'

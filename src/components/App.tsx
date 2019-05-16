@@ -1,4 +1,4 @@
-import { Paper } from '@material-ui/core'
+import Paper from '@material-ui/core/Paper'
 import { StyleRules, Theme, withStyles } from '@material-ui/core/styles'
 import * as React from 'react'
 import IConfig, { IProfile } from '../@types/Config'

@@ -1,7 +1,7 @@
-import { LinearProgress } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormGroup from '@material-ui/core/FormGroup'
+import LinearProgress from '@material-ui/core/LinearProgress'
 import MenuItem from '@material-ui/core/MenuItem'
 import { StyleRules, Theme, withStyles } from '@material-ui/core/styles'
 import Switch from '@material-ui/core/Switch'
