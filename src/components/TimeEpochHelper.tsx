@@ -1,7 +1,7 @@
 import { Typography } from '@material-ui/core'
 import { StyleRules, Theme, withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-import moment from 'moment'
+import { format } from 'date-fns'
 import * as React from 'react'
 import { WithStyleProps } from '../@types/Styles'
 
@@ -58,8 +58,8 @@ class TimeEpochHelper extends React.Component<Props, State> {
     const { classes } = this.props
     const { epochBeginInMs, epochEndInMs, intervalInMin, epochCount } = this.state
 
-    const beginCurrentEpoch = moment(epochBeginInMs).format('LTS')
-    const beginNextEpoch = moment(epochEndInMs).format('LTS')
+    const beginCurrentEpoch = format(epochBeginInMs,  'DD.MM.YYYY HH:mm:ss')
+    const beginNextEpoch = format(epochEndInMs, 'DD.MM.YYYY HH:mm:ss')
 
     return (
       <div>
