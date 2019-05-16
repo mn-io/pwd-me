@@ -1,4 +1,6 @@
-import { StyleRules, Theme, withStyles } from '@material-ui/core/styles'
+import {Theme} from '@material-ui/core/styles/createMuiTheme'
+import {StyleRules} from '@material-ui/core/styles/withStyles'
+import withStyles from '@material-ui/core/styles/withStyles'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { format } from 'date-fns'
