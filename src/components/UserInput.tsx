@@ -115,6 +115,7 @@ class UserInput extends React.Component<Props, State> {
             label='Identifier'
             onChange={this.handleInputIdentifierChange}
             tabIndex={2}
+            inputProps={{autocorrect: 'off', autocapitalize: 'off'}}
             className={classes.spacingBottom}
           />
 

@@ -31,5 +31,4 @@ More information about the basic idea can be found here: https://en.wikipedia.or
 - Minimize bundle with proper tree shaking, especially for lodash
 - Refactoring: varaible names, use state destruction
 - Increase test coverage for non criticial code
-- default use low caps letters on input fields
 - cache config in localStorage
