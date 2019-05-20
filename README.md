@@ -28,7 +28,6 @@ More information about the basic idea can be found here: https://en.wikipedia.or
 
 ## To Dos
 
-- Minimize bundle with proper tree shaking, especially for lodash
-- Refactoring: varaible names, use state destruction
+- Refactoring: variable names, use state destruction
 - Increase test coverage for non criticial code
 - cache config in localStorage

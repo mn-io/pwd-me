@@ -1,6 +1,6 @@
 import Paper from '@material-ui/core/Paper'
-import {Theme} from '@material-ui/core/styles/createMuiTheme'
-import {StyleRules} from '@material-ui/core/styles/withStyles'
+import { Theme } from '@material-ui/core/styles/createMuiTheme'
+import { StyleRules } from '@material-ui/core/styles/withStyles'
 import withStyles from '@material-ui/core/styles/withStyles'
 import * as React from 'react'
 import IConfig, { IProfile } from '../@types/Config'
@@ -98,10 +98,11 @@ class App extends React.Component<Props, State> {
   }
 
   private loadConfig = () => {
+    const READY_STATE_DONE = 4
     const request = new XMLHttpRequest()
     request.open('GET', configUrl, true)
     request.onreadystatechange = () => {
-      if (!this.mounted || request.readyState !== 4) {
+      if (!this.mounted || request.readyState !== READY_STATE_DONE) {
         return
       }
 

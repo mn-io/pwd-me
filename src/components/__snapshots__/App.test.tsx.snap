@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without crashing 1`] = `
+<div
+  className="App-root-3"
+>
+  <div
+    className="App-row-4"
+  >
+    <div
+      className="App-cell-1"
+    >
+      <div
+        className="MuiPaper-root-6 MuiPaper-elevation2-10 MuiPaper-rounded-7 App-userInput-5"
+      >
+        <form
+          onSubmit={[Function]}
+        >
+          <h5
+            className="MuiTypography-root-37 MuiTypography-h5-53 MuiTypography-alignCenter-60 UserInput-spacingBottom-36"
+          >
+            key derivator
+          </h5>
+          <div
+            className="MuiLinearProgress-root-73 MuiLinearProgress-colorPrimary-74 MuiLinearProgress-query-79"
+            role="progressbar"
+          >
+            <div
+              className="MuiLinearProgress-bar-83 MuiLinearProgress-barColorPrimary-84 MuiLinearProgress-bar1Indeterminate-86"
+              style={Object {}}
+            />
+            <div
+              className="MuiLinearProgress-bar-83 MuiLinearProgress-barColorPrimary-84 MuiLinearProgress-bar2Indeterminate-89"
+              style={Object {}}
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+    <div
+      className="App-cell-1"
+    />
+  </div>
+</div>
+`;
