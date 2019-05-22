@@ -8,7 +8,7 @@ import { WithStyleProps } from '../@types/Styles'
 import configProvider from '../services/configProvider/ConfigProvider'
 import emitter from '../services/Emitter'
 import HashBox from '../services/HashBox'
-import { Logger } from '../services/Logger'
+import logger from '../services/logger/Logger'
 import HashOutput from './HashOutput'
 import UserInput from './UserInput'
 
@@ -58,7 +58,7 @@ class App extends React.Component<Props, State> {
     super(props)
 
     this.loadConfig()
-    Logger.interceptConsole(emitter)
+    logger.interceptConsole(emitter)
     void HashBox.selfTest()
 
     this.state = {}

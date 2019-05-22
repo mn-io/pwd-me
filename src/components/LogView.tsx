@@ -1,5 +1,5 @@
-import {Theme} from '@material-ui/core/styles/createMuiTheme'
-import {StyleRules} from '@material-ui/core/styles/withStyles'
+import { Theme } from '@material-ui/core/styles/createMuiTheme'
+import { StyleRules } from '@material-ui/core/styles/withStyles'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -8,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow'
 import * as React from 'react'
 import { WithStyleProps } from '../@types/Styles'
 import emitter from '../services/Emitter'
-import { Logger } from '../services/Logger'
+import logger from '../services/logger/Logger'
 
 type Props = WithStyleProps
 
@@ -40,15 +40,15 @@ const styles = (theme: Theme) => ({
 class LogView extends React.Component<Props, State> {
 
   public componentDidMount() {
-    emitter.addListener(Logger.EVENT_NAME, this.listener)
+    emitter.addListener(logger.EVENT_NAME, this.listener)
   }
 
   public componentWillUnmount() {
-    emitter.removeListener(Logger.EVENT_NAME, this.listener)
+    emitter.removeListener(logger.EVENT_NAME, this.listener)
   }
 
   public render() {
-    const rows = Logger.instance.getLogs()
+    const rows = logger.getLogs()
       .map((log, index) => (
         <TableRow key={index}>
           <TableCell className={`${this.props.classes[log.channel]}, ${this.props.classes.table}`}>
