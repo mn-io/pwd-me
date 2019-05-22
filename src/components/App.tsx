@@ -5,7 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import * as React from 'react'
 import IConfig, { IProfile } from '../@types/Config'
 import { WithStyleProps } from '../@types/Styles'
-import { ConfigProvider } from '../services/ConfigProvider'
+import configProvider from '../services/configProvider/ConfigProvider'
 import emitter from '../services/Emitter'
 import HashBox from '../services/HashBox'
 import { Logger } from '../services/Logger'
@@ -98,7 +98,7 @@ class App extends React.Component<Props, State> {
   }
 
   private loadConfig = async () => {
-    const config = await ConfigProvider.loadConfig(configUrl)
+    const config = await configProvider.loadConfig(configUrl)
     if (this.mounted) {
       this.setState({ config })
     }

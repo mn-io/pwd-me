@@ -1,10 +1,12 @@
-import IConfig from '../@types/Config'
-import defaultConfig from '../DefaultConfig'
+import IConfig from '../../@types/Config'
+import defaultConfig from '../../DefaultConfig'
+import IConfigProvider from './IConfigProvider'
 
-export class ConfigProvider {
+class ConfigProvider implements IConfigProvider {
 
-  public static async loadConfig(configUrl: string): Promise<IConfig> {
+  private static READY_STATE_DONE = 4
 
+  public async loadConfig(configUrl: string): Promise<IConfig> {
     return new Promise((resolve) => {
       const request = new XMLHttpRequest()
       request.open('GET', configUrl, true)
@@ -33,9 +35,6 @@ export class ConfigProvider {
 
 
   }
-
-  private static READY_STATE_DONE = 4
-
-  private constructor() {
-  }
 }
+
+export default new ConfigProvider()

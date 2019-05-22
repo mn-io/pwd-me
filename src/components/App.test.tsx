@@ -1,10 +1,13 @@
 import * as React from 'react'
 import renderer from 'react-test-renderer'
 import mock, { once } from 'xhr-mock'
+import configProvider from '../services/configProvider/ConfigProvider'
 import config from './../DefaultConfig'
 import App from './App'
 
-describe('', () => {
+jest.mock('../services/configProvider/ConfigProvider')
+
+describe('App', () => {
 
   beforeEach(() => mock.setup())
 
