@@ -5,7 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import * as React from 'react'
 import IConfig, { IProfile } from '../@types/Config'
 import { WithStyleProps } from '../@types/Styles'
-import defaultConfig from '../DefaultConfig'
+import { ConfigProvider } from '../services/ConfigProvider'
 import emitter from '../services/Emitter'
 import HashBox from '../services/HashBox'
 import { Logger } from '../services/Logger'
@@ -97,31 +97,11 @@ class App extends React.Component<Props, State> {
     this.mounted = false
   }
 
-  private loadConfig = () => {
-    const READY_STATE_DONE = 4
-    const request = new XMLHttpRequest()
-    request.open('GET', configUrl, true)
-    request.onreadystatechange = () => {
-      if (!this.mounted || request.readyState !== READY_STATE_DONE) {
-        return
-      }
-
-      if (request.status === 200) {
-        try {
-          const config = JSON.parse(request.response) as IConfig
-          console.log(`Load config from ${configUrl} successful`)
-          this.setState({ config })
-        } catch (e) {
-          console.error(`Load config from ${configUrl} failed due to '${e}', using default fallback`)
-          this.setState({ config: defaultConfig })
-        }
-      } else {
-        console.error(`Load config from ${configUrl} failed due to server response ${request.status}, using default fallback`)
-        this.setState({ config: defaultConfig })
-      }
+  private loadConfig = async () => {
+    const config = await ConfigProvider.loadConfig(configUrl)
+    if (this.mounted) {
+      this.setState({ config })
     }
-
-    request.send()
   }
 
   private onGenerateHashes = async (profile: IProfile, inputIdentifier: string, inputToken: string, epochCount = 0): Promise<void> => {
