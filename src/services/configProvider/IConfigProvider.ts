@@ -1,4 +1,4 @@
-import IConfig from '../@types/Config'
+import IConfig from '../../@types/Config'
 
 export default interface IConfigProvider {
   loadConfig(configUrl: string): Promise<IConfig>
