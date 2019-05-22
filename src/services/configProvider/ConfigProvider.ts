@@ -9,6 +9,7 @@ class ConfigProvider implements IConfigProvider {
   public async loadConfig(configUrl: string): Promise<IConfig> {
     return new Promise((resolve) => {
       const request = new XMLHttpRequest()
+      request.timeout = 500
       request.open('GET', configUrl, true)
       request.onreadystatechange = () => {
         if (request.readyState !== ConfigProvider.READY_STATE_DONE) {
