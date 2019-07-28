@@ -1,7 +1,7 @@
 import IconButton from '@material-ui/core/IconButton'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
-import {Theme} from '@material-ui/core/styles/createMuiTheme'
-import {StyleRules} from '@material-ui/core/styles/withStyles'
+import { Theme } from '@material-ui/core/styles/createMuiTheme'
+import { StyleRules } from '@material-ui/core/styles/withStyles'
 import withStyles from '@material-ui/core/styles/withStyles'
 import FiberManualRecord from '@material-ui/icons/FiberManualRecord'
 import * as React from 'react'
@@ -38,6 +38,9 @@ const styles = (theme: Theme) => ({
     '& input': {
       padding: theme.spacing.unit,
     },
+    '& input:hover': {
+      cursor: 'pointer',
+    },
     '&:first-child': {
       marginRight: 0,
     },
@@ -68,6 +71,14 @@ const calculateWidth = (length: number) => {
 }
 
 class HashOutput extends React.Component<Props, State> {
+
+  private previousTimeout?: NodeJS.Timeout
+
+  public componentWillUnmount() {
+    if (this.previousTimeout) {
+      clearTimeout(this.previousTimeout)
+    }
+  }
 
   public render() {
     const rows = this.props.hashes.map((hashes, index) => this.renderRow(hashes, index))
@@ -119,7 +130,16 @@ class HashOutput extends React.Component<Props, State> {
 
   private handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     event.persist()
-    setTimeout(() => event.target.select(), 10)
+
+    if (this.previousTimeout) {
+      clearTimeout(this.previousTimeout)
+      this.previousTimeout = undefined
+    }
+
+    this.previousTimeout = setTimeout(() => {
+      event.target.select()
+      document.execCommand('copy')
+    }, 10)
   }
 
   private createOtmHandler = (hashes: string[]) => {
