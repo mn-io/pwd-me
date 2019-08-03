@@ -25,16 +25,20 @@
     "analyze": "node analyzeBuild.js"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.10.3",
     "@types/jest": "^24.0.13",
     "@types/lodash": "^4.14.129",
-    "@types/react-test-renderer": "^16.8.1",
     "@types/node": "^12.0.2",
     "@types/pbkdf2": "^3.0.0",
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
+    "@types/react-test-renderer": "^16.8.1",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "enzyme-to-json": "^3.4.0",
     "json": "^9.0.6",
-    "typescript": "^3.4.5",
     "react-test-renderer": "^16.8.6",
+    "typescript": "^3.4.5",
     "webpack-bundle-analyzer": "^3.3.2",
     "xhr-mock": "^2.4.1"
   },
