@@ -57,11 +57,10 @@ class App extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
 
-    this.loadConfig()
-    logger.interceptConsole(emitter)
-    void HashBox.selfTest()
-
     this.state = {}
+    logger.interceptConsole(emitter)
+    void this.loadConfig()
+    void HashBox.selfTest()
   }
 
   public render() {
@@ -116,9 +115,11 @@ class App extends React.Component<Props, State> {
     this.previousInput = input
     this.previousProfile = profile
 
-    console.log(`Generate hashes: with profile \'${profile.name}\' and identifier \'${inputIdentifier}\'`)
     const hashes = await HashBox.run(this.state.config.hashBoxConfig, profile, input)
-    this.setState({ hashes })
+    await new Promise(resolve => {
+      this.setState({ hashes }, resolve)
+    })
+    console.log(`Generated hashes: with profile \'${profile.name}\' and identifier \'${inputIdentifier}\'`)
   }
 }
 

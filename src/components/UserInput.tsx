@@ -3,8 +3,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormGroup from '@material-ui/core/FormGroup'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import MenuItem from '@material-ui/core/MenuItem'
-import {Theme} from '@material-ui/core/styles/createMuiTheme'
-import {StyleRules} from '@material-ui/core/styles/withStyles'
+import { Theme } from '@material-ui/core/styles/createMuiTheme'
+import { StyleRules } from '@material-ui/core/styles/withStyles'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Switch from '@material-ui/core/Switch'
 import TextField from '@material-ui/core/TextField'
@@ -117,7 +117,7 @@ class UserInput extends React.Component<Props, State> {
             label='Identifier'
             onChange={this.handleInputIdentifierChange}
             tabIndex={2}
-            inputProps={{autoCorrect: 'off', autoCapitalize: 'off'}}
+            inputProps={{ autoCorrect: 'off', autoCapitalize: 'off' }}
             className={classes.spacingBottom}
           />
 
@@ -133,6 +133,7 @@ class UserInput extends React.Component<Props, State> {
           </TextField>
 
           <Button
+            id='submitForm'
             type='submit'
             variant="outlined"
             onClick={this.submitForm}
@@ -220,9 +221,12 @@ class UserInput extends React.Component<Props, State> {
     const { inputIdentifier, inputToken, inputTimeEpoch } = this.state
 
     this.hasGeneratedHashes = true
-    this.startAutoDestroy()
+
+    await this.startAutoDestroy()
     await onGenerateHashes(profile, inputIdentifier, inputToken, inputTimeEpoch)
-    this.setState({ isGenerating: false })
+    await new Promise(resolve => {
+      this.setState({ isGenerating: false }, resolve)
+    })
   }
 
   private toggleAutoDestroy = () => {
@@ -236,16 +240,20 @@ class UserInput extends React.Component<Props, State> {
       }
 
       if (this.hasGeneratedHashes) {
-        this.startAutoDestroy()
+        void this.startAutoDestroy()
       }
     })
   }
 
   private startAutoDestroy = () => {
-    if (this.state.isAutoDestroy) {
+    return new Promise(resolve => {
+      if (!this.state.isAutoDestroy) {
+        resolve()
+        return
+      }
       this.autoDestroy()
-      this.setState({ isAutoDestroyDebounced: true })
-    }
+      this.setState({ isAutoDestroyDebounced: true }, resolve)
+    })
   }
 
   private cancelAutoDestroy = () => {
@@ -255,14 +263,12 @@ class UserInput extends React.Component<Props, State> {
 
   private handleInputTokenChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputToken = event.target.value
-    this.setState({ inputToken })
-    this.cancelAutoDestroy()
+    this.setState({ inputToken }, this.cancelAutoDestroy)
   }
 
   private handleInputIdentifierChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputIdentifier = event.target.value
-    this.setState({ inputIdentifier })
-    this.cancelAutoDestroy()
+    this.setState({ inputIdentifier }, this.cancelAutoDestroy)
   }
 
   private setTimeEpoch = (inputTimeEpoch: number) => {

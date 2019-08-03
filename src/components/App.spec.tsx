@@ -6,11 +6,13 @@ jest.mock('../services/configProvider/ConfigProvider')
 jest.mock('../services/logger/Logger')
 
 describe('App', () => {
-  it('renders without crashing', () => {
+
+  it('renders matching snapshot', async () => {
     const tree = renderer
       .create(<App />)
-      .toJSON()
 
-    expect(tree).toMatchSnapshot()
+    expect(tree.toJSON()).toMatchSnapshot()
+
+    tree.unmount()
   })
 })
